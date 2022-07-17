@@ -93,54 +93,6 @@ export default [
         component: () => import('../views/pages/sample-auth/recoverpwd-1')
     },
     {
-        path: '/pages/starter',
-        name: 'Starter Page',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/utility/starter')
-    },
-    {
-        path: '/pages/maintenance',
-        name: 'Maintenance',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/utility/maintenance')
-    },
-    {
-        path: '/pages/coming-soon',
-        name: 'Coming-soon',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/utility/coming-soon')
-    },
-    {
-        path: '/pages/timeline',
-        name: 'Timeline',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/utility/timeline/index')
-    },
-    {
-        path: '/pages/faqs',
-        name: 'Faqs',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/utility/faqs')
-    },
-    {
-        path: '/pages/pricing',
-        name: 'Pricing',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/utility/pricing/index')
-    },
-    {
-        path: '/pages/error-404',
-        name: 'Error-404',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/utility/error-404')
-    },
-    {
-        path: '/pages/error-500',
-        name: 'Error-500',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/utility/error-500')
-    },
-    {
         path: '/icons/font-awesome',
         name: 'Font Awesome 5',
         meta: { authRequired: true },
