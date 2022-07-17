@@ -1,77 +1,25 @@
 <script>
-import { required, email } from "vuelidate/lib/validators";
-
-import {
-  authMethods,
-  authFackMethods,
-  notificationMethods
-} from "@/state/helpers";
 
 export default {
   data() {
     return {
-      email: "admin@themesdesign.in",
-      password: "123456",
+      email: "",
+      password: "",
       submitted: false
     };
   },
   computed: {
-    notification() {
-      return this.$store ? this.$store.state.notification : null;
-    }
   },
   created() {
     document.body.classList.add("auth-body-bg");
   },
-  validations: {
-    email: { required, email },
-    password: { required }
-  },
   methods: {
-    ...authMethods,
-    ...authFackMethods,
-    ...notificationMethods,
     // Try to log the user in with the username
     // and password they provided.
     tryToLogIn() {
-      this.submitted = true;
+      // this.submitted = true;
       // stop here if form is invalid
-      this.$v.$touch();
-
-      if (this.$v.$invalid) {
-        return;
-      } else {
-        if (process.env.VUE_APP_DEFAULT_AUTH === "firebase") {
-          this.tryingToLogIn = true;
-          // Reset the authError if it existed.
-          this.authError = null;
-          return (
-            this.logIn({
-              email: this.email,
-              password: this.password
-            })
-              // eslint-disable-next-line no-unused-vars
-              .then(token => {
-                this.tryingToLogIn = false;
-                this.isAuthError = false;
-                // Redirect to the originally requested page, or to the home page
-                this.$router.push(
-                  this.$route.query.redirectFrom || { name: "home" }
-                );
-              })
-              .catch(error => {
-                this.tryingToLogIn = false;
-                this.authError = error ? error : "";
-                this.isAuthError = true;
-              })
-          );
-        } else {
-          const { email, password } = this;
-          if (email && password) {
-            this.login({ email, password });
-          }
-        }
-      }
+      this.$router.push("/");
     }
   }
 };
@@ -79,11 +27,6 @@ export default {
 
 <template>
   <div>
-    <div class="home-btn d-none d-sm-block">
-      <a href="/">
-        <i class="mdi mdi-home-variant h2 text-white"></i>
-      </a>
-    </div>
     <div>
       <div class="container-fluid p-0">
         <div class="row no-gutters">
@@ -101,16 +44,8 @@ export default {
                         </div>
 
                         <h4 class="font-size-18 mt-4">Welcome Back !</h4>
-                        <p class="text-muted">Sign in to continue to Nazox.</p>
+                        <p class="text-muted">Sign in to continue to Laundro.</p>
                       </div>
-
-                      <b-alert
-                        variant="danger"
-                        class="mt-3"
-                        v-if="notification.message"
-                        show
-                        dismissible
-                      >{{notification.message}}</b-alert>
 
                       <div class="p-2 mt-5">
                         <form class="form-horizontal" @submit.prevent="tryToLogIn">
@@ -123,12 +58,7 @@ export default {
                               class="form-control"
                               id="email"
                               placeholder="Enter email"
-                              :class="{ 'is-invalid': submitted && $v.email.$error }"
                             />
-                            <div v-if="submitted && $v.email.$error" class="invalid-feedback">
-                              <span v-if="!$v.email.required">Email is required.</span>
-                              <span v-if="!$v.email.email">Please enter valid email.</span>
-                            </div>
                           </div>
 
                           <div class="form-group auth-form-group-custom mb-4">
@@ -140,38 +70,21 @@ export default {
                               class="form-control"
                               id="userpassword"
                               placeholder="Enter password"
-                              :class="{ 'is-invalid': submitted && $v.password.$error }"
                             />
-                            <div
-                              v-if="submitted && !$v.password.required"
-                              class="invalid-feedback"
-                            >Password is required.</div>
-                          </div>
-
-                          <div class="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              class="custom-control-input"
-                              id="customControlInline"
-                            />
-                            <label
-                              class="custom-control-label"
-                              for="customControlInline"
-                            >Remember me</label>
                           </div>
 
                           <div class="mt-4 text-center">
                             <button
-                              class="btn btn-primary w-md waves-effect waves-light"
+                              class="btn btn-primary w-md waves-effect waves-light btn-block"
                               type="submit"
                             >Log In</button>
                           </div>
 
-                          <div class="mt-4 text-center">
+                          <!-- <div class="mt-4 text-center">
                             <router-link tag="a" to="/forgot-password" class="text-muted">
                               <i class="mdi mdi-lock mr-1"></i> Forgot your password?
                             </router-link>
-                          </div>
+                          </div> -->
                         </form>
                       </div>
 
@@ -185,8 +98,8 @@ export default {
                           >Register</router-link>
                         </p>
                         <p>
-                          © 2020 Nazox. Crafted with
-                          <i class="mdi mdi-heart text-danger"></i> by Themesdesign
+                          © 2022 Laundro. Crafted with
+                          <i class="mdi mdi-heart text-danger"></i> by Prowebs
                         </p>
                       </div>
                     </div>
