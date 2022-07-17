@@ -5,18 +5,6 @@ export default [
         path: '/login',
         name: 'login',
         component: () => import('../views/pages/account/login'),
-        meta: {
-            beforeResolve(routeTo, routeFrom, next) {
-                // If the user is already logged in
-                if (store.getters['auth/loggedIn']) {
-                    // Redirect to the home page instead
-                    next({ name: 'home' })
-                } else {
-                    // Continue to the login page
-                    next()
-                }
-            },
-        },
     },
     {
         path: '/register',
@@ -74,87 +62,12 @@ export default [
     {
         path: '/',
         name: 'home',
-        meta: {
-            authRequired: true,
-        },
+        // meta: {
+        //     authRequired: true,
+        // },
         component: () => import('../views/pages/dashboard/index')
     },
-    {
-        path: '/chat',
-        name: 'Chat',
-        meta: {
-            authRequired: true,
-        },
-        component: () => import('../views/pages/chat/index')
-    },
-    {
-        path: '/calendar',
-        name: 'Calendar',
-        meta: {
-            authRequired: true,
-        },
-        component: () => import('../views/pages/calendar/index')
-    },
-    {
-        path: '/ecommerce/products',
-        name: 'products',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/ecommerce/products')
-    },
-    {
-        path: '/ecommerce/product-detail',
-        name: 'product detail',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/ecommerce/product-detail')
-    },
-    {
-        path: '/ecommerce/orders',
-        name: 'Orders',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/ecommerce/orders')
-    },
-    {
-        path: '/ecommerce/customers',
-        name: 'Customers',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/ecommerce/customers')
-    },
-    {
-        path: '/ecommerce/cart',
-        name: 'Cart',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/ecommerce/cart')
-    },
-    {
-        path: '/ecommerce/checkout',
-        name: 'Checkout',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/ecommerce/checkout')
-    },
-    {
-        path: '/ecommerce/shops',
-        name: 'Shops',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/ecommerce/shops')
-    },
-    {
-        path: '/ecommerce/add-product',
-        name: 'Add-product',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/ecommerce/add-product')
-    },
-    {
-        path: '/email/inbox',
-        name: 'Inbox',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/email/inbox')
-    },
-    {
-        path: '/email/read',
-        name: 'Read Email',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/email/reademail')
-    },
+
     {
         path: '/auth/login-1',
         name: 'login-1',
@@ -178,12 +91,6 @@ export default [
         name: 'Recoverpwd-1',
         meta: { authRequired: true },
         component: () => import('../views/pages/sample-auth/recoverpwd-1')
-    },
-    {
-        path: '/apps/kanban-board',
-        name: 'Kanban-board',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/kanbanboard/index')
     },
     {
         path: '/pages/starter',
@@ -424,41 +331,5 @@ export default [
         name: 'Advanced Tables',
         meta: { authRequired: true },
         component: () => import('../views/pages/tables/advancedtable')
-    },
-    {
-        path: '/charts/apex',
-        name: 'Apex chart',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/charts/apex')
-    },
-    {
-        path: '/charts/chartjs',
-        name: 'Chartjs chart',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/charts/chartjs/index')
-    },
-    {
-        path: '/charts/chartist',
-        name: 'Chartist chart',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/charts/chartist')
-    },
-    {
-        path: '/charts/echart',
-        name: 'Echart chart',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/charts/echart/index')
-    },
-    {
-        path: '/maps/google',
-        name: 'Google Maps',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/maps/google')
-    },
-    {
-        path: '/maps/leaflet',
-        name: 'Leaflet Maps',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/maps/leaflet/index')
     },
 ]

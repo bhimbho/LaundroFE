@@ -437,33 +437,6 @@ export default {
           </div>
         </div>
 
-        <b-dropdown variant="white" right toggle-class="header-item">
-          <template v-slot:button-content>
-            <img
-              class
-              src="@/assets/images/flags/us.jpg"
-              alt="Header Language"
-              height="16"
-            />
-          </template>
-          <b-dropdown-item
-            class="notify-item"
-            v-for="(entry, i) in languages"
-            :key="`Lang${i}`"
-            :value="entry"
-            @click="setLanguage(entry.language)"
-            :link-class="{ active: entry.language === current_language }"
-          >
-            <img
-              :src="`${entry.flag}`"
-              alt="user-image"
-              class="mr-1"
-              height="12"
-            />
-            <span class="align-middle">{{ entry.title }}</span>
-          </b-dropdown-item>
-        </b-dropdown>
-
         <b-dropdown
           class="d-none d-lg-inline-block d-lg-inline-block ml-1"
           menu-class="dropdown-menu-lg"
