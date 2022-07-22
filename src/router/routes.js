@@ -7,16 +7,6 @@ export default [
         component: () => import('../views/auth/login'),
     },
     {
-        path: '/register',
-        name: 'register',
-        component: () => import('../views/pages/account/register'),
-    },
-    {
-        path: '/forgot-password',
-        name: 'Forgot-password',
-        component: () => import('../views/pages/account/forgot-password'),
-    },
-    {
         path: '/logout',
         name: 'logout',
     },
