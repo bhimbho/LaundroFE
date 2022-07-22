@@ -1,71 +1,59 @@
-import store from '@/state/store'
+// import store from '@/state/store'
 
 export default [
     {
-        path: '/login',
+        path: '/',
         name: 'login',
-        component: () => import('../views/pages/account/login'),
+        component: () => import('../views/auth/login'),
     },
     {
         path: '/register',
         name: 'register',
         component: () => import('../views/pages/account/register'),
-        meta: {
-            beforeResolve(routeTo, routeFrom, next) {
-                // If the user is already logged in
-                if (store.getters['auth/loggedIn']) {
-                    // Redirect to the home page instead
-                    next({ name: 'home' })
-                } else {
-                    // Continue to the login page
-                    next()
-                }
-            },
-        },
     },
     {
         path: '/forgot-password',
         name: 'Forgot-password',
         component: () => import('../views/pages/account/forgot-password'),
-        meta: {
-            beforeResolve(routeTo, routeFrom, next) {
-                // If the user is already logged in
-                if (store.getters['auth/loggedIn']) {
-                    // Redirect to the home page instead
-                    next({ name: 'home' })
-                } else {
-                    // Continue to the login page
-                    next()
-                }
-            },
-        },
     },
     {
         path: '/logout',
         name: 'logout',
-        meta: {
-            authRequired: true,
-            beforeResolve(routeTo, routeFrom, next) {
-                if (process.env.VUE_APP_DEFAULT_AUTH === "firebase") {
-                    store.dispatch('auth/logOut')
-                } else {
-                    store.dispatch('authfack/logout')
-                }
-                const authRequiredOnPreviousRoute = routeFrom.matched.some(
-                    (route) => route.push('/login')
-                )
-                // Navigate back to previous page, or home as a fallback
-                next(authRequiredOnPreviousRoute ? { name: 'home' } : { ...routeFrom })
-            },
-        },
     },
     {
-        path: '/',
-        name: 'home',
+        path: '/dashboard',
+        name: 'dashboard',
         // meta: {
         //     authRequired: true,
         // },
-        component: () => import('../views/pages/dashboard/index')
+        component: () => import('../views/dashboard/index')
+    },
+    {
+        path: '/customers',
+        name: 'customers',
+        meta: { authRequired: true },
+        component: () => import('../views/customer/index')
+    },
+
+    {
+        path: '/transactions',
+        name: 'transactions',
+        meta: { authRequired: true },
+        component: () => import('../views/transactions/index')
+    },
+
+    {
+        path: '/administrator',
+        name: 'administrator',
+        meta: { authRequired: true },
+        component: () => import('../views/administrator/index')
+    },
+
+    {
+        path: '/administrator/add-administrator',
+        name: 'add-administrator',
+        meta: { authRequired: true },
+        component: () => import('../views/administrator/addAdministrator')
     },
 
     {
@@ -271,17 +259,5 @@ export default [
         name: 'Form Mask',
         meta: { authRequired: true },
         component: () => import('../views/pages/forms/mask')
-    },
-    {
-        path: '/tables/basic',
-        name: 'Basic Tables',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/tables/basictable')
-    },
-    {
-        path: '/tables/advanced',
-        name: 'Advanced Tables',
-        meta: { authRequired: true },
-        component: () => import('../views/pages/tables/advancedtable')
     },
 ]

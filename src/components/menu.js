@@ -10,7 +10,12 @@ export const menuItems = [
         icon: 'ri-dashboard-line',
         link: '/'
     },
-    
+    {
+        id: 3,
+        label: 'menuitems.administrator.text',
+        icon: 'ri-dashboard-line',
+        link: '/administrator'
+    },
 
     {
         id: 18,
