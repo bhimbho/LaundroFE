@@ -19,7 +19,7 @@ export default {
     tryToLogIn() {
       // this.submitted = true;
       // stop here if form is invalid
-      this.$router.push("/");
+      this.$router.push("/dashboard");
     }
   }
 };

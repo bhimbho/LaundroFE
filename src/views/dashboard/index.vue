@@ -1,5 +1,5 @@
 <script>
-import Layout from "../../layouts/main";
+import Layout from "../layouts/main";
 import PageHeader from "@/components/page-header";
 import Stat from "./widget";
 import RevenueAnalytics from "./revenue";
