@@ -5,7 +5,6 @@ import VueApexCharts from 'vue-apexcharts'
 import Vuelidate from 'vuelidate'
 import VueSweetalert2 from 'vue-sweetalert2';
 import VueMask from 'v-mask'
-import * as VueGoogleMaps from 'vue2-google-maps'
 import VueYoutube from 'vue-youtube'
 
 import vco from "v-click-outside"
@@ -24,13 +23,6 @@ Vue.use(Vuelidate)
 Vue.use(VueSweetalert2);
 Vue.use(VueMask)
 Vue.use(require('vue-chartist'))
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: 'AIzaSyAbvyBxmMbFhrzP9Z8moyYr6dCr-pzjhBE',
-    libraries: 'places',
-  },
-  installComponents: true
-})
 Vue.component('apexchart', VueApexCharts)
 
 new Vue({
