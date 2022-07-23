@@ -1,17 +1,15 @@
 <script>
-
 export default {
   data() {
     return {
-      email: "",
-      password: "",
-      submitted: false
+      email: '',
+      password: '',
+      submitted: false,
     };
   },
-  computed: {
-  },
+  computed: {},
   created() {
-    document.body.classList.add("auth-body-bg");
+    document.body.classList.add('auth-body-bg');
   },
   methods: {
     // Try to log the user in with the username
@@ -19,9 +17,9 @@ export default {
     tryToLogIn() {
       // this.submitted = true;
       // stop here if form is invalid
-      this.$router.push("/dashboard");
-    }
-  }
+      this.$router.push('/dashboard');
+    },
+  },
 };
 </script>
 
@@ -29,9 +27,11 @@ export default {
   <div>
     <div>
       <div class="container-fluid p-0">
-        <div class="row no-gutters">
-          <div class="col-lg-4">
-            <div class="authentication-page-content p-4 d-flex align-items-center min-vh-100">
+        <div class="row d-flex justify-content-center no-gutters">
+          <div class="col-lg-5">
+            <div
+              class="authentication-page-content p-4 d-flex align-items-center min-vh-100"
+            >
               <div class="w-100">
                 <div class="row justify-content-center">
                   <div class="col-lg-9">
@@ -39,16 +39,25 @@ export default {
                       <div class="text-center">
                         <div>
                           <a href="/" class="logo">
-                            <img src="@/assets/images/logo-dark.png" height="40" alt="logo" />
+                            <img
+                              src="@/assets/images/logo-dark.png"
+                              height="40"
+                              alt="logo"
+                            />
                           </a>
                         </div>
 
-                        <h4 class="font-size-18 mt-4">Welcome Back to Eligail Laundro Manager.</h4>
+                        <h4 class="font-size-18 mt-4">
+                          Welcome Back to Eligail Laundro Manager.
+                        </h4>
                         <!-- <p class="text-muted">Sign in to continue to Eligail Laundro Manager.</p> -->
                       </div>
 
                       <div class="p-2 mt-5">
-                        <form class="form-horizontal" @submit.prevent="tryToLogIn">
+                        <form
+                          class="form-horizontal"
+                          @submit.prevent="tryToLogIn"
+                        >
                           <div class="form-group auth-form-group-custom mb-4">
                             <i class="ri-mail-line auti-custom-input-icon"></i>
                             <label for="email">Email</label>
@@ -62,7 +71,9 @@ export default {
                           </div>
 
                           <div class="form-group auth-form-group-custom mb-4">
-                            <i class="ri-lock-2-line auti-custom-input-icon"></i>
+                            <i
+                              class="ri-lock-2-line auti-custom-input-icon"
+                            ></i>
                             <label for="userpassword">Password</label>
                             <input
                               v-model="password"
@@ -77,7 +88,9 @@ export default {
                             <button
                               class="btn btn-primary w-md waves-effect waves-light btn-block"
                               type="submit"
-                            >Log In</button>
+                            >
+                              Log In
+                            </button>
                           </div>
 
                           <!-- <div class="mt-4 text-center">
@@ -98,11 +111,6 @@ export default {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="col-lg-8">
-            <div class="authentication-bg">
-              <div class="bg-overlay"></div>
             </div>
           </div>
         </div>
