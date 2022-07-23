@@ -50,7 +50,7 @@ export default {
                         <h4 class="font-size-18 mt-4">
                           Welcome Back to Eligail Laundro Manager.
                         </h4>
-                        <!-- <p class="text-muted">Sign in to continue to Eligail Laundro Manager.</p> -->
+                        <!-- <p class='text-muted'>Sign in to continue to Eligail Laundro Manager.</p> -->
                       </div>
 
                       <div class="p-2 mt-5">
@@ -93,9 +93,9 @@ export default {
                             </button>
                           </div>
 
-                          <!-- <div class="mt-4 text-center">
-                            <router-link tag="a" to="/forgot-password" class="text-muted">
-                              <i class="mdi mdi-lock mr-1"></i> Forgot your password?
+                          <!-- <div class='mt-4 text-center'>
+                            <router-link tag='a' to='/forgot-password' class='text-muted'>
+                              <i class='mdi mdi-lock mr-1'></i> Forgot your password?
                             </router-link>
                           </div> -->
                         </form>

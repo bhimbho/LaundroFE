@@ -1,11 +1,11 @@
 <script>
-// import simplebar from "simplebar-vue";
-import i18n from "../i18n";
+// import simplebar from 'simplebar-vue';
+import i18n from '../i18n';
 
 export default {
   data() {
     return {
-      current_language: "en"
+      current_language: 'en',
     };
   },
   // components: { simplebar },
@@ -19,8 +19,8 @@ export default {
     setLanguage(locale) {
       i18n.locale = locale;
       this.current_language = i18n.locale;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -72,7 +72,9 @@ export default {
               src="@/assets/images/users/avatar-2.jpg"
               alt="Header Avatar"
             />
-            <span class="d-none d-xl-inline-block ml-1">{{ $t('navbar.dropdown.kevin.text')}}</span>
+            <span class="d-none d-xl-inline-block ml-1">{{
+              $t('navbar.dropdown.kevin.text')
+            }}</span>
             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
           </template>
           <!-- item-->
@@ -82,13 +84,13 @@ export default {
           </a>
         </b-dropdown>
 
-        <!-- <div class="dropdown d-inline-block">
+        <!-- <div class='dropdown d-inline-block'>
           <button
-            type="button"
-            class="btn header-item noti-icon right-bar-toggle waves-effect toggle-right"
-            @click="toggleRightSidebar"
+            type='button'
+            class='btn header-item noti-icon right-bar-toggle waves-effect toggle-right'
+            @click='toggleRightSidebar'
           >
-            <i class="ri-settings-2-line toggle-right"></i>
+            <i class='ri-settings-2-line toggle-right'></i>
           </button>
         </div> -->
       </div>
