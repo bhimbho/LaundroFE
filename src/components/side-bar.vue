@@ -93,8 +93,8 @@ export default {
     },
     onRoutechange() {
       setTimeout(() => {
-        const currentPosition = document.getElementsByClassName("mm-active")[0]
-          .offsetTop;
+        const currentPosition =
+          document.getElementsByClassName("mm-active")[0].offsetTop;
         if (currentPosition > 400)
           this.$refs.currentMenu.SimpleBar.getScrollElement().scrollTop =
             currentPosition + 200;
@@ -179,19 +179,13 @@ export default {
         <!-- Left Menu Start -->
         <ul class="metismenu list-unstyled" id="side-menu">
           <li>
-            <router-link
-              :to="{ name: 'dashboard' }"
-              class="side-nav-link-ref"
-            >
+            <router-link :to="{ name: 'dashboard' }" class="side-nav-link-ref">
               <i class="bx ri-dashboard-line"></i>
               <span>Dashboard</span>
             </router-link>
           </li>
           <li>
-            <router-link
-              :to="{ name: 'customers' }"
-              class="side-nav-link-ref"
-            >
+            <router-link :to="{ name: 'customers' }" class="side-nav-link-ref">
               <i class="bx ri-dashboard-line"></i>
               <span>Customers</span>
             </router-link>
@@ -224,10 +218,7 @@ export default {
             </router-link>
           </li>
           <li>
-            <router-link
-              :to="{ name: 'admin-dashboard' }"
-              class="side-nav-link-ref"
-            >
+            <router-link :to="{ name: 'order' }" class="side-nav-link-ref">
               <i class="bx ri-dashboard-line"></i>
               <span>Order</span>
             </router-link>
