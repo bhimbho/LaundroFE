@@ -1,29 +1,29 @@
 <script>
-import Layout from "../layouts/main";
-import PageHeader from "@/components/page-header";
-import appConfig from "@/app.config";
+import Layout from '../layouts/main';
+import PageHeader from '@/components/page-header';
+import appConfig from '@/app.config';
 
 export default {
   page: {
-    title: "Forms Elements",
-    meta: [{ name: "description", content: appConfig.description }],
+    title: 'Forms Elements',
+    meta: [{ name: 'description', content: appConfig.description }],
   },
   components: { Layout, PageHeader },
   data() {
     return {
-      title: "Order",
+      title: 'Order',
       items: [
         {
-          text: "Dashboard",
-          href: "/dashboard",
+          text: 'Dashboard',
+          href: '/dashboard',
         },
         {
-          text: "Order",
+          text: 'Order',
           active: true,
         },
       ],
-      status: "not_accepted",
-      checkCustom: "not_accepted",
+      status: 'not_accepted',
+      checkCustom: 'not_accepted',
       checked: true,
     };
   },

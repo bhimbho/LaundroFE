@@ -1,30 +1,30 @@
 <script>
-import Layout from "../layouts/main";
-import PageHeader from "@/components/page-header";
-import appConfig from "@/app.config";
+import Layout from '../layouts/main';
+import PageHeader from '@/components/page-header';
+import appConfig from '@/app.config';
 
-import { tableData } from "./dataAdvancedtable";
+import { tableData } from './dataAdvancedtable';
 
 /**
  * Advanced table component
  */
 export default {
   page: {
-    title: "Order",
-    meta: [{ name: "description", content: appConfig.description }],
+    title: 'Order',
+    meta: [{ name: 'description', content: appConfig.description }],
   },
   components: { Layout, PageHeader },
   data() {
     return {
       tableData: tableData,
-      title: "Order",
+      title: 'Order',
       items: [
         {
-          text: "Dashboard",
-          href: "/dashboard",
+          text: 'Dashboard',
+          href: '/dashboard',
         },
         {
-          text: "order",
+          text: 'order',
           active: true,
         },
       ],
@@ -34,15 +34,15 @@ export default {
       pageOptions: [10, 25, 50, 100],
       filter: null,
       filterOn: [],
-      sortBy: "age",
+      sortBy: 'age',
       sortDesc: false,
       fields: [
-        { key: "name", sortable: true },
-        { key: "position", sortable: true },
-        { key: "office", sortable: true },
-        { key: "age", sortable: true },
-        { key: "date", sortable: true },
-        { key: "salary", sortable: true },
+        { key: 'name', sortable: true },
+        { key: 'position', sortable: true },
+        { key: 'office', sortable: true },
+        { key: 'age', sortable: true },
+        { key: 'date', sortable: true },
+        { key: 'salary', sortable: true },
       ],
     };
   },
@@ -69,7 +69,7 @@ export default {
     },
 
     addOrder: function () {
-      this.$router.push("/order/add-order");
+      this.$router.push('/order/add-order');
     },
   },
 };
