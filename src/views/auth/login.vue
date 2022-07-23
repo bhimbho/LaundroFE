@@ -39,12 +39,12 @@ export default {
                       <div class="text-center">
                         <div>
                           <a href="/" class="logo">
-                            <img src="@/assets/images/logo-dark.png" height="20" alt="logo" />
+                            <img src="@/assets/images/logo-dark.png" height="40" alt="logo" />
                           </a>
                         </div>
 
-                        <h4 class="font-size-18 mt-4">Welcome Back !</h4>
-                        <p class="text-muted">Sign in to continue to Laundro.</p>
+                        <h4 class="font-size-18 mt-4">Welcome Back to Eligail Laundro Manager.</h4>
+                        <!-- <p class="text-muted">Sign in to continue to Eligail Laundro Manager.</p> -->
                       </div>
 
                       <div class="p-2 mt-5">
@@ -88,18 +88,10 @@ export default {
                         </form>
                       </div>
 
-                      <div class="mt-5 text-center">
-                        <p>
-                          Don't have an account ?
-                          <router-link
-                            tag="a"
-                            to="/register"
-                            class="font-weight-medium text-primary"
-                          >Register</router-link>
-                        </p>
+                      <div class="mt-3 text-center">
                         <p>
                           © 2022 Laundro. Crafted with
-                          <i class="mdi mdi-heart text-danger"></i> by Prowebs
+                          <i class="mdi mdi-heart text-danger"></i> for Eligail
                         </p>
                       </div>
                     </div>
