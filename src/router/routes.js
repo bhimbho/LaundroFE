@@ -33,6 +33,13 @@ export default [
   },
 
   {
+    path: '/transactions/add-transaction',
+    name: 'add-transaction',
+    meta: { authRequired: true },
+    component: () => import('../views/transactions/addTransaction'),
+  },
+
+  {
     path: '/order',
     name: 'order',
     meta: { authRequired: true },
