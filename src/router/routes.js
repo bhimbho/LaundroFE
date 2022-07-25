@@ -26,6 +26,13 @@ export default [
   },
 
   {
+    path: '/customers/add-customer',
+    name: 'add-customer',
+    meta: { authRequired: true },
+    component: () => import('../views/customer/addCustomer'),
+  },
+
+  {
     path: '/transactions',
     name: 'transactions',
     meta: { authRequired: true },
