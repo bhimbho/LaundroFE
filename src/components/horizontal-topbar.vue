@@ -1,7 +1,7 @@
 <script>
 import simplebar from "simplebar-vue";
 import i18n from "../i18n";
-import { layoutComputed } from "@/state/helpers";
+import { layoutComputed } from "@/store/helpers";
 
 export default {
   props: {

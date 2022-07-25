@@ -4,7 +4,7 @@ import HorizontalNav from "@/components/horizontal-navbar";
 import RightBar from "@/components/right-sidebar";
 import Footer from "@/components/footer";
 
-import { layoutComputed } from "@/state/helpers";
+import { layoutComputed } from "@/store/helpers";
 
 /**
  * Horizontal-layout

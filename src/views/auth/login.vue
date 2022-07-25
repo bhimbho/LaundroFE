@@ -1,28 +1,3 @@
-<script>
-export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-      submitted: false,
-    };
-  },
-  computed: {},
-  created() {
-    document.body.classList.add('auth-body-bg');
-  },
-  methods: {
-    // Try to log the user in with the username
-    // and password they provided.
-    tryToLogIn() {
-      // this.submitted = true;
-      // stop here if form is invalid
-      this.$router.push('/dashboard');
-    },
-  },
-};
-</script>
-
 <template>
   <div>
     <div>
@@ -56,14 +31,14 @@ export default {
                       <div class="p-2 mt-5">
                         <form
                           class="form-horizontal"
-                          @submit.prevent="tryToLogIn"
+                          @submit.prevent="login()"
                         >
                           <div class="form-group auth-form-group-custom mb-4">
                             <i class="ri-mail-line auti-custom-input-icon"></i>
                             <label for="email">Email</label>
                             <input
                               type="email"
-                              v-model="email"
+                              v-model="user.email"
                               class="form-control"
                               id="email"
                               placeholder="Enter email"
@@ -76,7 +51,7 @@ export default {
                             ></i>
                             <label for="userpassword">Password</label>
                             <input
-                              v-model="password"
+                              v-model="user.password"
                               type="password"
                               class="form-control"
                               id="userpassword"
@@ -92,12 +67,6 @@ export default {
                               Log In
                             </button>
                           </div>
-
-                          <!-- <div class='mt-4 text-center'>
-                            <router-link tag='a' to='/forgot-password' class='text-muted'>
-                              <i class='mdi mdi-lock mr-1'></i> Forgot your password?
-                            </router-link>
-                          </div> -->
                         </form>
                       </div>
 
@@ -118,3 +87,47 @@ export default {
     </div>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      user: {
+        email: "",
+        password: "",
+      },
+      submitted: false,
+    };
+  },
+  computed: {},
+  created() {
+    document.body.classList.add("auth-body-bg");
+  },
+  methods: {
+    // Try to log the user in with the username
+    // and password they provided.
+    login: function () {
+      // this.isLoading = true;
+      this.$store
+        .dispatch("login", {
+          email: this.user.email,
+          password: this.user.password,
+        })
+        .then(() => {
+          // this.isLoading = false;
+          // console.log(response);
+          this.$router.push({ name: "dashboard" });
+        })
+        .catch((err) => {
+          if (err.response.status == 400) {
+            this.error = "Invalid login details";
+            // this.isLoading = false;
+          }
+          if (err.response.status == 422) {
+            this.error = "Fields are empty";
+            // this.isLoading = false;
+          }
+        });
+    },
+  },
+};
+</script>
