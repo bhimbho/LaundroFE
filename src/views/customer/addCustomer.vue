@@ -37,58 +37,79 @@ export default {
       <div class="col-12">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Add Order</h4>
+            <h4 class="card-title">Add Customer</h4>
             <div class="row">
               <div class="col-12">
                 <form class="" role="form">
                   <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <b-form-group
                         id="example text"
-                        label="Order ID"
-                        label-for="Order ID"
+                        label="First Name"
+                        label-for="First Name"
                       >
                         <b-form-input
                           for="text"
                           value=""
-                          placeholder="Order ID"
+                          placeholder="First Name"
                         ></b-form-input>
                       </b-form-group>
-                    </div>
-                    <div class="col-md-4 mt-3" style="align-self: center">
-                      <b-button variant="primary" class="btn btn-block"
-                        >Generate ID</b-button
-                      >
                     </div>
                     <div class="col-md-4">
                       <b-form-group
                         id="example text"
-                        label="Order Name"
-                        label-for="Order Name"
+                        label="Last Name"
+                        label-for="Last Name"
                       >
                         <b-form-input
                           for="text"
                           value=""
-                          placeholder="Order Name"
+                          placeholder="Last Name"
                         ></b-form-input>
                       </b-form-group>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <b-form-group
                         id="example text"
-                        label="Order Description"
-                        label-for="Order Description"
+                        label="Other Name"
+                        label-for="Other Name"
                       >
                         <b-form-input
                           for="text"
                           value=""
-                          placeholder="Order Description"
+                          placeholder="Other Name"
+                        ></b-form-input>
+                      </b-form-group>
+                    </div>
+                    <div class="col-md-4">
+                      <b-form-group
+                        id="example text"
+                        label="Email"
+                        label-for="Email"
+                      >
+                        <b-form-input
+                          for="text"
+                          value=""
+                          placeholder="Email"
+                        ></b-form-input>
+                      </b-form-group>
+                    </div>
+                    <div class="col-md-4">
+                      <b-form-group
+                        id="example text"
+                        label="Phone Number"
+                        label-for="Phone Number"
+                      >
+                        <b-form-input
+                          for="text"
+                          value=""
+                          placeholder="Phone Number"
                         ></b-form-input>
                       </b-form-group>
                     </div>
                     <div class="col-md-12 mt-2">
                       <b-button variant="primary" class="btn btn-block"
-                        >Create Order</b-button
+                        >Create Customer</b-button
                       >
                     </div>
                   </div>
