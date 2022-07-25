@@ -1,6 +1,6 @@
 <script>
 import simplebar from "simplebar-vue";
-import { layoutComputed } from "@/state/helpers";
+import { layoutComputed } from "@/store/helpers";
 
 import MetisMenu from "metismenujs/dist/metismenujs";
 

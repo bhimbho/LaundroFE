@@ -10,7 +10,7 @@ import VueYoutube from 'vue-youtube'
 import vco from "v-click-outside"
 
 import router from './router'
-import store from '@/state/store'
+import store from '@/store'
 import i18n from './i18n'
 
 import "@/assets/scss/app.scss";

@@ -1,6 +1,6 @@
 <script>
 import router from "@/router";
-import { layoutComputed } from "@/state/helpers";
+import { layoutComputed } from "@/store/helpers";
 
 import Topbar from "@/components/topbar";
 import SideBar from "@/components/side-bar";

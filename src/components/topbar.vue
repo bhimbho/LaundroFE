@@ -1,29 +1,3 @@
-<script>
-// import simplebar from 'simplebar-vue';
-import i18n from '../i18n';
-
-export default {
-  data() {
-    return {
-      current_language: 'en',
-    };
-  },
-  // components: { simplebar },
-  methods: {
-    toggleMenu() {
-      this.$parent.toggleMenu();
-    },
-    toggleRightSidebar() {
-      this.$parent.toggleRightSidebar();
-    },
-    setLanguage(locale) {
-      i18n.locale = locale;
-      this.current_language = i18n.locale;
-    },
-  },
-};
-</script>
-
 <template>
   <header id="page-topbar">
     <div class="navbar-header">
@@ -72,15 +46,13 @@ export default {
               src="@/assets/images/users/avatar-2.jpg"
               alt="Header Avatar"
             />
-            <span class="d-none d-xl-inline-block ml-1">{{
-              $t('navbar.dropdown.kevin.text')
-            }}</span>
+            <span class="d-none d-xl-inline-block ml-1">{{user.username}}</span>
             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
           </template>
           <!-- item-->
-          <a class="dropdown-item text-danger" href="/logout">
+          <a class="dropdown-item text-danger" @click.prevent="logout()">
             <i class="ri-shut-down-line align-middle mr-1 text-danger"></i>
-            {{ $t('navbar.dropdown.kevin.list.logout') }}
+            Logout
           </a>
         </b-dropdown>
 
@@ -97,6 +69,37 @@ export default {
     </div>
   </header>
 </template>
+<script>
+// import simplebar from 'simplebar-vue';
+import i18n from '../i18n';
+export default {
+  data() {
+    return {
+      current_language: 'en',
+      user: this.$store.getters.user,
+    };
+  },
+  // components: { simplebar },
+  methods: {
+    toggleMenu() {
+      this.$parent.toggleMenu();
+    },
+    toggleRightSidebar() {
+      this.$parent.toggleRightSidebar();
+    },
+    setLanguage(locale) {
+      i18n.locale = locale;
+      this.current_language = i18n.locale;
+    },
+    logout: function () {
+      this.$store.dispatch("logout");
+    },
+  },
+  mounted() {
+    console.log(this.user)
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 .notify-item {

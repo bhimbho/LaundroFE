@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import VueMeta from 'vue-meta'
 
 import routes from './routes'
+import store from "@/store";
 
 Vue.use(VueRouter)
 Vue.use(VueMeta, {
@@ -20,6 +21,19 @@ const router = new VueRouter({
   // Simulate native-like scroll behavior when navigating to a new
   // route and using back/forward buttons.
 })
+
+router.beforeEach((to, from, next) => {
+  const loggedIn = store.state.user;
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!loggedIn) {
+      next("/");
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 // Before each route evaluates..
 

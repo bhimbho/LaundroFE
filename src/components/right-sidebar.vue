@@ -1,5 +1,5 @@
 <script>
-import { layoutMethods } from "@/state/helpers";
+import { layoutMethods } from "@/store/helpers";
 /**
  * Right-sidebar 
  */
