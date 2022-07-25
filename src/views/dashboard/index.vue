@@ -4,7 +4,6 @@ import PageHeader from "@/components/page-header";
 import Stat from "./widget";
 import RevenueAnalytics from "./revenue";
 import Transaction from './transaction';
-
 /**
  * Dashboard component
  */
@@ -29,6 +28,9 @@ export default {
         }
       ]
     };
+  },
+  mounted() {
+    console.log(this.$store.state.token)
   }
 };
 </script>

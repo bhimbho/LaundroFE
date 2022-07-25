@@ -13,9 +13,7 @@ export default [
   {
     path: '/dashboard',
     name: 'dashboard',
-    // meta: {
-    //     authRequired: true,
-    // },
+    meta: { requiresAuth: true },
     component: () => import('../views/dashboard/index'),
   },
   {
@@ -270,5 +268,12 @@ export default [
     name: 'Form Mask',
     meta: { authRequired: true },
     component: () => import('../views/pages/forms/mask'),
+  },
+
+  {
+    path: "*",
+    name: "",
+    component: () => import('../views/dashboard/index'),
+    meta: { requiresAuth: true },
   },
 ];
