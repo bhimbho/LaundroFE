@@ -1,10 +1,10 @@
 <script>
-import simplebar from "simplebar-vue";
-import { layoutComputed } from "@/store/helpers";
+import simplebar from 'simplebar-vue';
+import { layoutComputed } from '@/store/helpers';
 
-import MetisMenu from "metismenujs/dist/metismenujs";
+import MetisMenu from 'metismenujs/dist/metismenujs';
 
-import { menuItems } from "./menu";
+import { menuItems } from './menu';
 
 export default {
   components: {
@@ -34,8 +34,8 @@ export default {
   },
   mounted: function () {
     // eslint-disable-next-line no-unused-vars
-    var menuRef = new MetisMenu("#side-menu");
-    var links = document.getElementsByClassName("side-nav-link-ref");
+    var menuRef = new MetisMenu('#side-menu');
+    var links = document.getElementsByClassName('side-nav-link-ref');
     var matchingMenuItem = null;
     for (var i = 0; i < links.length; i++) {
       if (window.location.pathname === links[i].pathname) {
@@ -45,7 +45,7 @@ export default {
     }
 
     if (matchingMenuItem) {
-      matchingMenuItem.classList.add("active");
+      matchingMenuItem.classList.add('active');
       var parent = matchingMenuItem.parentElement;
 
       /**
@@ -53,28 +53,28 @@ export default {
        * We should come up with non hard coded approach
        */
       if (parent) {
-        parent.classList.add("mm-active");
-        const parent2 = parent.parentElement.closest("ul");
-        if (parent2 && parent2.id !== "side-menu") {
-          parent2.classList.add("mm-show");
+        parent.classList.add('mm-active');
+        const parent2 = parent.parentElement.closest('ul');
+        if (parent2 && parent2.id !== 'side-menu') {
+          parent2.classList.add('mm-show');
 
           const parent3 = parent2.parentElement;
           if (parent3) {
-            parent3.classList.add("mm-active");
-            var childAnchor = parent3.querySelector(".has-arrow");
-            var childDropdown = parent3.querySelector(".has-dropdown");
-            if (childAnchor) childAnchor.classList.add("mm-active");
-            if (childDropdown) childDropdown.classList.add("mm-active");
+            parent3.classList.add('mm-active');
+            var childAnchor = parent3.querySelector('.has-arrow');
+            var childDropdown = parent3.querySelector('.has-dropdown');
+            if (childAnchor) childAnchor.classList.add('mm-active');
+            if (childDropdown) childDropdown.classList.add('mm-active');
 
             const parent4 = parent3.parentElement;
-            if (parent4 && parent4.id !== "side-menu") {
-              parent4.classList.add("mm-show");
+            if (parent4 && parent4.id !== 'side-menu') {
+              parent4.classList.add('mm-show');
               const parent5 = parent4.parentElement;
-              if (parent5 && parent5.id !== "side-menu") {
-                parent5.classList.add("mm-active");
-                const childanchor = parent5.querySelector(".is-parent");
-                if (childanchor && parent5.id !== "side-menu") {
-                  childanchor.classList.add("mm-active");
+              if (parent5 && parent5.id !== 'side-menu') {
+                parent5.classList.add('mm-active');
+                const childanchor = parent5.querySelector('.is-parent');
+                if (childanchor && parent5.id !== 'side-menu') {
+                  childanchor.classList.add('mm-active');
                 }
               }
             }
@@ -94,7 +94,7 @@ export default {
     onRoutechange() {
       setTimeout(() => {
         const currentPosition =
-          document.getElementsByClassName("mm-active")[0].offsetTop;
+          document.getElementsByClassName('mm-active')[0].offsetTop;
         if (currentPosition > 400)
           this.$refs.currentMenu.SimpleBar.getScrollElement().scrollTop =
             currentPosition + 200;
@@ -103,7 +103,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: "onRoutechange",
+      handler: 'onRoutechange',
       immediate: true,
       deep: true,
     },
@@ -112,37 +112,37 @@ export default {
       handler(newVal, oldVal) {
         if (newVal !== oldVal) {
           switch (newVal) {
-            case "dark":
-              document.body.setAttribute("data-sidebar", "dark");
-              document.body.removeAttribute("data-topbar");
-              document.body.removeAttribute("data-sidebar-size");
+            case 'dark':
+              document.body.setAttribute('data-sidebar', 'dark');
+              document.body.removeAttribute('data-topbar');
+              document.body.removeAttribute('data-sidebar-size');
               break;
-            case "light":
-              document.body.setAttribute("data-topbar", "dark");
-              document.body.removeAttribute("data-sidebar");
-              document.body.removeAttribute("data-sidebar-size");
-              document.body.classList.remove("vertical-collpsed");
+            case 'light':
+              document.body.setAttribute('data-topbar', 'dark');
+              document.body.removeAttribute('data-sidebar');
+              document.body.removeAttribute('data-sidebar-size');
+              document.body.classList.remove('vertical-collpsed');
               break;
-            case "compact":
-              document.body.setAttribute("data-sidebar-size", "small");
-              document.body.setAttribute("data-sidebar", "dark");
-              document.body.classList.remove("vertical-collpsed");
-              document.body.removeAttribute("data-topbar", "dark");
+            case 'compact':
+              document.body.setAttribute('data-sidebar-size', 'small');
+              document.body.setAttribute('data-sidebar', 'dark');
+              document.body.classList.remove('vertical-collpsed');
+              document.body.removeAttribute('data-topbar', 'dark');
               break;
-            case "icon":
-              document.body.setAttribute("data-keep-enlarged", "true");
-              document.body.classList.add("vertical-collpsed");
-              document.body.setAttribute("data-sidebar", "dark");
-              document.body.removeAttribute("data-topbar", "dark");
+            case 'icon':
+              document.body.setAttribute('data-keep-enlarged', 'true');
+              document.body.classList.add('vertical-collpsed');
+              document.body.setAttribute('data-sidebar', 'dark');
+              document.body.removeAttribute('data-topbar', 'dark');
               break;
-            case "colored":
-              document.body.setAttribute("data-sidebar", "colored");
-              document.body.removeAttribute("data-keep-enlarged");
-              document.body.classList.remove("vertical-collpsed");
-              document.body.removeAttribute("data-sidebar-size");
+            case 'colored':
+              document.body.setAttribute('data-sidebar', 'colored');
+              document.body.removeAttribute('data-keep-enlarged');
+              document.body.classList.remove('vertical-collpsed');
+              document.body.removeAttribute('data-sidebar-size');
               break;
             default:
-              document.body.setAttribute("data-sidebar", "dark");
+              document.body.setAttribute('data-sidebar', 'dark');
               break;
           }
         }
@@ -153,15 +153,15 @@ export default {
       handler(newVal, oldVal) {
         if (newVal !== oldVal) {
           switch (newVal) {
-            case "boxed":
-              document.body.setAttribute("data-layout-size", "boxed");
+            case 'boxed':
+              document.body.setAttribute('data-layout-size', 'boxed');
               break;
-            case "fluid":
-              document.body.setAttribute("data-layout-mode", "fluid");
-              document.body.removeAttribute("data-layout-size");
+            case 'fluid':
+              document.body.setAttribute('data-layout-mode', 'fluid');
+              document.body.removeAttribute('data-layout-size');
               break;
             default:
-              document.body.setAttribute("data-layout-mode", "fluid");
+              document.body.setAttribute('data-layout-mode', 'fluid');
               break;
           }
         }
@@ -200,10 +200,7 @@ export default {
             </router-link>
           </li>
           <li>
-            <router-link
-              :to="{ name: 'admin-dashboard' }"
-              class="side-nav-link-ref"
-            >
+            <router-link :to="{ name: 'attire' }" class="side-nav-link-ref">
               <i class="bx ri-dashboard-line"></i>
               <span>Attire</span>
             </router-link>
