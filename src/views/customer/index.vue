@@ -43,6 +43,7 @@ export default {
         { key: 'age', sortable: true },
         { key: 'date', sortable: true },
         { key: 'salary', sortable: true },
+        { key: 'action' },
       ],
     };
   },
@@ -137,6 +138,25 @@ export default {
                 :filter="filter"
                 :filter-included-fields="filterOn"
                 @filtered="onFiltered"
+              >
+                <template v-slot:cell(action)>
+                  <a
+                    href="javascript:void(0);"
+                    class="mr-3 text-primary"
+                    v-b-tooltip.hover
+                    data-toggle="tooltip"
+                    title="Edit"
+                  >
+                    <i class="mdi mdi-pencil font-size-18"></i>
+                  </a>
+                  <a
+                    href="javascript:void(0);"
+                    class="text-danger"
+                    v-b-tooltip.hover
+                    title="Delete"
+                  >
+                    <i class="mdi mdi-trash-can font-size-18"></i>
+                  </a> </template
               ></b-table>
             </div>
             <div class="row">

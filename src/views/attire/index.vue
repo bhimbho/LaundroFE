@@ -10,21 +10,21 @@ import { tableData } from './dataAdvancedtable';
  */
 export default {
   page: {
-    title: 'Transactions',
+    title: 'Attire',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: { Layout, PageHeader },
   data() {
     return {
       tableData: tableData,
-      title: 'Transactions',
+      title: 'Attire',
       items: [
         {
           text: 'Dashboard',
-          href: '/',
+          href: '/dashboard',
         },
         {
-          text: 'Transactions',
+          text: 'Attire',
           active: true,
         },
       ],
@@ -69,8 +69,8 @@ export default {
       this.currentPage = 1;
     },
 
-    addTransaction: function () {
-      this.$router.push('/transactions/add-transaction');
+    addAttire: function () {
+      this.$router.push('/attire/add-attire');
     },
   },
 };
@@ -87,9 +87,9 @@ export default {
             <h4
               class="card-title d-flex justify-content-between align-items-center"
             >
-              View Transactions
-              <b-button class="btn" variant="primary" @click="addTransaction()"
-                >Add Transaction</b-button
+              View Attire
+              <b-button class="btn" variant="primary" @click="addAttire()"
+                >Add Attire</b-button
               >
             </h4>
             <div class="row mt-4">

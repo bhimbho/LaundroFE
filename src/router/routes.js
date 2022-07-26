@@ -59,6 +59,20 @@ export default [
   },
 
   {
+    path: '/attire',
+    name: 'attire',
+    meta: { authRequired: true },
+    component: () => import('../views/attire/index'),
+  },
+
+  {
+    path: '/attire/add-attire',
+    name: 'add-attire',
+    meta: { authRequired: true },
+    component: () => import('../views/attire/addAttire'),
+  },
+
+  {
     path: '/administrator',
     name: 'administrator',
     meta: { authRequired: true },
@@ -278,8 +292,8 @@ export default [
   },
 
   {
-    path: "*",
-    name: "",
+    path: '*',
+    name: '',
     component: () => import('../views/dashboard/index'),
     meta: { requiresAuth: true },
   },
