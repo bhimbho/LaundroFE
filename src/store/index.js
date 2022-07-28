@@ -13,11 +13,20 @@ export default new Vuex.Store({
   state: {
     token: null,
     user: null,
+    allAdministrators: null,
   },
+
   getters: {
     token: (state) => state.token,
     user: (state) => state.user,
+    getAllAdministrators: (state) => state.allAdministrators,
+    getSingleAdministrator: (state) => (id) => {
+      return state.allAdministrators.find(
+        (administrator) => administrator.id === id
+      );
+    },
   },
+
   mutations: {
     setToken(state, token) {
       state.token = token;
@@ -25,12 +34,16 @@ export default new Vuex.Store({
     setUserData(state, userData) {
       state.user = userData;
     },
+    setAllAdministrators(state, allAdministrators) {
+      state.allAdministrators = allAdministrators
+    },
     clearUserData(state) {
       state.token = null;
       state.user = null;
       location.reload();
     },
   },
+
   actions: {
     // user login
     async login({ commit }, credentials) {
@@ -40,10 +53,21 @@ export default new Vuex.Store({
         commit("setToken", userData.token);
       });
     },
+
     // user logout
     logout({ commit }) {
       commit("clearUserData");
     },
+
+    // fetch administrators 
+    async allAdministrators({ commit }) {
+      const response = await axios.get(api + "admin/list_adminstrators", {
+        headers: {
+          Authorization: `Bearer ${this.state.token}`,
+        }
+      })
+      commit("setAllAdministrators", response.data.data);
+    }
   },
   
   
