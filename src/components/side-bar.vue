@@ -185,6 +185,12 @@ export default {
             </router-link>
           </li>
           <li>
+            <router-link :to="{ name: 'services' }" class="side-nav-link-ref">
+              <i class="bx ri-dashboard-line"></i>
+              <span>Services</span>
+            </router-link>
+          </li>
+          <li>
             <router-link :to="{ name: 'customers' }" class="side-nav-link-ref">
               <i class="bx ri-dashboard-line"></i>
               <span>Customers</span>
@@ -203,15 +209,6 @@ export default {
             <router-link :to="{ name: 'attire' }" class="side-nav-link-ref">
               <i class="bx ri-dashboard-line"></i>
               <span>Attire</span>
-            </router-link>
-          </li>
-          <li>
-            <router-link
-              :to="{ name: 'admin-dashboard' }"
-              class="side-nav-link-ref"
-            >
-              <i class="bx ri-dashboard-line"></i>
-              <span>Service</span>
             </router-link>
           </li>
           <li>
