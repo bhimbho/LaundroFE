@@ -59,6 +59,20 @@ export default [
   },
 
   {
+    path: '/services',
+    name: 'services',
+    meta: { authRequired: true },
+    component: () => import('../views/services/index'),
+  },
+
+  {
+    path: '/services/add-service',
+    name: 'add-service',
+    meta: { authRequired: true },
+    component: () => import('../views/services/addService'),
+  },
+
+  {
     path: '/attire',
     name: 'attire',
     meta: { authRequired: true },
