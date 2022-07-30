@@ -15,6 +15,7 @@ export default new Vuex.Store({
     user: null,
     allAdministrators: null,
     allAttires: null,
+    allServices: null,
   },
   
   getters: {
@@ -32,6 +33,12 @@ export default new Vuex.Store({
           (attire) => attire.id === id
           );
         },
+        getAllServices: (state) => state.allServices,
+        getSingleService: (state) => (id) => {
+          return state.allServices.find(
+            (service) => service.id === id
+            );
+          },
       },
       
       mutations: {
@@ -46,6 +53,9 @@ export default new Vuex.Store({
         },
         SET_ALL_ATTIRES(state, allAttires) {
           state.allAttires = allAttires
+        },
+        SET_ALL_SERVICES(state, allServices) {
+          state.allServices = allServices
         },
         clearUserData(state) {
           state.token = null;
@@ -89,6 +99,17 @@ export default new Vuex.Store({
           })
           console.log(response);
           commit("SET_ALL_ATTIRES", response.data.data);
+        },
+
+        // fetch services 
+        async allServices({ commit }) {
+          const response = await axios.get(api + "admin/services", {
+            headers: {
+              Authorization: `Bearer ${this.state.token}`,
+            }
+          })
+          console.log(response)
+          commit("SET_ALL_SERVICES", response.data.data);
         }
       },
       

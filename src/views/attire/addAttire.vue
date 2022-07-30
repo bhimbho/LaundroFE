@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-12">
                 <b-alert show variant="success" class="my-2" v-if="this.message">{{this.message}}</b-alert>
-                <b-alert show variant="danger" class="my-2" v-if="this.error">Invalid User Details</b-alert>
+                <b-alert show variant="danger" class="my-2" v-if="this.error">Invalid Details</b-alert>
                 <form class="" role="form" method="post" enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-md-6">
