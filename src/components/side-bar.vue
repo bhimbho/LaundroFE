@@ -235,6 +235,12 @@ export default {
               <span>Administrator</span>
             </router-link>
           </li>
+          <li>
+            <router-link :to="{ name: 'invoice' }" class="side-nav-link-ref">
+              <i class="bx ri-dashboard-line"></i>
+              <span>Invoice</span>
+            </router-link>
+          </li>
         </ul>
       </div>
       <!-- Sidebar -->
