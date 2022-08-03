@@ -101,6 +101,13 @@ export default [
   },
 
   {
+    path: '/invoice',
+    name: 'invoice',
+    meta: { authRequired: true },
+    component: () => import('../views/invoice/index'),
+  },
+
+  {
     path: '/auth/login-1',
     name: 'login-1',
     meta: { authRequired: true },
