@@ -82,12 +82,13 @@ export default {
       >
         <div class="card" style="height: 100%">
           <div class="card-body">
-            <h4
-              class="card-title text-center"
-              style="font-size: 12px; font-weight: 600"
-            >
-              Eligail Online Laundry Service
-            </h4>
+            <div class="card-image d-flex justify-content-center">
+              <img
+                src="@/assets/images/logo-dark.png"
+                alt="Eligail Clothing Services"
+                style="width: 75px; object-fit: contain"
+              />
+            </div>
             <p
               class="text-center mt-2 mb-0"
               style="font-size: 10px; font-weight: 400"
@@ -101,16 +102,18 @@ export default {
               VERTEX (TOWER A) Singapore 408664
             </p>
             <p
-              class="text-center mt-2 mb-0"
+              class="d-flex justify-content-between text-center mt-2 mb-0"
               style="font-size: 10px; font-weight: 400"
             >
-              Tel: +2349060058210
+              <span> Tel: +2349060058210 </span>
+              <span> Unit No: 12346789A </span>
             </p>
             <p
               class="d-flex justify-content-between text-center mt-2 mb-0"
               style="font-size: 10px; font-weight: 400"
             >
-              <span> UEN: 12346789A </span> <span> GST No: 12346789A </span>
+              <span> Transaction No: 12346789A </span>
+              <span> Tag No: 12346789A </span>
             </p>
             <div class="d-flex justify-content-between mt-2">
               <p class="mb-0" style="font-size: 10px; font-weight: 700">
@@ -163,7 +166,9 @@ export default {
                     class="card-table-item"
                     style="flex-grow: 1; font-size: 10px; font-weight: 400"
                   >
-                    Piece of suit
+                    <span>Shirts </span>
+                    <span>(Starching) </span>
+                    <span>24Hrs</span>
                   </div>
                   <div
                     class="card-table-item"
@@ -190,7 +195,9 @@ export default {
                     class="card-table-item"
                     style="flex-grow: 1; font-size: 10px; font-weight: 400"
                   >
-                    Piece of suit
+                    <span>Shirts </span>
+                    <span>(Starching) </span>
+                    <span> 24Hrs</span>
                   </div>
                   <div
                     class="card-table-item"
@@ -217,7 +224,9 @@ export default {
                     class="card-table-item"
                     style="flex-grow: 1; font-size: 10px; font-weight: 400"
                   >
-                    Piece of suit
+                    <span>Shirts </span>
+                    <span>(Starching) </span>
+                    <span>24Hrs</span>
                   </div>
                   <div
                     class="card-table-item"
