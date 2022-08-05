@@ -168,7 +168,7 @@ export default {
                   >
                     <span>Shirts </span>
                     <span>(Starching) </span>
-                    <span>24Hrs </span>
+                    <span>12Hrs </span>
                   </div>
                   <div
                     class="card-table-item"
