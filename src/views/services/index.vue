@@ -127,6 +127,17 @@
                   >
                     <i class="mdi mdi-trash-can font-size-18"></i>
                   </a>
+                  <a
+                    href="javascript:void(0);"
+                    class="mr-3 text-primary"
+                    v-b-tooltip.hover
+                    data-toggle="tooltip"
+                    title="Edit"
+                    v-b-modal.edit-service-cost
+                    @click="getServiceCost(data.item.id)"
+                  >
+                    <i class="mdi mdi-pencil font-size-18"></i>
+                  </a>
                 </template>
               </b-table>
             </div>
@@ -154,6 +165,56 @@
     <!-- modal for updating service -->
     <b-modal
       id="modal-lg"
+      size="lg"
+      title="Edit Service"
+      hide-footer
+      title-class="font-18"
+      ref="my-modal"
+    >
+      <b-alert show variant="success" class="my-2" v-if="this.newMessage">{{
+        this.newMessage
+      }}</b-alert>
+
+      <form class="" role="form">
+        <div class="row">
+          <div class="col-md-12">
+            <b-form-group
+              id="example text"
+              label="Service Title"
+              label-for="Service Title"
+            >
+              <b-form-input
+                for="text"
+                placeholder="Service Title"
+                v-model="singleService.title"
+              ></b-form-input>
+            </b-form-group>
+          </div>
+          
+          <div class="col-md-12 mt-4">
+            <b-button
+              variant="primary"
+                @click="updateService(singleService.id)"
+              class="btn btn-block" v-show="!isLoading" 
+              >Update Attire</b-button
+            >
+            <b-button
+              v-show="isLoading"
+              variant="primary"
+              class="btn btn-block waves-effect waves-light"
+              disabled
+            >
+              <b-spinner small type="grow"></b-spinner>
+              Loading...
+            </b-button>
+          </div>
+        </div>
+      </form>
+    </b-modal>
+
+    <!-- modal to add service cost -->
+    <b-modal
+      id="edit-service-cost"
       size="lg"
       title="Edit Service"
       hide-footer
