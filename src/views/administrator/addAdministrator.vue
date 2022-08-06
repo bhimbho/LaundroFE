@@ -70,7 +70,7 @@
                             <label for="">Roles</label>
                             <select class="form-control" v-model="role">
                                 <option>Select</option>
-                                <option value="super-admin">Super Admin</option>
+                                <option :value="role" v-for="role in this.getRoles" :key="role.id">{{role}}</option>
                             </select>
                         </div>
                         <div class="col-md-12 mt-4">
@@ -101,6 +101,7 @@
 import Layout from "../layouts/main";
 import PageHeader from "@/components/page-header";
 import appConfig from "@/app.config";
+import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 const api = process.env.VUE_APP_BASE_URL;
 
@@ -143,7 +144,11 @@ export default {
       error: false,
     };
   },
+  computed: {
+    ...mapGetters(["getRoles"]),
+  },
   methods: {
+    ...mapActions(["allRoles"]),
     // add administrator 
     addAdministrator: async function() {
       this.isLoading = true;
@@ -180,6 +185,10 @@ export default {
       this.password = ""
       this.confirmPassword = ""
     }
+  },
+  mounted() {
+    this.allRoles();
+    console.log(this.$store.getters.getRoles);
   }
 };
 </script>

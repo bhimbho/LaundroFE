@@ -87,6 +87,13 @@ export default [
   },
 
   {
+    path: '/delivery-method',
+    name: 'delivery-method',
+    meta: { authRequired: true },
+    component: () => import('../views/deliveryMethod'),
+  },
+
+  {
     path: '/administrator',
     name: 'administrator',
     meta: { authRequired: true },

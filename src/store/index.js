@@ -16,7 +16,12 @@ export default new Vuex.Store({
     allAdministrators: null,
     allAttires: null,
     allServices: null,
+<<<<<<< HEAD
     allTransactions: null,
+=======
+    roles: null,
+    deliveryMethods: null,
+>>>>>>> 0f049be (ui updates)
   },
 
   getters: {
@@ -26,6 +31,7 @@ export default new Vuex.Store({
     getSingleAdministrator: (state) => (id) => {
       return state.allAdministrators.find(
         (administrator) => administrator.id === id
+<<<<<<< HEAD
       );
     },
     getAllAttires: (state) => state.allAttires,
@@ -120,3 +126,137 @@ export default new Vuex.Store({
   // https://vuex.vuejs.org/guide/strict.html
   // strict: process.env.NODE_ENV !== 'production',
 });
+=======
+        );
+      },
+      getAllAttires: (state) => state.allAttires,
+      getSingleAttire: (state) => (id) => {
+        return state.allAttires.find(
+          (attire) => attire.id === id
+          );
+        },
+        getAllServices: (state) => state.allServices,
+        getSingleService: (state) => (id) => {
+          return state.allServices.find(
+            (service) => service.id === id
+            );
+          },
+          getAllDeliveryMethods: (state) => state.deliveryMethods,
+          getSingleDeliveryMethod: (state) => (id) => {
+            return state.deliveryMethods.find(
+              (methods) => methods.id === id
+              );
+            },
+            getRoles: (state) => state.roles,
+          },
+          
+          mutations: {
+            setToken(state, token) {
+              state.token = token;
+            },
+            setUserData(state, userData) {
+              state.user = userData;
+            },
+            setAllAdministrators(state, allAdministrators) {
+              state.allAdministrators = allAdministrators
+            },
+            SET_ALL_ATTIRES(state, allAttires) {
+              state.allAttires = allAttires
+            },
+            SET_ALL_SERVICES(state, allServices) {
+              state.allServices = allServices
+            },
+            SET_ALL_DELIVERY_METHODS(state, deliveryMethods) {
+              state.deliveryMethods = deliveryMethods
+            },
+            SET_ROLES(state, roles) {
+              state.roles = roles
+            },
+            clearUserData(state) {
+              state.token = null;
+              state.user = null;
+              state.allAdministrators = null;
+              location.reload();
+            },
+          },
+          
+          actions: {
+            // user login
+            async login({ commit }, credentials) {
+              await axios.post(api + "admin/login", credentials).then((response) => {
+                const userData = response.data;
+                commit("setUserData", userData.data);
+                commit("setToken", userData.token);
+              });
+            },
+            
+            // user logout
+            logout({ commit }) {
+              commit("clearUserData");
+            },
+            
+            // fetch administrators 
+            async allAdministrators({ commit }) {
+              const response = await axios.get(api + "admin/list_administrators", {
+                headers: {
+                  Authorization: `Bearer ${this.state.token}`,
+                }
+              })
+              commit("setAllAdministrators", response.data.data);
+            },
+            
+            // fetch attires
+            async allAttires({commit}) {
+              const response = await axios.get(api + "admin/attires", {
+                headers: {
+                  Authorization: `Bearer ${this.state.token}`,
+                }
+              })
+              console.log(response);
+              commit("SET_ALL_ATTIRES", response.data.data);
+            },
+            
+            // fetch services 
+            async allServices({ commit }) {
+              const response = await axios.get(api + "admin/services", {
+                headers: {
+                  Authorization: `Bearer ${this.state.token}`,
+                }
+              })
+              console.log(response)
+              commit("SET_ALL_SERVICES", response.data.data);
+            },
+            
+            // fetch delivery methods 
+            async allDeliveryMethods({ commit }) {
+              const response = await axios.get(api + "admin/delivery_methods", {
+                headers: {
+                  Authorization: `Bearer ${this.state.token}`,
+                }
+              })
+              console.log(response)
+              commit("SET_ALL_DELIVERY_METHODS", response.data.data);
+            },
+            
+            // fetch roles
+            async allRoles({ commit }) {
+              const response = await axios.get(api + "admin/roles", {
+                headers: {
+                  Authorization: `Bearer ${this.state.token}`,
+                }
+              })
+              console.log(response)
+              commit("SET_ROLES", response.data.data);
+            },
+          },
+          
+          
+          
+          
+          modules,
+          // Enable strict mode in development to get a warning
+          // when mutating state outside of a mutation.
+          // https://vuex.vuejs.org/guide/strict.html
+          // strict: process.env.NODE_ENV !== 'production',
+        })
+>>>>>>> 0f049be (ui updates)
