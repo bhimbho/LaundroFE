@@ -81,7 +81,7 @@ export default {
         style="max-width: 300px; flex-basis: 300px; min-height: 450px"
       >
         <div class="card" style="height: 100%">
-          <div class="card-body">
+          <div class="card-body" style="padding: 10px">
             <div class="card-image d-flex justify-content-center">
               <img
                 src="@/assets/images/logo-dark.png"
@@ -90,30 +90,34 @@ export default {
               />
             </div>
             <p
-              class="text-center mt-2 mb-0"
-              style="font-size: 10px; font-weight: 400"
+              class="text-center mt-1 mb-0"
+              style="font-size: 10px; font-weight: 600"
+            >
+              Eligail Laundry & Clothing Services
+            </p>
+            <p
+              class="text-center mt-1 mb-0"
+              style="font-size: 9px; font-weight: 400"
             >
               33 Ubi Ave 3 #7-50
             </p>
             <p
-              class="text-center mt-2 mb-0"
-              style="font-size: 10px; font-weight: 400"
+              class="text-center mt-1 mb-0"
+              style="font-size: 9px; font-weight: 400"
             >
               VERTEX (TOWER A) Singapore 408664
             </p>
             <p
-              class="d-flex justify-content-between text-center mt-2 mb-0"
-              style="font-size: 10px; font-weight: 400"
+              class="text-center mt-1 mb-0"
+              style="font-size: 9px; font-weight: 400"
             >
-              <span> Tel: +2349060058210 </span>
-              <span> Unit No: 12346789A </span>
+              Tel: +2349060058210
             </p>
-            <p
-              class="d-flex justify-content-between text-center mt-2 mb-0"
-              style="font-size: 10px; font-weight: 400"
-            >
-              <span> Transaction No: 12346789A </span>
-              <span> Tag No: 12346789A </span>
+            <p class="mt-2 mb-0" style="font-size: 10px; font-weight: 400">
+              Transaction No: 12346789A
+            </p>
+            <p class="mt-2 mb-0" style="font-size: 10px; font-weight: 400">
+              Tag No: 12346789A
             </p>
             <div class="d-flex justify-content-between mt-2">
               <p class="mb-0" style="font-size: 10px; font-weight: 700">
@@ -136,9 +140,15 @@ export default {
                 </span>
                 <span
                   class="card-table-title"
-                  style="font-size: 11px; font-weight: 600; flex-grow: 1"
+                  style="font-size: 11px; font-weight: 600"
                 >
                   Description
+                </span>
+                <span
+                  class="card-table-title"
+                  style="font-size: 11px; font-weight: 600"
+                >
+                  Unit
                 </span>
                 <span
                   class="card-table-title"
@@ -164,7 +174,7 @@ export default {
                   </div>
                   <div
                     class="card-table-item"
-                    style="flex-grow: 1; font-size: 10px; font-weight: 400"
+                    style="font-size: 10px; font-weight: 400"
                   >
                     <span>Shirts </span>
                     <span>(Starching) </span>
@@ -174,30 +184,7 @@ export default {
                     class="card-table-item"
                     style="font-size: 10px; font-weight: 400"
                   >
-                    45,000.00
-                  </div>
-                </div>
-                <div
-                  class="card-table-row mt-2 d-flex justify-content-between"
-                  style="gap: 10px"
-                >
-                  <div
-                    class="card-table-item"
-                    style="
-                      font-size: 10px;
-                      font-weight: 400;
-                      padding-right: 13px;
-                    "
-                  >
-                    2
-                  </div>
-                  <div
-                    class="card-table-item"
-                    style="flex-grow: 1; font-size: 10px; font-weight: 400"
-                  >
-                    <span>Shirts </span>
-                    <span>(Starching) </span>
-                    <span> 24Hrs</span>
+                    22,500.00
                   </div>
                   <div
                     class="card-table-item"
@@ -222,11 +209,52 @@ export default {
                   </div>
                   <div
                     class="card-table-item"
-                    style="flex-grow: 1; font-size: 10px; font-weight: 400"
+                    style="font-size: 10px; font-weight: 400"
+                  >
+                    <span>Shirts </span>
+                    <span>(Starching) </span>
+                    <span> 24Hrs</span>
+                  </div>
+                  <div
+                    class="card-table-item"
+                    style="font-size: 10px; font-weight: 400"
+                  >
+                    22,500.00
+                  </div>
+                  <div
+                    class="card-table-item"
+                    style="font-size: 10px; font-weight: 400"
+                  >
+                    45,000.00
+                  </div>
+                </div>
+                <div
+                  class="card-table-row mt-2 d-flex justify-content-between"
+                  style="gap: 10px"
+                >
+                  <div
+                    class="card-table-item"
+                    style="
+                      font-size: 10px;
+                      font-weight: 400;
+                      padding-right: 13px;
+                    "
+                  >
+                    2
+                  </div>
+                  <div
+                    class="card-table-item"
+                    style="font-size: 10px; font-weight: 400"
                   >
                     <span>Shirts </span>
                     <span>(Starching) </span>
                     <span>24Hrs</span>
+                  </div>
+                  <div
+                    class="card-table-item"
+                    style="font-size: 10px; font-weight: 400"
+                  >
+                    22,500.00
                   </div>
                   <div
                     class="card-table-item"
@@ -244,9 +272,27 @@ export default {
               <div
                 class="card-table-amount mt-2 d-flex justify-content-between"
               >
+                <span style="font-size: 10px; font-weight: 400">
+                  Delivery Type
+                </span>
+                <span style="font-size: 10px; font-weight: 400"> Pickup </span>
+              </div>
+              <div
+                class="card-table-amount mt-2 d-flex justify-content-between"
+              >
+                <span style="font-size: 10px; font-weight: 400">
+                  Delivery Fee
+                </span>
+                <span style="font-size: 10px; font-weight: 400">
+                  3,500.00
+                </span>
+              </div>
+              <div
+                class="card-table-amount mt-2 d-flex justify-content-between"
+              >
                 <span style="font-size: 10px; font-weight: 400"> Total </span>
                 <span style="font-size: 10px; font-weight: 400">
-                  135,000.00
+                  138,500.00
                 </span>
               </div>
               <div
@@ -256,7 +302,7 @@ export default {
                   Paid By: Credit Card
                 </span>
                 <span style="font-size: 10px; font-weight: 400">
-                  135,000.00
+                  138,500.00
                 </span>
               </div>
               <p
