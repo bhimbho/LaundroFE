@@ -236,6 +236,12 @@ export default {
               <span>Administrator</span>
             </router-link>
           </li>
+          <li>
+            <router-link :to="{ name: 'invoice' }" class="side-nav-link-ref">
+              <i class="bx ri-dashboard-line"></i>
+              <span>Invoice</span>
+            </router-link>
+          </li> 
         </ul>
 
         <ul class="metismenu list-unstyled" id="side-menu" v-if="this.user.role == 'manager'">
@@ -361,7 +367,7 @@ export default {
               <i class="bx ri-dashboard-line"></i>
               <span>Invoice</span>
             </router-link>
-          </li>
+          </li> -->
         </ul>
       </div>
       <!-- Sidebar -->
