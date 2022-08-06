@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       menuItems: menuItems,
+      user: this.$store.getters.user,
     };
   },
   computed: {
@@ -177,7 +178,7 @@ export default {
       <!--- Sidemenu -->
       <div id="sidebar-menu">
         <!-- Left Menu Start -->
-        <ul class="metismenu list-unstyled" id="side-menu">
+        <ul class="metismenu list-unstyled" id="side-menu" v-if="this.user.role == 'super-admin'">
           <li>
             <router-link :to="{ name: 'dashboard' }" class="side-nav-link-ref">
               <i class="bx ri-dashboard-line"></i>
@@ -191,6 +192,132 @@ export default {
             </router-link>
           </li>
           <li>
+            <router-link :to="{ name: 'customers' }" class="side-nav-link-ref">
+              <i class="bx ri-dashboard-line"></i>
+              <span>Customers</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              :to="{ name: 'transactions' }"
+              class="side-nav-link-ref"
+            >
+              <i class="bx ri-dashboard-line"></i>
+              <span>Transactions</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'attire' }" class="side-nav-link-ref">
+              <i class="bx ri-dashboard-line"></i>
+              <span>Attire</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'order' }" class="side-nav-link-ref">
+              <i class="bx ri-dashboard-line"></i>
+              <span>Order</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              :to="{ name: 'delivery-method' }"
+              class="side-nav-link-ref"
+            >
+              <i class="bx ri-dashboard-line"></i>
+              <span>Delivery Method</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              :to="{ name: 'administrator' }"
+              class="side-nav-link-ref"
+            >
+              <i class="bx ri-dashboard-line"></i>
+              <span>Administrator</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'invoice' }" class="side-nav-link-ref">
+              <i class="bx ri-dashboard-line"></i>
+              <span>Invoice</span>
+            </router-link>
+          </li> 
+        </ul>
+
+        <ul class="metismenu list-unstyled" id="side-menu" v-if="this.user.role == 'manager'">
+          <li>
+            <router-link :to="{ name: 'dashboard' }" class="side-nav-link-ref">
+              <i class="bx ri-dashboard-line"></i>
+              <span>Dashboard</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'services' }" class="side-nav-link-ref">
+              <i class="bx ri-dashboard-line"></i>
+              <span>Services</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'customers' }" class="side-nav-link-ref">
+              <i class="bx ri-dashboard-line"></i>
+              <span>Customers</span>
+            </router-link>
+          </li>
+          <!-- <li>
+            <router-link
+              :to="{ name: 'transactions' }"
+              class="side-nav-link-ref"
+            >
+              <i class="bx ri-dashboard-line"></i>
+              <span>Transactions</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'attire' }" class="side-nav-link-ref">
+              <i class="bx ri-dashboard-line"></i>
+              <span>Attire</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'order' }" class="side-nav-link-ref">
+              <i class="bx ri-dashboard-line"></i>
+              <span>Order</span>
+            </router-link>
+          </li> -->
+          <li>
+            <router-link
+              :to="{ name: 'admin-dashboard' }"
+              class="side-nav-link-ref"
+            >
+              <i class="bx ri-dashboard-line"></i>
+              <span>Delivery Method</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              :to="{ name: 'administrator' }"
+              class="side-nav-link-ref"
+            >
+              <i class="bx ri-dashboard-line"></i>
+              <span>Administrator</span>
+            </router-link>
+          </li>
+        </ul>
+
+        <ul class="metismenu list-unstyled" id="side-menu" v-if="this.user.role == 'frontdesk'">
+          <li>
+            <router-link :to="{ name: 'dashboard' }" class="side-nav-link-ref">
+              <i class="bx ri-dashboard-line"></i>
+              <span>Dashboard</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'services' }" class="side-nav-link-ref">
+              <i class="bx ri-dashboard-line"></i>
+              <span>Services</span>
+            </router-link>
+          </li>
+          <!-- <li>
             <router-link :to="{ name: 'customers' }" class="side-nav-link-ref">
               <i class="bx ri-dashboard-line"></i>
               <span>Customers</span>
@@ -240,7 +367,7 @@ export default {
               <i class="bx ri-dashboard-line"></i>
               <span>Invoice</span>
             </router-link>
-          </li>
+          </li> -->
         </ul>
       </div>
       <!-- Sidebar -->

@@ -6,7 +6,7 @@
       <div class="col-4">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Add Services</h4>
+            <h4 class="card-title">Add Delivery Method</h4>
             <div class="row">
               <div class="col-12">
                 <b-alert show variant="success" class="my-2" v-if="this.message">{{this.message}}</b-alert>
@@ -16,19 +16,32 @@
                     <div class="col-md-12">
                       <b-form-group
                         id="example text"
-                        label="Title"
-                        label-for="Title"
+                        label="Delivery Method"
+                        label-for="Delivery Method"
                       >
                         <b-form-input
                           for="text"
-                          placeholder="Service Title"
-                          v-model="serviceTitle"
+                          placeholder="Delivery Method"
+                          v-model="deliveryName"
+                        ></b-form-input>
+                      </b-form-group>
+                    </div>
+                    <div class="col-md-12">
+                      <b-form-group
+                        id="example text"
+                        label="Cost"
+                        label-for="Cost"
+                      >
+                        <b-form-input
+                          for="text"
+                          placeholder="Delivery Cost"
+                          v-model="deliveryCost"
                         ></b-form-input>
                       </b-form-group>
                     </div>
                     <div class="col-md-12 mt-2">
-                      <b-button variant="primary" class="btn btn-block" v-show="!isLoading" @click="addService()"
-                        >Create Service</b-button
+                      <b-button variant="primary" class="btn btn-block" v-show="!isLoading" @click="addDeliveryMethods()"
+                        >Create Delivery Method</b-button
                       >
                       <b-button v-show="isLoading" variant="primary"
                              class="btn btn-block waves-effect waves-light"
@@ -51,9 +64,9 @@
             <h4
               class="card-title d-flex justify-content-between align-items-center"
             >
-              View Services
-              <b-button class="btn" variant="primary" @click="addService()"
-                >Add Service</b-button
+              View Delivery Methodss
+              <b-button class="btn" variant="primary"
+                >Add Delivery Methods</b-button
               >
             </h4>
             <div class="row mt-4">
@@ -92,7 +105,7 @@
             <!-- Table -->
             <div class="table-responsive mb-0">
               <b-table
-                :items="this.getAllServices"
+                :items="this.getAllDeliveryMethods"
                 :fields="fields"
                 responsive="sm"
                 :per-page="perPage"
@@ -114,7 +127,7 @@
                     data-toggle="tooltip"
                     title="Edit"
                     v-b-modal.modal-lg
-                    @click="getSingleService(data.item.id)"
+                    @click="getSingleDeliveryMethod(data.item.id)"
                   >
                     <i class="mdi mdi-pencil font-size-18"></i>
                   </a>
@@ -123,20 +136,9 @@
                     class="text-danger"
                     v-b-tooltip.hover
                     title="Delete"
-                    @click.prevent="deleteService(data.item.id)"
+                    @click.prevent="deleteDeliveryMethod(data.item.id)"
                   >
                     <i class="mdi mdi-trash-can font-size-18"></i>
-                  </a>
-                  <a
-                    href="javascript:void(0);"
-                    class="mr-3 text-primary"
-                    v-b-tooltip.hover
-                    data-toggle="tooltip"
-                    title="Edit"
-                    v-b-modal.edit-service-cost
-                    @click="getServiceCost(data.item.id)"
-                  >
-                    <i class="mdi mdi-pencil font-size-18"></i>
                   </a>
                 </template>
               </b-table>
@@ -162,11 +164,11 @@
       </div>
     </div>
 
-    <!-- modal for updating service -->
+    <!-- modal for updating deliveryMethods -->
     <b-modal
       id="modal-lg"
       size="lg"
-      title="Edit Service"
+      title="Edit deliveryMethods"
       hide-footer
       title-class="font-18"
       ref="my-modal"
@@ -180,63 +182,26 @@
           <div class="col-md-12">
             <b-form-group
               id="example text"
-              label="Service Title"
-              label-for="Service Title"
+              label="Delivery Method"
+              label-for="Delivery Method"
             >
               <b-form-input
                 for="text"
-                placeholder="Service Title"
-                v-model="singleService.title"
+                placeholder="Delivery Methods"
+                v-model="singleDeliveryMethod.name"
               ></b-form-input>
             </b-form-group>
           </div>
-          
-          <div class="col-md-12 mt-4">
-            <b-button
-              variant="primary"
-                @click="updateService(singleService.id)"
-              class="btn btn-block" v-show="!isLoading" 
-              >Update Attire</b-button
-            >
-            <b-button
-              v-show="isLoading"
-              variant="primary"
-              class="btn btn-block waves-effect waves-light"
-              disabled
-            >
-              <b-spinner small type="grow"></b-spinner>
-              Loading...
-            </b-button>
-          </div>
-        </div>
-      </form>
-    </b-modal>
-
-    <!-- modal to add service cost -->
-    <b-modal
-      id="edit-service-cost"
-      size="lg"
-      title="Edit Service"
-      hide-footer
-      title-class="font-18"
-      ref="my-modal"
-    >
-      <b-alert show variant="success" class="my-2" v-if="this.newMessage">{{
-        this.newMessage
-      }}</b-alert>
-
-      <form class="" role="form">
-        <div class="row">
           <div class="col-md-12">
             <b-form-group
               id="example text"
-              label="Service Title"
-              label-for="Service Title"
+              label="Delivery Method"
+              label-for="Delivery Methods"
             >
               <b-form-input
                 for="text"
-                placeholder="Service Title"
-                v-model="singleService.title"
+                placeholder="Delivery Methods"
+                v-model="singleDeliveryMethod.cost"
               ></b-form-input>
             </b-form-group>
           </div>
@@ -244,9 +209,9 @@
           <div class="col-md-12 mt-4">
             <b-button
               variant="primary"
-                @click="updateService(singleService.id)"
+                @click="updateDeliveryMethod(singleDeliveryMethod.id)"
               class="btn btn-block" v-show="!isLoading" 
-              >Update Attire</b-button
+              >Update Delivery Method</b-button
             >
             <b-button
               v-show="isLoading"
@@ -279,21 +244,21 @@ const api = process.env.VUE_APP_BASE_URL;
  */
 export default {
   page: {
-    title: 'Services',
+    title: 'deliveryMethodss',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: { Layout, PageHeader },
   data() {
     return {
       tableData: tableData,
-      title: 'Services',
+      title: 'deliveryMethodss',
       items: [
         {
           text: 'Dashboard',
           href: '/',
         },
         {
-          text: 'Services',
+          text: 'deliveryMethodss',
           active: true,
         },
       ],
@@ -306,20 +271,22 @@ export default {
       sortBy: 'age',
       sortDesc: false,
       fields: [
-        { key: 'title', sortable: true },
+        { key: 'name', sortable: true },
+        { key: 'cost', sortable: true },
         { key: 'updated_at', sortable: true },
         { key: 'action' },
       ],
-      serviceTitle: "",
+      deliveryName: "",
+      deliveryCost: "",
       message: false,
       isLoading: false,
       error: false,
       newMessage: false,
-      singleService: [],
+      singleDeliveryMethod: [],
     };
   },
   computed: {
-    ...mapGetters(["getAllServices"]),
+    ...mapGetters(["getAllDeliveryMethods"]),
     /**
      * Total no. of records
      */
@@ -330,10 +297,10 @@ export default {
   mounted() {
     // Set the initial number of items
     this.totalRows = this.items.length;
-    this.allServices();
+    this.allDeliveryMethods();
   },
   methods: {
-    ...mapActions(["allServices"]),
+    ...mapActions(["allDeliveryMethods"]),
     /**
      * Search the table data with search input
      */
@@ -342,10 +309,11 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
-    addService() {
+    addDeliveryMethods() {
       this.isLoading = true;
-      axios.post(api + "admin/services", {
-        title: this.serviceTitle
+      axios.post(api + "admin/delivery_methods", {
+        name: this.deliveryName,
+        cost: this.deliveryCost
       }, {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`
@@ -353,42 +321,44 @@ export default {
       }).then(response => {
         this.message = response.data.message
         this.isLoading = false;
-        this.serviceTitle = ""
-        this.allServices();
+        this.deliveryName = ""
+        this.deliveryCost = ""
+        this.allDeliveryMethods();
         console.log(response);
       }).catch(error => {
         this.isLoading = false;
         this.error = true;
-        this.serviceTitle = ""
+        this.deliveryName = ""
+        this.deliveryCost = ""
         console.log(error.response.data);
       })
     },
 
-    // get single service
-    getSingleService(id) {
-      this.singleService = this.$store.getters.getSingleService(id);
-      console.log(this.singleService);
+    // get single deliveryMethods
+    getSingleDeliveryMethod(id) {
+      this.singleDeliveryMethod = this.$store.getters.getSingleDeliveryMethod(id);
+      console.log(this.singleDeliveryMethod);
     },
 
-    // delete service
-    deleteService: async function (id) {
+    // delete deliveryMethods
+    deleteDeliveryMethod: async function (id) {
       await axios
-        .delete(api + "admin/services/" + id, {
+        .delete(api + "admin/delivery_methods/" + id, {
           headers: {
             Authorization: `Bearer ${this.$store.state.token}`,
           },
         })
         .then((response) => {
-          this.allServices();
+          this.alldeliveryMethodss();
           console.log(response);
         });
     },
 
     // update admin profile
-    updateService: async function (id) {
+    updateDeliveryMethods: async function (id) {
       this.isLoading = true;
       await axios
-        .patch(api + "admin/services/" + id, this.singleService, {
+        .patch(api + "admin/delivery_methods/" + id, this.singleDeliveryMethod, {
           headers: {
             Authorization: `Bearer ${this.$store.state.token}`,
           },
@@ -396,7 +366,7 @@ export default {
         .then((response) => {
           this.isLoading = false;
           this.newMessage = response.data.message;
-          this.allServices();
+          this.allDeliveryMethods();
           console.log(response);
         });
     },
