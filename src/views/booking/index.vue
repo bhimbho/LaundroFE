@@ -9,6 +9,8 @@
             <h4 class="card-title">Add Booking</h4>
             <div class="row">
               <div class="col-12">
+                <b-alert show variant="success" class="my-2" v-if="this.message">{{this.message}}</b-alert>
+                <b-alert show variant="danger" class="my-2" v-if="this.error">{{ this.error }}</b-alert>
                 <form class="" role="form">
                   <div class="row">
                     <div class="col-md-12 mb-2">
@@ -21,7 +23,7 @@
                       >
                         <option value="">Select Attire Type</option>
                         <option
-                          :value="attire.group"
+                          :value="attire"
                           :data-id="attire.group"
                           v-for="attire in this.getAllAttires"
                           :key="attire.id"
@@ -44,11 +46,11 @@
                         id=""
                         class="form-control"
                         v-model="serviceType"
-                        @change="getBookingServiceCost()"
+                        @change="getServiceCost()"
                       >
                         <option value="">Select Service</option>
                         <option
-                          :value="service.id"
+                          :value="service"
                           v-for="service in this.getAllServices"
                           :key="service.id"
                         >
@@ -63,7 +65,7 @@
                         id=""
                         class="form-control"
                         v-model="serviceHours"
-                        @change="getBookingServiceCost()"
+                        @change="getServiceMethodCost()"
                       >
                         <option value="">Select Service Houres</option>
                         <option
@@ -91,37 +93,11 @@
                         ></b-form-input>
                       </b-form-group>
                     </div>
-                    <div class="col-md-12">
-                      <b-form-group
-                        id="example text"
-                        label="Cost"
-                        label-for="Cost"
-                      >
-                        <b-form-input
-                          for="text"
-                          type="number"
-                          placeholder="Quantity"
-                          v-model="serviceCost"
-                        ></b-form-input>
-                      </b-form-group>
+                   <div>
+                      <span><h6>Service Cost: &#8358;{{ totalServiceCost }} </h6></span>
+                      <span><h6>Quick Hours Cost: &#8358;{{ totalServiceMethodCost }} </h6></span>
                     </div>
                     
-                    <div class="col-md-12">
-                      <b-form-group
-                        id="example text"
-                        label="Total service cost"
-                        label-for="total service cost"
-                      >
-                        <b-form-input
-                          for="text"
-                          type="number"
-                          placeholder="total service cost"
-                          v-model="totalServiceCost"
-                          readonly
-                          disabled
-                        ></b-form-input>
-                      </b-form-group>
-                    </div>
                     <div class="col-md-12 mt-2">
                       <b-button
                         variant="primary"
@@ -130,9 +106,7 @@
                         >Create Booking</b-button
                       >
                     </div>
-                    <div>
-                      Service Hours Cost: {{ totalServiceCost }}
-                    </div>
+                    
                   </div>
                 </form>
               </div>
@@ -174,7 +148,7 @@
                       :key="index"
                     >
                       <td>{{ index + 1 }}</td>
-                      <td>{{ booking.attireType }}</td>
+                      <td>{{ booking.attireType.title }}</td>
                       <td>{{ booking.service }}</td>
                       <td>{{ booking.hour }}</td>
                       <td>{{ booking.quantity }}</td>
@@ -248,13 +222,14 @@ export default {
       allServiceHours: [48, 24, 12, 6],
       attireType: "",
       serviceType: "",
-      attireGroup: "",
       serviceHours: "",
       quantity: 1,
       serviceCost: 0,
       serviceMethodCost: null,
       bookingList: [],
       showBookingList: [],
+      error: false,
+      message: false,
     };
   },
   computed: {
@@ -282,17 +257,14 @@ export default {
     },
 
     // get service cost from endpoint
-    getBookingServiceCost() {
-      console.log("attire:", this.attireType);
-      console.log("hour:", this.serviceHours);
-      console.log("service", this.serviceType);
+    getServiceMethodCost() {
       if (this.serviceHours == 48) {
-        this.serviceMethodCost = 0
+        this.serviceMethodCost = 0;
       } else {
         axios
         .get(
           api +
-            `admin/service-method-cost/${this.serviceHours}/${this.serviceType}/${this.attireType}`,
+            `admin/service-method-cost/${this.serviceHours}/${this.serviceType.id}/${this.attireType.group}`,
           {
             headers: {
               Authorization: `Bearer ${this.$store.state.token}`,
@@ -300,13 +272,44 @@ export default {
           }
         )
         .then((response) => {
-          console.log(response);
-          this.serviceMethodCost = response.data.data.cost;
-          // this.totalServiceCost = this.serviceCost * this.quantity;
+          if (response.data.data == null) {
+            this.error = "Inform the administrator to add pricing for this service hour. Note the service type and attire type.";
+          } else {
+            this.serviceMethodCost = response.data.data.cost;
+          }
         });
       }
+    },
+
+  /**
+   * 
+   */
+    getServiceCost() {
+        axios
+        .get(
+          api +
+            `admin/service-cost/${this.serviceType.id}/${this.attireType.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.$store.state.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(this.serviceType)
+          if (response.status == 201) {
+            if (typeof response.data.data ===  'undefined') {
+              this.error = response.data.message;
+            } else {
+              this.serviceCost = response.data.data;
+            }
+          } else {
+            this.error = "Something went wrong";
+          }
+        });
       
     },
+      
 
     // creating booking
     createBooking() {
@@ -314,7 +317,7 @@ export default {
         id: this.bookingList.length + 1,
         attireType: this.attireType,
         hour: this.serviceHours,
-        service: this.serviceType,
+        service: this.serviceType.title,
         quantity: this.quantity,
         cost: this.serviceCost,
         totalCost: this.totalServiceCost,
