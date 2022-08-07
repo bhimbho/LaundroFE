@@ -176,11 +176,15 @@
                 :filter-included-fields="filterOn"
                 @filtered="onFiltered"
               >
+              <template #cell(action)="item">
+              <i size="sm" @click="deleteServiceMethod(item)"  class="mr-2 mdi mdi-trash-can"></i>
+              </template>
               </b-table>
             </div>
             <div class="row">
               <div class="col">
-                <div
+                
+              <div
                   class="dataTables_paginate paging_simple_numbers float-right"
                 >
                   <ul class="pagination pagination-rounded mb-0">
@@ -299,16 +303,24 @@ export default {
           this.message = response.data.message
         })
     },
-
-    // get service cost method for single service
     getServiceCostMethod() {
-      // console.log(this.$refs.singleServiceId)
       axios.get(api + `admin/all-service-methods/${this.singleService.id}`, {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
       }).then(response => {
         this.relatedServiceMethods = response.data.data
+      })
+    },
+    // get service cost method for single service
+    deleteServiceMethod (serviceMethod) {
+      axios.delete(api + `admin/service-method/${serviceMethod.item.id}`, {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.token}`,
+        },
+      }).then(response => {
+        this.message = response.data.message
+        this.getServiceCostMethod();
       })
     },
   },
