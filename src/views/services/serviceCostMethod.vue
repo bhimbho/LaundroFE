@@ -301,6 +301,7 @@ export default {
         )
         .then((response) => {
           this.message = response.data.message
+           this.getServiceCostMethod();
         })
     },
     getServiceCostMethod() {
