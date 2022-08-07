@@ -213,9 +213,9 @@ export default {
             </router-link>
           </li>
           <li>
-            <router-link :to="{ name: 'order' }" class="side-nav-link-ref">
+            <router-link :to="{ name: 'booking' }" class="side-nav-link-ref">
               <i class="bx ri-dashboard-line"></i>
-              <span>Order</span>
+              <span>Booking</span>
             </router-link>
           </li>
           <li>

@@ -229,6 +229,7 @@ export default {
       singleService: [],
       serviceAttire: "",
       serviceCost: "",
+      allServiceCost: [],
 
       message: false,
       isLoading: false,
@@ -273,12 +274,26 @@ export default {
         )
         .then((response) => {
           console.log(response);
+          this.getServiceCost();
         });
     },
+
+    // get all service cost
+    getServiceCost() {
+      axios.get(api + `admin/service-cost/${this.$refs.singleServiceId.value}`, {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.token}`,
+        },
+      }).then(response => {
+        console.log(response);
+        this.allServiceCost = response.data
+      })
+    }
   },
   mounted() {
     this.totalRows = this.items.length;
     this.getSingleService();
+    this.getServiceCost();
   },
 };
 </script>

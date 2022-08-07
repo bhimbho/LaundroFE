@@ -153,6 +153,7 @@ export default new Vuex.Store({
               console.log(response)
               commit("SET_ROLES", response.data.data);
             },
+
             // fetch all attire groups
             async allAttireGroup({ commit }) {
               const response = await axios.get(api + "admin/groups", {
