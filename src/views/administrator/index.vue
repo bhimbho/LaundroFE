@@ -188,7 +188,8 @@
           <div class="col-md-12 mt-4">
             <b-button
               variant="primary"
-              class="btn btn-block" v-show="!isLoading"
+              class="btn btn-block"
+              v-show="!isLoading"
               @click="updateAdministratorProfile(singleAdministrator.id)"
               >Update Administrator Profile</b-button
             >
@@ -209,13 +210,13 @@
 </template>
 
 <script>
-import Layout from "../layouts/main";
-import PageHeader from "@/components/page-header";
-import appConfig from "@/app.config";
+import Layout from '../layouts/main';
+import PageHeader from '@/components/page-header';
+import appConfig from '@/app.config';
 
-import { tableData } from "./dataAdvancedtable";
-import { mapActions, mapGetters } from "vuex";
-import axios from "axios";
+import { tableData } from './dataAdvancedtable';
+import { mapActions, mapGetters } from 'vuex';
+import axios from 'axios';
 const api = process.env.VUE_APP_BASE_URL;
 
 /**
@@ -223,21 +224,21 @@ const api = process.env.VUE_APP_BASE_URL;
  */
 export default {
   page: {
-    title: "Advanced Table",
-    meta: [{ name: "description", content: appConfig.description }],
+    title: 'Advanced Table',
+    meta: [{ name: 'description', content: appConfig.description }],
   },
   components: { Layout, PageHeader },
   data() {
     return {
       tableData: tableData,
-      title: "Advanced Table",
+      title: 'Advanced Table',
       items: [
         {
-          text: "Tables",
-          href: "/",
+          text: 'Tables',
+          href: '/',
         },
         {
-          text: "Advanced",
+          text: 'Advanced',
           active: true,
         },
       ],
@@ -247,27 +248,27 @@ export default {
       pageOptions: [10, 25, 50, 100],
       filter: null,
       filterOn: [],
-      sortBy: "age",
+      sortBy: 'age',
       sortDesc: false,
       fields: [
-        "no",
-        { key: "username", sortable: true },
-        { key: "firstname", sortable: true },
-        { key: "lastname", sortable: true },
-        { key: "email", sortable: true },
-        { key: "role", sortable: true },
-        { key: "updated_at", sortable: true },
-        { key: "action" },
+        'no',
+        { key: 'username', sortable: true },
+        { key: 'firstname', sortable: true },
+        { key: 'lastname', sortable: true },
+        { key: 'email', sortable: true },
+        { key: 'role', sortable: true },
+        { key: 'updated_at', sortable: true },
+        { key: 'action' },
       ],
       message: false,
       singleAdministrator: [],
-      firstName: "",
-      lastName: "",
-      email: "",
-      role: "",
-      username: "",
-      password: "",
-      confirmPassword: "",
+      firstName: '',
+      lastName: '',
+      email: '',
+      role: '',
+      username: '',
+      password: '',
+      confirmPassword: '',
       newMessage: false,
       isLoading: false,
     };
@@ -276,19 +277,19 @@ export default {
     /**
      * Total no. of records
      */
-    ...mapGetters(["getAllAdministrators"]),
+    ...mapGetters(['getAllAdministrators']),
     AllAdministrators() {
       return this.getAllAdministrators;
     },
     rows() {
-      return this.tableData.length;
+      return this.getAllAdministrators.length;
     },
   },
   methods: {
     /**
      * Search the table data with search input
      */
-    ...mapActions(["allAdministrators"]),
+    ...mapActions(['allAdministrators']),
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
@@ -296,7 +297,7 @@ export default {
     },
 
     addAdmin: function () {
-      this.$router.push("/administrator/add-administrator");
+      this.$router.push('/administrator/add-administrator');
     },
     // get single addministrator
 
@@ -307,7 +308,7 @@ export default {
     // delete administrator
     deleteAdministrator: async function (id) {
       await axios
-        .delete(api + "admin/delete_profile/" + id, {
+        .delete(api + 'admin/delete_profile/' + id, {
           headers: {
             Authorization: `Bearer ${this.$store.state.token}`,
           },
@@ -322,7 +323,7 @@ export default {
     updateAdministratorProfile: async function (id) {
       this.isLoading = true;
       await axios
-        .patch(api + "admin/update_profile/" + id, this.singleAdministrator, {
+        .patch(api + 'admin/update_profile/' + id, this.singleAdministrator, {
           headers: {
             Authorization: `Bearer ${this.$store.state.token}`,
           },
