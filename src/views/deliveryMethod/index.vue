@@ -47,6 +47,19 @@
                         ></b-form-input>
                       </b-form-group>
                     </div>
+                    <div class="col-md-12">
+                      <b-form-group
+                        id="example text"
+                        label="Delivery Times"
+                        label-for="Delivery Times"
+                      >
+                        <b-form-input
+                          for="text"
+                          placeholder="Delivery Times"
+                          v-model="deliveryTimes"
+                        ></b-form-input>
+                      </b-form-group>
+                    </div>
                     <div class="col-md-12 mt-2">
                       <b-button
                         variant="primary"
@@ -119,7 +132,7 @@
             <!-- Table -->
             <div class="table-responsive mb-0">
               <b-table
-                :items="this.getAllDeliveryMethods"
+                :items="this.getAllDeliveryMethods.data"
                 :fields="fields"
                 responsive="sm"
                 :per-page="perPage"
@@ -182,7 +195,7 @@
     <b-modal
       id="modal-lg"
       size="lg"
-      title="Edit deliveryMethods"
+      title="Edit Delivery Methods"
       hide-footer
       title-class="font-18"
       ref="my-modal"
@@ -209,17 +222,31 @@
           <div class="col-md-12">
             <b-form-group
               id="example text"
-              label="Delivery Method"
-              label-for="Delivery Methods"
+              label="Delivery Cost"
+              label-for="Delivery Cost"
             >
               <b-form-input
                 for="text"
-                placeholder="Delivery Methods"
+                placeholder="Delivery Cost"
                 v-model="singleDeliveryMethod.cost"
               ></b-form-input>
             </b-form-group>
           </div>
 
+          <div class="col-md-12">
+            <b-form-group
+              id="example text"
+              label="Delivery Times"
+              label-for="Delivery Times"
+            >
+              <b-form-input
+                for="text"
+                placeholder="Delivery Times"
+                v-model="singleDeliveryMethod.times"
+              ></b-form-input>
+            </b-form-group>
+          </div>
+          
           <div class="col-md-12 mt-4">
             <b-button
               variant="primary"
@@ -288,11 +315,13 @@ export default {
       fields: [
         { key: 'name', sortable: true },
         { key: 'cost', sortable: true },
+        { key: 'times', sortable: true },
         { key: 'updated_at', sortable: true },
         { key: 'action' },
       ],
-      deliveryName: '',
-      deliveryCost: '',
+      deliveryName: "",
+      deliveryCost: "",
+      deliveryTimes: "",
       message: false,
       isLoading: false,
       error: false,
@@ -326,34 +355,30 @@ export default {
     },
     addDeliveryMethods() {
       this.isLoading = true;
-      axios
-        .post(
-          api + 'admin/delivery_methods',
-          {
-            name: this.deliveryName,
-            cost: this.deliveryCost,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$store.state.token}`,
-            },
-          }
-        )
-        .then((response) => {
-          this.message = response.data.message;
-          this.isLoading = false;
-          this.deliveryName = '';
-          this.deliveryCost = '';
-          this.allDeliveryMethods();
-          console.log(response);
-        })
-        .catch((error) => {
-          this.isLoading = false;
-          this.error = true;
-          this.deliveryName = '';
-          this.deliveryCost = '';
-          console.log(error.response.data);
-        });
+      axios.post(api + "admin/delivery_methods", {
+        name: this.deliveryName,
+        cost: this.deliveryCost,
+        times: this.deliveryTimes
+      }, {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.token}`
+        }
+      }).then(response => {
+        this.message = response.data.message
+        this.isLoading = false;
+        this.deliveryName = ""
+        this.deliveryCost = ""
+        this.deliveryTimes = ""
+        this.allDeliveryMethods();
+        console.log(response);
+      }).catch(error => {
+        this.isLoading = false;
+        this.error = true;
+        this.deliveryName = ""
+        this.deliveryCost = ""
+        this.deliveryTimes = ""
+        console.log(error.response.data);
+      })
     },
 
     // get single deliveryMethods

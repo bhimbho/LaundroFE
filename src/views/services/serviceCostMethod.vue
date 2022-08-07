@@ -276,6 +276,10 @@ export default {
 
     // add service cost method for single service
     addServiceCostMethod: async function () {
+      console.log("service-id", this.$refs.singleServiceId.value)
+      console.log("cost", this.serviceCost)
+      console.log("group", this.serviceAttireGroup)
+      console.log("hours", this.serviceTime);
       await axios
         .post(
           api + "admin/service-method",
@@ -295,10 +299,23 @@ export default {
           console.log(response);
         });
     },
+
+    // get service cost method for single service
+    getServiceCostMethod() {
+      axios.get(api + `admin/all-service-methods/${this.$refs.singleServiceId.value}`, {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.token}`,
+        },
+      }).then(response => {
+        console.log(response);
+        this.allServiceCost = response.data
+      })
+    },
   },
   mounted() {
     this.totalRows = this.items.length;
     this.getSingleService();
+    this.getServiceCostMethod();
   },
 };
 </script>

@@ -45,17 +45,17 @@ export default [
   },
 
   {
-    path: '/order',
-    name: 'order',
+    path: '/booking',
+    name: 'booking',
     meta: { authRequired: true },
-    component: () => import('../views/order/index'),
+    component: () => import('../views/booking/index'),
   },
 
   {
     path: '/order/add-order',
     name: 'add-order',
     meta: { authRequired: true },
-    component: () => import('../views/order/addOrder'),
+    component: () => import('../views/booking/addOrder'),
   },
 
   {
