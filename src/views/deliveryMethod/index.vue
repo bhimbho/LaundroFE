@@ -233,8 +233,6 @@
             </b-form-group>
           </div>
 
-<<<<<<< HEAD
-=======
           <div class="col-md-12">
             <b-form-group
               id="example text"
@@ -249,7 +247,6 @@
             </b-form-group>
           </div>
           
->>>>>>> cdb08eb (booking and localstorage fixed)
           <div class="col-md-12 mt-4">
             <b-button
               variant="primary"
@@ -322,14 +319,9 @@ export default {
         { key: 'updated_at', sortable: true },
         { key: 'action' },
       ],
-<<<<<<< HEAD
-      deliveryName: '',
-      deliveryCost: '',
-=======
       deliveryName: "",
       deliveryCost: "",
       deliveryTimes: "",
->>>>>>> cdb08eb (booking and localstorage fixed)
       message: false,
       isLoading: false,
       error: false,
