@@ -10,6 +10,16 @@
             </h4>
             <div class="row">
               <div class="col-12">
+                <b-alert
+                  show
+                  variant="success"
+                  class="my-2"
+                  v-if="this.message"
+                  >Added successfully</b-alert
+                >
+                <b-alert show variant="danger" class="my-2" v-if="this.error"
+                  >{{this.newMessage}}</b-alert
+                >
                 <form class="" role="form">
                   <div class="row">
                     <div class="col-md-12">
@@ -240,7 +250,7 @@ export default {
       message: false,
       isLoading: false,
       error: false,
-      newMessage: false,
+      newMessage: "",
     };
   },
   computed: {
@@ -264,6 +274,7 @@ export default {
     // add service cost for single service
    
     addServiceCost: async function () {
+      this.isLoading = true;
       await axios
         .post(
           api + "admin/service-cost",

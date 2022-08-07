@@ -16,10 +16,10 @@
                     <div class="col-md-12 mb-2">
                       <label for="">Attire Type</label>
                       <select
-                        name=""
+                        :name="attire.group"
                         id=""
                         class="form-control"
-                        v-model="attireType"
+                        v-model="attireType" @change="findAttire($event)"
                       >
                         <option value="">Select Attire Type</option>
                         <option
@@ -32,6 +32,7 @@
                         </option>
                       </select>
                     </div>
+                    
                     <!-- <div class="col-md-12 mb-2">
                       <label for="Service">Attire Group</label>
                       <select name="" id="" class="form-control" v-model="attireGroup">
@@ -67,7 +68,7 @@
                         v-model="serviceHours"
                         @change="getServiceMethodCost()"
                       >
-                        <option value="">Select Service Houres</option>
+                        <option value="">Select Service Hours</option>
                         <option
                           :value="hour"
                           v-for="hour in this.allServiceHours"
@@ -355,6 +356,9 @@ export default {
           this.getBookingListFromStorage()
           console.log(this.bookingList);
       }
+    },
+    findAttire(event) {
+        console.log(event.target.options[event.target.options.selectedIndex].getAttribute('test'));
     },
 
     addOrder: function () {

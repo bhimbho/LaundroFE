@@ -305,7 +305,7 @@ export default {
         })
     },
     getServiceCostMethod() {
-      axios.get(api + `admin/all-service-methods/${this.singleService.id}`, {
+      axios.get(api + `admin/all-service-methods/${this.id}`, {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
