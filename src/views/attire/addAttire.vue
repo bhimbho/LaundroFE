@@ -44,6 +44,12 @@
                         </div>
                       </b-form-group>
                     </div>
+                    <div class="col-md-12">
+                      <select name="" id="" class="form-control" v-model="attireGroup">
+                        <option value="">Select Attire Group</option>
+                        <option :value="group" v-for="group in this.getAttireGroup" :key="group">{{group}}</option>
+                      </select>
+                    </div>
                     <div class="col-md-12 mt-2">
                       <b-button variant="primary" class="btn btn-block" v-show="!isLoading" @click.prevent="addAttire()"
                         >Create Attire</b-button
@@ -71,6 +77,7 @@
 import Layout from '../layouts/main';
 import PageHeader from '@/components/page-header';
 import appConfig from '@/app.config';
+import { mapGetters, mapActions } from "vuex"
 import axios from "axios";
 const api = process.env.VUE_APP_BASE_URL;
 
@@ -98,12 +105,17 @@ export default {
       checked: true,
       attireTitle: "",
       attireImage: null,
+      attireGroup: "",
       message: false,
       isLoading: false,
       error: false,
     };
   },
+  computed: {
+    ...mapGetters(["getAttireGroup"]),
+  },
   methods: {
+    ...mapActions(["allAttireGroup"]),
     uploadAttireImage: function () {
       this.attireImage = this.$refs.attireImage.files[0];
       console.log(this.attireImage);
@@ -113,6 +125,7 @@ export default {
       const formData = new FormData();
       formData.append("title", this.attireTitle);
       formData.append("attire_image", this.attireImage);
+      formData.append("group", this.attireGroup);
       
       axios.post(api + "admin/attires", formData, {
         headers: {
@@ -131,5 +144,8 @@ export default {
       })
     }
   },
+  mounted() {
+    this.allAttireGroup();
+  }
 };
 </script>

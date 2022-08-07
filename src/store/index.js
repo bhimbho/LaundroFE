@@ -18,6 +18,7 @@ export default new Vuex.Store({
     allServices: null,
     roles: null,
     deliveryMethods: null,
+    attireGroup: null,
   },
 
   getters: {
@@ -48,6 +49,7 @@ export default new Vuex.Store({
               );
             },
             getRoles: (state) => state.roles,
+            getAttireGroup: (state) => state.attireGroup,
           },
           
           mutations: {
@@ -71,6 +73,9 @@ export default new Vuex.Store({
             },
             SET_ROLES(state, roles) {
               state.roles = roles
+            },
+            SET_ATTIRE_GROUP(state, attireGroup) {
+              state.attireGroup = attireGroup
             },
             clearUserData(state) {
               state.token = null;
@@ -148,7 +153,21 @@ export default new Vuex.Store({
               console.log(response)
               commit("SET_ROLES", response.data.data);
             },
+            // fetch all attire groups
+            async allAttireGroup({ commit }) {
+              const response = await axios.get(api + "admin/groups", {
+                headers: {
+                  Authorization: `Bearer ${this.state.token}`,
+                }
+              })
+              console.log(response)
+              commit("SET_ATTIRE_GROUP", response.data);
+            },
+
+
           },
+
+          
           
           
           

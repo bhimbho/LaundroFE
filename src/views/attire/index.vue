@@ -225,6 +225,7 @@ export default {
       fields: [
         { key: "title", sortable: true },
         { key: "attire_image", sortable: true },
+        { key: "group", sortable: true },
         { key: "updated_at", sortable: true },
         { key: "action" },
       ],
