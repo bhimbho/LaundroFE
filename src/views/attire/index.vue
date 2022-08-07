@@ -62,11 +62,7 @@
                 @filtered="onFiltered"
               >
                 <template #cell(attire_image)="data">
-                  <img
-                    :src="
-                      data.item.attire_image
-                    " width="50" height="50"
-                  />
+                  <img :src="data.item.attire_image" width="50" height="50" />
                 </template>
                 <template #cell(updated_at)="data">
                   {{ new Date(data.value).toLocaleString() }}
@@ -157,12 +153,13 @@
               ></b-form-input>
             </b-form-group>
           </div>
-          
+
           <div class="col-md-12 mt-4">
             <b-button
               variant="primary"
-                @click="updateAttire(singleAttire.id)"
-              class="btn btn-block" v-show="!isLoading" 
+              @click="updateAttire(singleAttire.id)"
+              class="btn btn-block"
+              v-show="!isLoading"
               >Update Attire</b-button
             >
             <b-button
@@ -182,13 +179,13 @@
 </template>
 
 <script>
-import Layout from "../layouts/main";
-import PageHeader from "@/components/page-header";
-import appConfig from "@/app.config";
+import Layout from '../layouts/main';
+import PageHeader from '@/components/page-header';
+import appConfig from '@/app.config';
 
-import { tableData } from "./dataAdvancedtable";
-import { mapGetters, mapActions } from "vuex";
-import axios from "axios"
+import { tableData } from './dataAdvancedtable';
+import { mapGetters, mapActions } from 'vuex';
+import axios from 'axios';
 const api = process.env.VUE_APP_BASE_URL;
 
 /**
@@ -196,21 +193,21 @@ const api = process.env.VUE_APP_BASE_URL;
  */
 export default {
   page: {
-    title: "Attire",
-    meta: [{ name: "description", content: appConfig.description }],
+    title: 'Attire',
+    meta: [{ name: 'description', content: appConfig.description }],
   },
   components: { Layout, PageHeader },
   data() {
     return {
       tableData: tableData,
-      title: "Attire",
+      title: 'Attire',
       items: [
         {
-          text: "Dashboard",
-          href: "/dashboard",
+          text: 'Dashboard',
+          href: '/dashboard',
         },
         {
-          text: "Attire",
+          text: 'Attire',
           active: true,
         },
       ],
@@ -220,14 +217,14 @@ export default {
       pageOptions: [10, 25, 50, 100],
       filter: null,
       filterOn: [],
-      sortBy: "age",
+      sortBy: 'age',
       sortDesc: false,
       fields: [
-        { key: "title", sortable: true },
-        { key: "attire_image", sortable: true },
-        { key: "group", sortable: true },
-        { key: "updated_at", sortable: true },
-        { key: "action" },
+        { key: 'title', sortable: true },
+        { key: 'attire_image', sortable: true },
+        { key: 'group', sortable: true },
+        { key: 'updated_at', sortable: true },
+        { key: 'action' },
       ],
       singleAttire: [],
       api: api,
@@ -236,9 +233,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getAllAttires"]),
+    ...mapGetters(['getAllAttires']),
     rows() {
-      return this.tableData.length;
+      return this.getAllAttires.length;
     },
   },
   mounted() {
@@ -248,7 +245,7 @@ export default {
     console.log(this.$store.allAttires, this.api);
   },
   methods: {
-    ...mapActions(["allAttires"]),
+    ...mapActions(['allAttires']),
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
@@ -256,7 +253,7 @@ export default {
     },
 
     addAttire: function () {
-      this.$router.push("/attire/add-attire");
+      this.$router.push('/attire/add-attire');
     },
 
     // get single attire
@@ -268,7 +265,7 @@ export default {
     // delete attire
     deleteAttire: async function (id) {
       await axios
-        .delete(api + "admin/attires/" + id, {
+        .delete(api + 'admin/attires/' + id, {
           headers: {
             Authorization: `Bearer ${this.$store.state.token}`,
           },
@@ -283,7 +280,7 @@ export default {
     updateAttire: async function (id) {
       this.isLoading = true;
       await axios
-        .patch(api + "admin/attires/" + id, this.singleAttire, {
+        .patch(api + 'admin/attires/' + id, this.singleAttire, {
           headers: {
             Authorization: `Bearer ${this.$store.state.token}`,
           },

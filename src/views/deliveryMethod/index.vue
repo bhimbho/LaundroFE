@@ -9,8 +9,16 @@
             <h4 class="card-title">Add Delivery Method</h4>
             <div class="row">
               <div class="col-12">
-                <b-alert show variant="success" class="my-2" v-if="this.message">{{this.message}}</b-alert>
-                <b-alert show variant="danger" class="my-2" v-if="this.error">Invalid Details</b-alert>
+                <b-alert
+                  show
+                  variant="success"
+                  class="my-2"
+                  v-if="this.message"
+                  >{{ this.message }}</b-alert
+                >
+                <b-alert show variant="danger" class="my-2" v-if="this.error"
+                  >Invalid Details</b-alert
+                >
                 <form class="" role="form">
                   <div class="row">
                     <div class="col-md-12">
@@ -40,16 +48,22 @@
                       </b-form-group>
                     </div>
                     <div class="col-md-12 mt-2">
-                      <b-button variant="primary" class="btn btn-block" v-show="!isLoading" @click="addDeliveryMethods()"
+                      <b-button
+                        variant="primary"
+                        class="btn btn-block"
+                        v-show="!isLoading"
+                        @click="addDeliveryMethods()"
                         >Create Delivery Method</b-button
                       >
-                      <b-button v-show="isLoading" variant="primary"
-                             class="btn btn-block waves-effect waves-light"
-                             disabled
-                             >
-                              <b-spinner small type="grow"></b-spinner>
-                              Loading...
-                            </b-button>
+                      <b-button
+                        v-show="isLoading"
+                        variant="primary"
+                        class="btn btn-block waves-effect waves-light"
+                        disabled
+                      >
+                        <b-spinner small type="grow"></b-spinner>
+                        Loading...
+                      </b-button>
                     </div>
                   </div>
                 </form>
@@ -116,7 +130,7 @@
                 :filter-included-fields="filterOn"
                 @filtered="onFiltered"
               >
-              <template #cell(updated_at)="data">
+                <template #cell(updated_at)="data">
                   {{ new Date(data.value).toLocaleString() }}
                 </template>
                 <template v-slot:cell(action)="data">
@@ -205,12 +219,13 @@
               ></b-form-input>
             </b-form-group>
           </div>
-          
+
           <div class="col-md-12 mt-4">
             <b-button
               variant="primary"
-                @click="updateDeliveryMethod(singleDeliveryMethod.id)"
-              class="btn btn-block" v-show="!isLoading" 
+              @click="updateDeliveryMethod(singleDeliveryMethod.id)"
+              class="btn btn-block"
+              v-show="!isLoading"
               >Update Delivery Method</b-button
             >
             <b-button
@@ -235,8 +250,8 @@ import PageHeader from '@/components/page-header';
 import appConfig from '@/app.config';
 
 import { tableData } from './dataAdvancedtable';
-import { mapGetters, mapActions } from "vuex";
-import axios from "axios"
+import { mapGetters, mapActions } from 'vuex';
+import axios from 'axios';
 const api = process.env.VUE_APP_BASE_URL;
 
 /**
@@ -276,8 +291,8 @@ export default {
         { key: 'updated_at', sortable: true },
         { key: 'action' },
       ],
-      deliveryName: "",
-      deliveryCost: "",
+      deliveryName: '',
+      deliveryCost: '',
       message: false,
       isLoading: false,
       error: false,
@@ -286,12 +301,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getAllDeliveryMethods"]),
+    ...mapGetters(['getAllDeliveryMethods']),
     /**
      * Total no. of records
      */
     rows() {
-      return this.tableData.length;
+      return this.getAllDeliveryMethods.length;
     },
   },
   mounted() {
@@ -300,7 +315,7 @@ export default {
     this.allDeliveryMethods();
   },
   methods: {
-    ...mapActions(["allDeliveryMethods"]),
+    ...mapActions(['allDeliveryMethods']),
     /**
      * Search the table data with search input
      */
@@ -311,39 +326,47 @@ export default {
     },
     addDeliveryMethods() {
       this.isLoading = true;
-      axios.post(api + "admin/delivery_methods", {
-        name: this.deliveryName,
-        cost: this.deliveryCost
-      }, {
-        headers: {
-          Authorization: `Bearer ${this.$store.state.token}`
-        }
-      }).then(response => {
-        this.message = response.data.message
-        this.isLoading = false;
-        this.deliveryName = ""
-        this.deliveryCost = ""
-        this.allDeliveryMethods();
-        console.log(response);
-      }).catch(error => {
-        this.isLoading = false;
-        this.error = true;
-        this.deliveryName = ""
-        this.deliveryCost = ""
-        console.log(error.response.data);
-      })
+      axios
+        .post(
+          api + 'admin/delivery_methods',
+          {
+            name: this.deliveryName,
+            cost: this.deliveryCost,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.$store.state.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          this.message = response.data.message;
+          this.isLoading = false;
+          this.deliveryName = '';
+          this.deliveryCost = '';
+          this.allDeliveryMethods();
+          console.log(response);
+        })
+        .catch((error) => {
+          this.isLoading = false;
+          this.error = true;
+          this.deliveryName = '';
+          this.deliveryCost = '';
+          console.log(error.response.data);
+        });
     },
 
     // get single deliveryMethods
     getSingleDeliveryMethod(id) {
-      this.singleDeliveryMethod = this.$store.getters.getSingleDeliveryMethod(id);
+      this.singleDeliveryMethod =
+        this.$store.getters.getSingleDeliveryMethod(id);
       console.log(this.singleDeliveryMethod);
     },
 
     // delete deliveryMethods
     deleteDeliveryMethod: async function (id) {
       await axios
-        .delete(api + "admin/delivery_methods/" + id, {
+        .delete(api + 'admin/delivery_methods/' + id, {
           headers: {
             Authorization: `Bearer ${this.$store.state.token}`,
           },
@@ -358,11 +381,15 @@ export default {
     updateDeliveryMethods: async function (id) {
       this.isLoading = true;
       await axios
-        .patch(api + "admin/delivery_methods/" + id, this.singleDeliveryMethod, {
-          headers: {
-            Authorization: `Bearer ${this.$store.state.token}`,
-          },
-        })
+        .patch(
+          api + 'admin/delivery_methods/' + id,
+          this.singleDeliveryMethod,
+          {
+            headers: {
+              Authorization: `Bearer ${this.$store.state.token}`,
+            },
+          }
+        )
         .then((response) => {
           this.isLoading = false;
           this.newMessage = response.data.message;
