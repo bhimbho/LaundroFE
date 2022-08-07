@@ -9,8 +9,16 @@
             <h4 class="card-title">Add Services</h4>
             <div class="row">
               <div class="col-12">
-                <b-alert show variant="success" class="my-2" v-if="this.message">{{this.message}}</b-alert>
-                <b-alert show variant="danger" class="my-2" v-if="this.error">Invalid Details</b-alert>
+                <b-alert
+                  show
+                  variant="success"
+                  class="my-2"
+                  v-if="this.message"
+                  >{{ this.message }}</b-alert
+                >
+                <b-alert show variant="danger" class="my-2" v-if="this.error"
+                  >Invalid Details</b-alert
+                >
                 <form class="" role="form">
                   <div class="row">
                     <div class="col-md-12">
@@ -27,16 +35,22 @@
                       </b-form-group>
                     </div>
                     <div class="col-md-12 mt-2">
-                      <b-button variant="primary" class="btn btn-block" v-show="!isLoading" @click="addService()"
+                      <b-button
+                        variant="primary"
+                        class="btn btn-block"
+                        v-show="!isLoading"
+                        @click="addService()"
                         >Create Service</b-button
                       >
-                      <b-button v-show="isLoading" variant="primary"
-                             class="btn btn-block waves-effect waves-light"
-                             disabled
-                             >
-                              <b-spinner small type="grow"></b-spinner>
-                              Loading...
-                            </b-button>
+                      <b-button
+                        v-show="isLoading"
+                        variant="primary"
+                        class="btn btn-block waves-effect waves-light"
+                        disabled
+                      >
+                        <b-spinner small type="grow"></b-spinner>
+                        Loading...
+                      </b-button>
                     </div>
                   </div>
                 </form>
@@ -52,9 +66,6 @@
               class="card-title d-flex justify-content-between align-items-center"
             >
               View Services
-              <b-button class="btn" variant="primary" @click="addService()"
-                >Add Service</b-button
-              >
             </h4>
             <div class="row mt-4">
               <div class="col-sm-12 col-md-6">
@@ -103,7 +114,7 @@
                 :filter-included-fields="filterOn"
                 @filtered="onFiltered"
               >
-              <template #cell(updated_at)="data">
+                <template #cell(updated_at)="data">
                   {{ new Date(data.value).toLocaleString() }}
                 </template>
                 <template v-slot:cell(action)="data">
@@ -120,24 +131,35 @@
                   </a>
                   <a
                     href="javascript:void(0);"
-                    class="text-danger"
+                    class="mr-3 text-danger"
                     v-b-tooltip.hover
                     title="Delete"
                     @click.prevent="deleteService(data.item.id)"
                   >
                     <i class="mdi mdi-trash-can font-size-18"></i>
                   </a>
-                  <a
-                    href="javascript:void(0);"
+                  <router-link
+                    :to="{ name: 'service-cost', params: { id: data.item.id } }"
                     class="mr-3 text-primary"
                     v-b-tooltip.hover
                     data-toggle="tooltip"
-                    title="Edit"
-                    v-b-modal.edit-service-cost
-                    @click="getServiceCost(data.item.id)"
+                    title="Service Cost"
                   >
-                    <i class="mdi mdi-pencil font-size-18"></i>
-                  </a>
+                    <i class="mdi mdi-plus font-size-18"></i>
+                  </router-link>
+
+                  <router-link
+                    :to="{
+                      name: 'service-cost-method',
+                      params: { id: data.item.id },
+                    }"
+                    class="mr-3 text-primary"
+                    v-b-tooltip.hover
+                    data-toggle="tooltip"
+                    title="Add service Method"
+                  >
+                    <i class="mdi mdi-account-cash font-size-18"></i>
+                  </router-link>
                 </template>
               </b-table>
             </div>
@@ -190,62 +212,13 @@
               ></b-form-input>
             </b-form-group>
           </div>
-          
+
           <div class="col-md-12 mt-4">
             <b-button
               variant="primary"
-                @click="updateService(singleService.id)"
-              class="btn btn-block" v-show="!isLoading" 
-              >Update Attire</b-button
-            >
-            <b-button
-              v-show="isLoading"
-              variant="primary"
-              class="btn btn-block waves-effect waves-light"
-              disabled
-            >
-              <b-spinner small type="grow"></b-spinner>
-              Loading...
-            </b-button>
-          </div>
-        </div>
-      </form>
-    </b-modal>
-
-    <!-- modal to add service cost -->
-    <b-modal
-      id="edit-service-cost"
-      size="lg"
-      title="Edit Service"
-      hide-footer
-      title-class="font-18"
-      ref="my-modal"
-    >
-      <b-alert show variant="success" class="my-2" v-if="this.newMessage">{{
-        this.newMessage
-      }}</b-alert>
-
-      <form class="" role="form">
-        <div class="row">
-          <div class="col-md-12">
-            <b-form-group
-              id="example text"
-              label="Service Title"
-              label-for="Service Title"
-            >
-              <b-form-input
-                for="text"
-                placeholder="Service Title"
-                v-model="singleService.title"
-              ></b-form-input>
-            </b-form-group>
-          </div>
-          
-          <div class="col-md-12 mt-4">
-            <b-button
-              variant="primary"
-                @click="updateService(singleService.id)"
-              class="btn btn-block" v-show="!isLoading" 
+              @click="updateService(singleService.id)"
+              class="btn btn-block"
+              v-show="!isLoading"
               >Update Attire</b-button
             >
             <b-button
@@ -265,13 +238,13 @@
 </template>
 
 <script>
-import Layout from '../layouts/main';
-import PageHeader from '@/components/page-header';
-import appConfig from '@/app.config';
+import Layout from "../layouts/main";
+import PageHeader from "@/components/page-header";
+import appConfig from "@/app.config";
 
-import { tableData } from './dataAdvancedtable';
+import { tableData } from "./dataAdvancedtable";
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios"
+import axios from "axios";
 const api = process.env.VUE_APP_BASE_URL;
 
 /**
@@ -279,21 +252,21 @@ const api = process.env.VUE_APP_BASE_URL;
  */
 export default {
   page: {
-    title: 'Services',
-    meta: [{ name: 'description', content: appConfig.description }],
+    title: "Services",
+    meta: [{ name: "description", content: appConfig.description }],
   },
   components: { Layout, PageHeader },
   data() {
     return {
       tableData: tableData,
-      title: 'Services',
+      title: "Services",
       items: [
         {
-          text: 'Dashboard',
-          href: '/',
+          text: "Dashboard",
+          href: "/",
         },
         {
-          text: 'Services',
+          text: "Services",
           active: true,
         },
       ],
@@ -303,12 +276,12 @@ export default {
       pageOptions: [10, 25, 50, 100],
       filter: null,
       filterOn: [],
-      sortBy: 'age',
+      sortBy: "age",
       sortDesc: false,
       fields: [
-        { key: 'title', sortable: true },
-        { key: 'updated_at', sortable: true },
-        { key: 'action' },
+        { key: "title", sortable: true },
+        { key: "updated_at", sortable: true },
+        { key: "action" },
       ],
       serviceTitle: "",
       message: false,
@@ -324,7 +297,7 @@ export default {
      * Total no. of records
      */
     rows() {
-      return this.tableData.length;
+      return this.getAllServices.length;
     },
   },
   mounted() {
@@ -342,26 +315,34 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
+    // add service
     addService() {
       this.isLoading = true;
-      axios.post(api + "admin/services", {
-        title: this.serviceTitle
-      }, {
-        headers: {
-          Authorization: `Bearer ${this.$store.state.token}`
-        }
-      }).then(response => {
-        this.message = response.data.message
-        this.isLoading = false;
-        this.serviceTitle = ""
-        this.allServices();
-        console.log(response);
-      }).catch(error => {
-        this.isLoading = false;
-        this.error = true;
-        this.serviceTitle = ""
-        console.log(error.response.data);
-      })
+      axios
+        .post(
+          api + "admin/services",
+          {
+            title: this.serviceTitle,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.$store.state.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          this.message = response.data.message;
+          this.isLoading = false;
+          this.serviceTitle = "";
+          this.allServices();
+          console.log(response);
+        })
+        .catch((error) => {
+          this.isLoading = false;
+          this.error = true;
+          this.serviceTitle = "";
+          console.log(error.response.data);
+        });
     },
 
     // get single service
@@ -384,7 +365,7 @@ export default {
         });
     },
 
-    // update admin profile
+    // update service
     updateService: async function (id) {
       this.isLoading = true;
       await axios
@@ -400,6 +381,44 @@ export default {
           console.log(response);
         });
     },
+
+    // get single service modal
+    // addServiceCostModal(id) {
+    //   this.getSingleService(id);
+    // },
+
+    // // add service cost for single service
+    // addServiceCost: async function() {
+    //   await axios.post(api + "admin/service-cost", {
+    //     service_id: this.$refs.singleServiceId.value,
+    //     attire_type_id: this.serviceAttire,
+    //     cost: this.serviceCost
+    //   }, {
+    //     headers: {
+    //       Authorization: `Bearer ${this.$store.state.token}`,
+    //     },
+    //   }).then(response => {
+    //     console.log(response)
+    //   })
+    // },
+
+    // add service method
+    // addServiceMethodModal(id) {
+    //   this.getSingleService(id);
+    // },
+
+    // getServiceMethod() {
+    //   console.log("service id:",this.$refs.singleServiceId.value);
+    //   console.log("hour:", this.serviceTime);
+    //   console.log("attire", this.serviceAttireGroup);
+    //   axios.get(api + `admin/get-service-method/${this.serviceTime}/${this.$refs.singleServiceId.value}/${this.serviceAttireGroup}`, {
+    //     headers: {
+    //       Authorization: `Bearer ${this.$store.state.token}`,
+    //     },
+    //   }).then(response => {
+    //     console.log(response);
+    //   })
+    // }
   },
 };
 </script>

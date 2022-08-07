@@ -66,10 +66,17 @@ export default [
   },
 
   {
-    path: '/services/add-service',
-    name: 'add-service',
+    path: '/services/service-cost/:id',
+    name: 'service-cost',
     meta: { authRequired: true },
-    component: () => import('../views/services/addService'),
+    component: () => import('../views/services/serviceCost'),
+  },
+
+  {
+    path: '/services/service-cost-method/:id',
+    name: 'service-cost-method',
+    meta: { authRequired: true },
+    component: () => import('../views/services/serviceCostMethod'),
   },
 
   {
