@@ -8,6 +8,8 @@
             <h4 class="card-title">Add Service Cost Method</h4>
             <div class="row">
               <div class="col-12">
+                <b-alert show variant="success" class="my-2" v-if="this.message">{{this.message}}</b-alert>
+                <b-alert show variant="danger" class="my-2" v-if="this.error">{{ error.message.error }}</b-alert>
                 <form class="" role="form">
                   <div class="row">
                     <div class="col-md-12">
@@ -163,7 +165,7 @@
             <!-- Table -->
             <div class="table-responsive mb-0">
               <b-table
-                :items="this.getAllServices"
+                :items="this.relatedServiceMethods"
                 :fields="fields"
                 responsive="sm"
                 :per-page="perPage"
@@ -240,14 +242,17 @@ export default {
       sortBy: "age",
       sortDesc: false,
       fields: [
-        { key: "title", sortable: true },
-        { key: "updated_at", sortable: true },
+        { key: "group", sortable: true },
+        { key: "hours", sortable: true },
+        { key: "cost", sortable: true },
         { key: "action" },
       ],
       singleService: [],
       serviceCost: "",
       serviceAttireGroup: "",
       serviceTime: "",
+      relatedServiceMethods: "",
+    
 
       message: false,
       isLoading: false,
@@ -256,9 +261,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getAllServices", "getAllAttires", "getAttireGroup"]),
+    ...mapGetters(["getAllServices", "getAttireGroup"]),
     rows() {
-      return this.getAllServices.length;
+      return this.relatedServiceMethods.length;
     },
   },
   methods: {
@@ -271,20 +276,15 @@ export default {
     // get single service
     getSingleService() {
       this.singleService = this.$store.getters.getSingleService(this.id);
-      console.log(this.singleService);
     },
 
     // add service cost method for single service
     addServiceCostMethod: async function () {
-      console.log("service-id", this.$refs.singleServiceId.value)
-      console.log("cost", this.serviceCost)
-      console.log("group", this.serviceAttireGroup)
-      console.log("hours", this.serviceTime);
       await axios
         .post(
           api + "admin/service-method",
           {
-            service_id: this.$refs.singleServiceId.value,
+            service_id: this.singleService.id,
             cost: this.serviceCost,
             group: this.serviceAttireGroup,
             hours: this.serviceTime,
@@ -296,19 +296,19 @@ export default {
           }
         )
         .then((response) => {
-          console.log(response);
-        });
+          this.message = response.data.message
+        })
     },
 
     // get service cost method for single service
     getServiceCostMethod() {
-      axios.get(api + `admin/all-service-methods/${this.$refs.singleServiceId.value}`, {
+      // console.log(this.$refs.singleServiceId)
+      axios.get(api + `admin/all-service-methods/${this.singleService.id}`, {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
       }).then(response => {
-        console.log(response);
-        this.allServiceCost = response.data
+        this.relatedServiceMethods = response.data.data
       })
     },
   },

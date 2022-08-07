@@ -3,7 +3,7 @@
     <PageHeader :title="title" :items="items" />
 
     <div class="row">
-      <div class="col-6">
+      <div class="col-4">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Add Booking</h4>
@@ -105,6 +105,7 @@
                         ></b-form-input>
                       </b-form-group>
                     </div>
+                    
                     <div class="col-md-12">
                       <b-form-group
                         id="example text"
@@ -129,6 +130,9 @@
                         >Create Booking</b-button
                       >
                     </div>
+                    <div>
+                      Service Hours Cost: {{ totalServiceCost }}
+                    </div>
                   </div>
                 </form>
               </div>
@@ -137,7 +141,7 @@
         </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-8">
         <div class="card">
           <div class="card-body">
             <h4
@@ -241,13 +245,14 @@ export default {
         { key: "salary", sortable: true },
         { key: "action" },
       ],
-      allServiceHours: [24, 12, 6],
+      allServiceHours: [48, 24, 12, 6],
       attireType: "",
       serviceType: "",
       attireGroup: "",
       serviceHours: "",
       quantity: 1,
-      serviceCost: "",
+      serviceCost: 0,
+      serviceMethodCost: null,
       bookingList: [],
       showBookingList: [],
     };
@@ -260,6 +265,10 @@ export default {
     },
     totalServiceCost() {
       return this.serviceCost * this.quantity;
+    },
+
+    totalServiceMethodCost() {
+      return this.serviceMethodCost * this.quantity;
     },
   },
   methods: {
@@ -277,7 +286,10 @@ export default {
       console.log("attire:", this.attireType);
       console.log("hour:", this.serviceHours);
       console.log("service", this.serviceType);
-      axios
+      if (this.serviceHours == 48) {
+        this.serviceMethodCost = 0
+      } else {
+        axios
         .get(
           api +
             `admin/service-method-cost/${this.serviceHours}/${this.serviceType}/${this.attireType}`,
@@ -289,9 +301,11 @@ export default {
         )
         .then((response) => {
           console.log(response);
-          this.serviceCost = response.data.data.cost;
+          this.serviceMethodCost = response.data.data.cost;
           // this.totalServiceCost = this.serviceCost * this.quantity;
         });
+      }
+      
     },
 
     // creating booking

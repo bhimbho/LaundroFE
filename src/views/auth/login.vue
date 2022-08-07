@@ -127,7 +127,7 @@ export default {
           this.$router.push({ name: "dashboard" });
         })
         .catch((err) => {
-          console.log(err.response);
+          // console.log(err.response);
           if (err.response.status == 401) {
             this.error = err.response.data.error;
             this.isLoading = false;
