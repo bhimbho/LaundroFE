@@ -50,6 +50,7 @@
                           class="form-control"
                           v-model="serviceAttireId"
                         >
+                        <option value="">-- select attire --</option>
                           <option
                             :value="attire.id"
                             v-for="attire in this.getAllAttires"

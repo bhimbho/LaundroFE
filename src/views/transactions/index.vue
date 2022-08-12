@@ -3,7 +3,9 @@ import Layout from '../layouts/main';
 import PageHeader from '@/components/page-header';
 import appConfig from '@/app.config';
 
-import { tableData } from './dataAdvancedtable';
+// import { mapGetters } from "vuex";
+import axios from "axios";
+const api = process.env.VUE_APP_BASE_URL;
 
 /**
  * Advanced table component
@@ -16,7 +18,6 @@ export default {
   components: { Layout, PageHeader },
   data() {
     return {
-      tableData: tableData,
       title: 'Transactions',
       items: [
         {
@@ -37,14 +38,20 @@ export default {
       sortBy: 'age',
       sortDesc: false,
       fields: [
-        { key: 'name', sortable: true },
-        { key: 'position', sortable: true },
-        { key: 'office', sortable: true },
-        { key: 'age', sortable: true },
-        { key: 'date', sortable: true },
-        { key: 'salary', sortable: true },
+        { key: 'tag_no', sortable: true },
+        { key: 'customer_name',  sortable: true },
+        { key: 'customer_phone',  sortable: true },
+        { key: 'delivery_method.name', label: 'Delivery Type', sortable: true },
+        { key: 'payment_type', sortable: true },
+        { key: 'total', label: 'Total Paid' },
+        { key: 'total_quantity', label: 'Tot. Cloth' },
+        { key: 'has_special', label: 'Express',  sortable: true},
+        { key: 'created_at', label: 'Date Created', sortable: true },
         { key: 'action' },
       ],
+
+      // vars
+      transactions: []
     };
   },
   computed: {
@@ -52,12 +59,8 @@ export default {
      * Total no. of records
      */
     rows() {
-      return this.tableData.length;
+      return this.transactions.length;
     },
-  },
-  mounted() {
-    // Set the initial number of items
-    this.totalRows = this.items.length;
   },
   methods: {
     /**
@@ -68,10 +71,25 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
-
-    addTransaction: function () {
-      this.$router.push('/transactions/add-transaction');
+     // get all related service cost
+    allTransactions() {
+      axios.get(api + `admin/transactions`, {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.token}`,
+        },
+      }).then(response => {
+        this.transactions = response.data.data.data
+      })
     },
+
+    // addTransaction: function () {
+    //   this.$router.push('/transactions/add-transaction');
+    // },
+  },
+  mounted() {
+    // Set the initial number of items
+    this.totalRows = this.items.length;
+    this.allTransactions()
   },
 };
 </script>
@@ -88,9 +106,6 @@ export default {
               class="card-title d-flex justify-content-between align-items-center"
             >
               View Transactions
-              <b-button class="btn" variant="primary" @click="addTransaction()"
-                >Add Transaction</b-button
-              >
             </h4>
             <div class="row mt-4">
               <div class="col-sm-12 col-md-6">
@@ -128,7 +143,7 @@ export default {
             <!-- Table -->
             <div class="table-responsive mb-0">
               <b-table
-                :items="tableData"
+                :items="transactions"
                 :fields="fields"
                 responsive="sm"
                 :per-page="perPage"
@@ -139,24 +154,28 @@ export default {
                 :filter-included-fields="filterOn"
                 @filtered="onFiltered"
               >
+              <template #cell(has_special)="has_special">
+                  <p v-if="has_special.value == false">48hrs</p>
+                  <p class="bg-danger text-white text-center" v-else>Yes [24/12/6hrs Service Required]</p>
+              </template>
                 <template v-slot:cell(action)>
                   <a
                     href="javascript:void(0);"
                     class="mr-3 text-primary"
                     v-b-tooltip.hover
                     data-toggle="tooltip"
-                    title="Edit"
+                    title="View Transaction Orders"
                   >
-                    <i class="mdi mdi-pencil font-size-18"></i>
+                    <i class="mdi mdi-eye font-size-18"></i>
                   </a>
-                  <a
+                  <!-- <a
                     href="javascript:void(0);"
                     class="text-danger"
                     v-b-tooltip.hover
                     title="Delete"
                   >
                     <i class="mdi mdi-trash-can font-size-18"></i>
-                  </a>
+                  </a> -->
                 </template>
               </b-table>
             </div>

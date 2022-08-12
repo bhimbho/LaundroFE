@@ -19,6 +19,7 @@ export default new Vuex.Store({
     roles: null,
     deliveryMethods: null,
     attireGroup: null,
+    transactions: null
   },
 
   getters: {
