@@ -13,6 +13,8 @@
                 <form class="" role="form">
                   <div class="row">
                     <div class="col-md-12">
+                      <b-alert show variant="success" class="my-2" v-if="this.message">{{this.message}}</b-alert>
+                      <b-alert show variant="danger" class="my-2" v-if="this.error">{{ error.message.error }}</b-alert>
                       <b-form-group
                         id="example text"
                         label="Service Title"
@@ -46,7 +48,7 @@
                           name=""
                           id=""
                           class="form-control"
-                          v-model="serviceAttire"
+                          v-model="serviceAttireId"
                         >
                           <option
                             :value="attire.id"
@@ -145,7 +147,7 @@
             <!-- Table -->
             <div class="table-responsive mb-0">
               <b-table
-                :items="this.getAllServices"
+                :items="this.relatedServiceCost"
                 :fields="fields"
                 responsive="sm"
                 :per-page="perPage"
@@ -156,6 +158,9 @@
                 :filter-included-fields="filterOn"
                 @filtered="onFiltered"
               >
+              <template #cell(action)="item">
+                <i size="sm" @click="deleteServiceCost(item)"  class="mr-2 mdi mdi-trash-can"></i>
+              </template>
               </b-table>
             </div>
             <div class="row">
@@ -222,14 +227,14 @@ export default {
       sortBy: 'age',
       sortDesc: false,
       fields: [
-        { key: 'title', sortable: true },
-        { key: 'updated_at', sortable: true },
+        { key: 'attire_types.title', label: 'Attire Type', sortable: true },
+        { key: 'cost', sortable: true },
         { key: 'action' },
       ],
       singleService: [],
-      serviceAttire: "",
+      serviceAttireId: "",
       serviceCost: "",
-      allServiceCost: [],
+      relatedServiceCost: [],
 
       message: false,
       isLoading: false,
@@ -240,7 +245,7 @@ export default {
   computed: {
     ...mapGetters(["getAllServices", "getAllAttires"]),
     rows() {
-      return this.getAllServices.length;
+     return this.relatedServiceCost.length;
     },
   },
   methods: {
@@ -253,17 +258,17 @@ export default {
     // get single service
     getSingleService() {
       this.singleService = this.$store.getters.getSingleService(this.id);
-      console.log(this.singleService);
     },
 
     // add service cost for single service
+   
     addServiceCost: async function () {
       await axios
         .post(
           api + "admin/service-cost",
           {
-            service_id: this.$refs.singleServiceId.value,
-            attire_type_id: this.serviceAttire,
+            service_id: this.singleService.id,
+            attire_type_id: this.serviceAttireId,
             cost: this.serviceCost,
           },
           {
@@ -273,27 +278,43 @@ export default {
           }
         )
         .then((response) => {
-          console.log(response);
-          this.getServiceCost();
+          if (response.status === 403) {
+            this.error = response.data.error;
+          } else {
+            this.message = response.data.message;
+             this.error =false;
+            this.getRelatedServiceCosts();
+          }
         });
     },
 
-    // get all service cost
-    getServiceCost() {
-      axios.get(api + `admin/service-cost/${this.$refs.singleServiceId.value}`, {
+    // get all related service cost
+    getRelatedServiceCosts() {
+      axios.get(api + `admin/service-cost/${this.singleService.id}`, {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
       }).then(response => {
-        console.log(response);
-        this.allServiceCost = response.data
+        this.relatedServiceCost = response.data.data
       })
-    }
-  },
+    },
+
+  // get service cost method for single service
+  deleteServiceCost (serviceCost) {
+    axios.delete(api + `admin/service-cost/${serviceCost.item.id}`, {
+      headers: {
+      Authorization: `Bearer ${this.$store.state.token}`,
+      },
+      }).then(response => {
+        this.message = response.data.message
+        this.getRelatedServiceCosts();
+      })
+    },
+   },
   mounted() {
     this.totalRows = this.items.length;
     this.getSingleService();
-    this.getServiceCost();
+    this.getRelatedServiceCosts();
   },
 };
 </script>
