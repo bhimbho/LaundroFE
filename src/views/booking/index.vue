@@ -9,17 +9,25 @@
             <h4 class="card-title">Add Booking</h4>
             <div class="row">
               <div class="col-12">
-                <b-alert show variant="success" class="my-2" v-if="this.message">{{this.message}}</b-alert>
-                <b-alert show variant="danger" class="my-2" v-if="this.error">{{ this.error }}</b-alert>
+                <b-alert
+                  show
+                  variant="success"
+                  class="my-2"
+                  v-if="this.message"
+                  >{{ this.message }}</b-alert
+                >
+                <b-alert show variant="danger" class="my-2" v-if="this.error">{{
+                  this.error
+                }}</b-alert>
                 <form class="" role="form">
                   <div class="row">
                     <div class="col-md-12 mb-2">
                       <label for="">Attire Type</label>
                       <select
-                        :name="attire.group"
+                        name=""
                         id=""
                         class="form-control"
-                        v-model="attireType" @change="findAttire($event)"
+                        v-model="attireType"
                       >
                         <option value="">Select Attire Type</option>
                         <option
@@ -32,7 +40,7 @@
                         </option>
                       </select>
                     </div>
-                    
+
                     <!-- <div class="col-md-12 mb-2">
                       <label for="Service">Attire Group</label>
                       <select name="" id="" class="form-control" v-model="attireGroup">
@@ -94,11 +102,19 @@
                         ></b-form-input>
                       </b-form-group>
                     </div>
-                   <div>
-                      <span><h6>Service Cost: &#8358;{{ totalServiceCost }} </h6></span>
-                      <span><h6>Quick Hours Cost: &#8358;{{ totalServiceMethodCost }} </h6></span>
+                    <div>
+                      <span
+                        ><h6>
+                          Service Cost: &#8358;{{ totalServiceCost }}
+                        </h6></span
+                      >
+                      <span
+                        ><h6>
+                          Quick Hours Cost: &#8358;{{ totalServiceMethodCost }}
+                        </h6></span
+                      >
                     </div>
-                    
+
                     <div class="col-md-12 mt-2">
                       <b-button
                         variant="primary"
@@ -107,7 +123,6 @@
                         >Create Booking</b-button
                       >
                     </div>
-                    
                   </div>
                 </form>
               </div>
@@ -123,8 +138,8 @@
               class="card-title d-flex justify-content-between align-items-center"
             >
               View Order
-              <b-button class="btn" variant="primary" @click="addOrder()"
-                >Add Order</b-button
+              <b-button class="btn" variant="primary" v-b-modal.customer-details
+                >Process Order</b-button
               >
             </h4>
             <div class="row mt-4">
@@ -150,13 +165,18 @@
                     >
                       <td>{{ index + 1 }}</td>
                       <td>{{ booking.attireType.title }}</td>
-                      <td>{{ booking.service }}</td>
+                      <td>{{ booking.service.title }}</td>
                       <td>{{ booking.hour }}</td>
                       <td>{{ booking.quantity }}</td>
                       <td>{{ booking.cost }}</td>
                       <td>{{ booking.totalCost }}</td>
                       <td>
-                        <button class="btn btn-sm btn-danger" @click="deleteBooking(booking.id)">delete</button>
+                        <button
+                          class="btn btn-sm btn-danger"
+                          @click="deleteBooking(booking.id)"
+                        >
+                          delete
+                        </button>
                       </td>
                     </tr>
                   </tbody>
@@ -167,6 +187,157 @@
         </div>
       </div>
     </div>
+
+    <!-- modal to add customer details -->
+    <b-modal
+      id="customer-details"
+      size="lg"
+      title="Add Customer Details"
+      hide-footer
+      title-class="font-18"
+      ref="my-modal"
+    >
+      <!-- <b-alert show variant="success" class="my-2" v-if="this.newMessage">{{
+        this.newMessage
+      }}</b-alert> -->
+
+      <form class="" role="form">
+        <div class="row">
+          <div class="col-md-12">
+            <select name="" id="" v-model="customerType" class="form-control">
+              <option value="">Select Customer Type</option>
+              <option value="new-customer">New Customer</option>
+              <option value="existing-customer">Existing Customer</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="col-md-12" style="padding: 20px">
+              <form action="" v-if="customerType == 'new-customer'">
+                <div class="row">
+                  <div class="col-md-6">
+                    <b-form-group
+                      id="example text"
+                      label="Customer Name"
+                      label-for="Customer Name"
+                    >
+                      <b-form-input
+                        for="text"
+                        type="text"
+                        placeholder="Customer Name"
+                        v-model="customerName"
+                      ></b-form-input>
+                    </b-form-group>
+                  </div>
+                  <div class="col-md-6">
+                    <b-form-group
+                      id="example text"
+                      label="Customer Phone Number"
+                      label-for="Customer Phone Number"
+                    >
+                      <b-form-input
+                        for="text"
+                        type="text"
+                        placeholder="Customer Phone Number"
+                        v-model="customerPhoneNumber"
+                      ></b-form-input>
+                    </b-form-group>
+                  </div>
+                  <div class="col-md-6">
+                    <b-form-group
+                      id="example text"
+                      label="Customer Email Address"
+                      label-for="Customer Email Address"
+                    >
+                      <b-form-input
+                        for="text"
+                        type="text"
+                        placeholder="Customer Email Address"
+                        v-model="customerEmail"
+                      ></b-form-input>
+                    </b-form-group>
+                  </div>
+                  <div class="col-md-6">
+                    <b-form-group
+                      id="example text"
+                      label="Customer Address"
+                      label-for="Customer Address"
+                    >
+                      <b-form-input
+                        for="text"
+                        type="text"
+                        placeholder="Customer Address"
+                        v-model="customerAddress"
+                      ></b-form-input>
+                    </b-form-group>
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    <label for="">Payment Type</label>
+                    <select
+                      name=""
+                      id=""
+                      v-model="paymentType"
+                      class="form-control"
+                    >
+                      <option value="">Select Payment Type</option>
+                      <option value="transfer">Transfer</option>
+                      <option value="cash">Cash</option>
+                      <option value="cheque">Cheque</option>
+                      <option value="card">Card</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    <label for="">Delivery Method</label>
+                    <select
+                      name=""
+                      id=""
+                      v-model="deliveryType"
+                      class="form-control"
+                    >
+                      <option value="">Select Delivery Method</option>
+                      <option :value="delivery.id" v-for="delivery in this.getAllDeliveryMethods.data" :key="delivery.id">{{delivery.name}}</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <form action="" v-if="customerType == 'existing-customer'">
+            <div class="col-md-12">
+              <b-form-group
+                id="example text"
+                label="Customer Address"
+                label-for="Customer Address"
+              >
+                <b-form-input
+                  for="text"
+                  type="text"
+                  placeholder="Customer Address"
+                ></b-form-input>
+              </b-form-group>
+            </div>
+          </form>
+
+          <div class="col-md-12 mt-4">
+            <b-button
+              variant="primary"
+              class="btn btn-block"
+              @click="makeOrder()"
+              >Make Order</b-button
+            >
+            <!-- <b-button
+              v-show="isLoading"
+              variant="primary"
+              class="btn btn-block waves-effect waves-light"
+              disabled
+            >
+              <b-spinner small type="grow"></b-spinner>
+              Loading...
+            </b-button> -->
+          </div>
+        </div>
+      </form>
+    </b-modal>
   </Layout>
 </template>
 
@@ -231,10 +402,20 @@ export default {
       showBookingList: [],
       error: false,
       message: false,
+      isLoading: false,
+
+      customerType: "",
+      customerName: "",
+      customerPhoneNumber: "",
+      customerEmail: "",
+      customerAddress: "",
+      paymentType: "",
+      deliveryType: "",
+      customerOrder: [],
     };
   },
   computed: {
-    ...mapGetters(["getAllAttires", "getAllServices", "getAttireGroup"]),
+    ...mapGetters(["getAllAttires", "getAllServices", "getAttireGroup", "getAllDeliveryMethods"]),
     /* Total no. of records*/
     rows() {
       return this.tableData.length;
@@ -248,6 +429,50 @@ export default {
     },
   },
   methods: {
+    makeOrder: function () {
+      var booking = JSON.parse(localStorage.getItem("allBookingList"));
+      var newBooking = [];
+      for (var i = 0; i < booking.length; i++) {
+        newBooking.push({
+          attire_type_id: booking[i].attireType.id,
+          service_id: booking[i].service.id,
+          quantity: booking[i].quantity,
+          service_hours: booking[i].hour,
+        });
+      }
+
+      // console.log(booking);
+      this.customerOrder.push({
+        customer_id: "0ae26c8b-8426-4056-8223-d1afb4df443d",
+        customer_name: this.customerName,
+        customer_phone: this.customerPhoneNumber,
+        customer_email: this.customerEmail,
+        address: this.customerAddress,
+        payment_type: this.paymentType,
+        delivery_method_id: this.deliveryType,
+        booking: {
+          ...newBooking,
+        },
+      });
+      console.log(this.customerOrder);
+    axios.post(api + "admin/booking", {
+        customer_name: this.customerName,
+        customer_phone: this.customerPhoneNumber,
+        customer_email: this.customerEmail,
+        address: this.customerAddress,
+        payment_type: this.paymentType,
+        delivery_method_id: this.deliveryType,
+        booking: {
+          ...newBooking,
+        },
+    }, {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.token}`,
+        },
+      }).then(response => {
+        console.log(response);
+      })
+    },
     /**
      * Search the table data with search input
      */
@@ -263,30 +488,31 @@ export default {
         this.serviceMethodCost = 0;
       } else {
         axios
-        .get(
-          api +
-            `admin/service-method-cost/${this.serviceHours}/${this.serviceType.id}/${this.attireType.group}`,
-          {
-            headers: {
-              Authorization: `Bearer ${this.$store.state.token}`,
-            },
-          }
-        )
-        .then((response) => {
-          if (response.data.data == null) {
-            this.error = "Inform the administrator to add pricing for this service hour. Note the service type and attire type.";
-          } else {
-            this.serviceMethodCost = response.data.data.cost;
-          }
-        });
+          .get(
+            api +
+              `admin/service-method-cost/${this.serviceHours}/${this.serviceType.id}/${this.attireType.group}`,
+            {
+              headers: {
+                Authorization: `Bearer ${this.$store.state.token}`,
+              },
+            }
+          )
+          .then((response) => {
+            if (response.data.data == null) {
+              this.error =
+                "Inform the administrator to add pricing for this service hour. Note the service type and attire type.";
+            } else {
+              this.serviceMethodCost = response.data.data.cost;
+            }
+          });
       }
     },
 
-  /**
-   * 
-   */
+    /**
+     *
+     */
     getServiceCost() {
-        axios
+      axios
         .get(
           api +
             `admin/service-cost/${this.serviceType.id}/${this.attireType.id}`,
@@ -297,9 +523,9 @@ export default {
           }
         )
         .then((response) => {
-          console.log(this.serviceType)
+          console.log(this.serviceType);
           if (response.status == 201) {
-            if (typeof response.data.data ===  'undefined') {
+            if (typeof response.data.data === "undefined") {
               this.error = response.data.message;
             } else {
               this.serviceCost = response.data.data;
@@ -308,9 +534,7 @@ export default {
             this.error = "Something went wrong";
           }
         });
-      
     },
-      
 
     // creating booking
     createBooking() {
@@ -318,7 +542,7 @@ export default {
         id: this.bookingList.length + 1,
         attireType: this.attireType,
         hour: this.serviceHours,
-        service: this.serviceType.title,
+        service: this.serviceType,
         quantity: this.quantity,
         cost: this.serviceCost,
         totalCost: this.totalServiceCost,
@@ -335,9 +559,7 @@ export default {
     getBookingListFromStorage() {
       if (localStorage.getItem("allBookingList")) {
         try {
-          this.bookingList = JSON.parse(
-            localStorage.getItem("allBookingList")
-          );
+          this.bookingList = JSON.parse(localStorage.getItem("allBookingList"));
         } catch (e) {
           console.log(e);
         }
@@ -347,18 +569,24 @@ export default {
     // delete booking from list
     deleteBooking(id) {
       alert(id);
-      console.log(id)
+      console.log(id);
       if (localStorage.getItem("allBookingList")) {
-          this.bookingList = JSON.parse(
-            localStorage.getItem("allBookingList"));
-          this.bookingList = this.bookingList.filter(item => item.id != id);
-          localStorage.setItem("allBookingList", JSON.stringify(this.bookingList));
-          this.getBookingListFromStorage()
-          console.log(this.bookingList);
+        this.bookingList = JSON.parse(localStorage.getItem("allBookingList"));
+        this.bookingList = this.bookingList.filter((item) => item.id != id);
+        localStorage.setItem(
+          "allBookingList",
+          JSON.stringify(this.bookingList)
+        );
+        this.getBookingListFromStorage();
+        console.log(this.bookingList);
       }
     },
     findAttire(event) {
-        console.log(event.target.options[event.target.options.selectedIndex].getAttribute('test'));
+      console.log(
+        event.target.options[event.target.options.selectedIndex].getAttribute(
+          "test"
+        )
+      );
     },
 
     addOrder: function () {
@@ -370,6 +598,7 @@ export default {
     // Set the initial number of items
     this.totalRows = this.items.length;
     this.getBookingListFromStorage();
+    console.log(this.getAllDeliveryMethods)
   },
 };
 </script>

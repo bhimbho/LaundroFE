@@ -209,11 +209,9 @@
 import Layout from "../layouts/main";
 import PageHeader from "@/components/page-header";
 import appConfig from "@/app.config";
-
 import { mapGetters } from "vuex";
 import axios from "axios";
 const api = process.env.VUE_APP_BASE_URL;
-
 export default {
   page: {
     title: "Forms Elements",
@@ -255,9 +253,8 @@ export default {
       serviceCost: "",
       serviceAttireGroup: "",
       serviceTime: "",
-      relatedServiceMethods: "",
+      relatedServiceMethods: {},
     
-
       message: false,
       isLoading: false,
       error: false,
@@ -276,12 +273,10 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
-
     // get single service
     getSingleService() {
       this.singleService = this.$store.getters.getSingleService(this.id);
     },
-
     // add service cost method for single service
     addServiceCostMethod: async function () {
       await axios
@@ -305,7 +300,7 @@ export default {
         })
     },
     getServiceCostMethod() {
-      axios.get(api + `admin/all-service-methods/${this.id}`, {
+      axios.get(api + `admin/all-service-methods/${this.singleService.id}`, {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
