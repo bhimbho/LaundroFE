@@ -38,10 +38,10 @@ export default [
   },
 
   {
-    path: '/transactions/add-transaction',
-    name: 'add-transaction',
+    path: '/transactions/transaction-details/:id',
+    name: 'transaction-details',
     meta: { authRequired: true },
-    component: () => import('../views/transactions/addTransaction'),
+    component: () => import('../views/transactions/viewTransactions'),
   },
 
   {
