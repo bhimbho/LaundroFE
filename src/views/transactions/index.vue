@@ -3,9 +3,9 @@ import Layout from '../layouts/main';
 import PageHeader from '@/components/page-header';
 import appConfig from '@/app.config';
 
-// import { mapGetters } from "vuex";
-import axios from "axios";
-const api = process.env.VUE_APP_BASE_URL;
+import { mapGetters, mapActions } from "vuex";
+// import axios from "axios";
+// const api = process.env.VUE_APP_BASE_URL;
 
 /**
  * Advanced table component
@@ -55,6 +55,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["getAllTransactions"]),
     /**
      * Total no. of records
      */
@@ -63,6 +64,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(["allTransactions"]),
     /**
      * Search the table data with search input
      */
@@ -72,16 +74,16 @@ export default {
       this.currentPage = 1;
     },
      // get all related service cost
-    allTransactions() {
-      axios.get(api + `admin/transactions`, {
-        headers: {
-          Authorization: `Bearer ${this.$store.state.token}`,
-        },
-      }).then(response => {
-        this.transactions = response.data.data.data
-      })
-    },
-
+    // allTransactions() {
+    //   axios.get(api + `admin/transactions`, {
+    //     headers: {
+    //       Authorization: `Bearer ${this.$store.state.token}`,
+    //     },
+    //   }).then(response => {
+    //     this.transactions = response.data.data.data
+    //   })
+    
+  
     // addTransaction: function () {
     //   this.$router.push('/transactions/add-transaction');
     // },
@@ -89,7 +91,7 @@ export default {
   mounted() {
     // Set the initial number of items
     this.totalRows = this.items.length;
-    this.allTransactions()
+    this.allTransactions();
   },
 };
 </script>
@@ -143,7 +145,7 @@ export default {
             <!-- Table -->
             <div class="table-responsive mb-0">
               <b-table
-                :items="transactions"
+                :items="this.getAllTransactions"
                 :fields="fields"
                 responsive="sm"
                 :per-page="perPage"
@@ -155,11 +157,12 @@ export default {
                 @filtered="onFiltered"
               >
               <template #cell(has_special)="has_special">
-                  <p v-if="has_special.value == false">48hrs</p>
+                  <p v-if="has_special.value == true">48hrs</p>
                   <p class="bg-danger text-white text-center" v-else>Yes [24/12/6hrs Service Required]</p>
               </template>
-                <template v-slot:cell(action)>
-                  <a
+                <template v-slot:cell(action)="data">
+                  <router-link
+                    :to="{ name: 'transaction-details', params: { id: data.item.id } }"
                     href="javascript:void(0);"
                     class="mr-3 text-primary"
                     v-b-tooltip.hover
@@ -167,7 +170,7 @@ export default {
                     title="View Transaction Orders"
                   >
                     <i class="mdi mdi-eye font-size-18"></i>
-                  </a>
+                  </router-link>
                   <!-- <a
                     href="javascript:void(0);"
                     class="text-danger"

@@ -19,7 +19,7 @@ export default new Vuex.Store({
     roles: null,
     deliveryMethods: null,
     attireGroup: null,
-    transactions: null
+    transactions: null,
   },
 
   getters: {
@@ -51,6 +51,10 @@ export default new Vuex.Store({
             },
             getRoles: (state) => state.roles,
             getAttireGroup: (state) => state.attireGroup,
+            getAllTransactions: (state) => state.transactions,
+            getSingleTransaction: (state) => (id) => {
+              return state.transactions.find((transaction) => transaction.id === id )
+            }
           },
           
           mutations: {
@@ -77,6 +81,9 @@ export default new Vuex.Store({
             },
             SET_ATTIRE_GROUP(state, attireGroup) {
               state.attireGroup = attireGroup
+            }, 
+            SET_TRANSACTIONS(state, transactions) {
+              state.transactions = transactions
             },
             clearUserData(state) {
               state.token = null;
@@ -164,6 +171,20 @@ export default new Vuex.Store({
               })
               console.log(response)
               commit("SET_ATTIRE_GROUP", response.data);
+            },
+
+            // fetch all transactions
+            async allTransactions({ commit }) {
+              const response = await axios.get(api + "admin/transactions", {
+                headers: {
+                  Authorization: `Bearer ${this.state.token}`,
+                },
+              })
+              console.log(response);
+              commit("SET_TRANSACTIONS", response.data.data.data)
+              // .then(response => {
+              //   this.transactions = response.data.data.data
+              // })
             },
 
 

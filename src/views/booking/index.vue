@@ -443,7 +443,6 @@ export default {
 
       // console.log(booking);
       this.customerOrder.push({
-        customer_id: "0ae26c8b-8426-4056-8223-d1afb4df443d",
         customer_name: this.customerName,
         customer_phone: this.customerPhoneNumber,
         customer_email: this.customerEmail,
@@ -462,9 +461,9 @@ export default {
         address: this.customerAddress,
         payment_type: this.paymentType,
         delivery_method_id: this.deliveryType,
-        booking: {
-          ...newBooking,
-        },
+        bookings: [
+          ...newBooking
+        ],
     }, {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
