@@ -101,6 +101,13 @@ export default [
   },
 
   {
+    path: '/view-transaction',
+    name: 'view-transaction',
+    meta: { authRequired: true },
+    component: () => import('../views/transactions/viewTransaction'),
+  },
+
+  {
     path: '/administrator',
     name: 'administrator',
     meta: { authRequired: true },
