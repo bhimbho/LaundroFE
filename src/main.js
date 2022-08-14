@@ -6,6 +6,31 @@ import Vuelidate from 'vuelidate'
 import VueSweetalert2 from 'vue-sweetalert2';
 import VueMask from 'v-mask'
 import VueYoutube from 'vue-youtube'
+import VueHtmlToPaper from 'vue-html-to-paper';
+
+import vSelect from 'vue-select'
+
+Vue.component('v-select', vSelect)
+import 'vue-select/dist/vue-select.css';
+
+const options = {
+  name: '_blank',
+  specs: [
+    'fullscreen=yes',
+    'titlebar=yes',
+    'scrollbars=yes'
+  ],
+  styles: [
+    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+    'https://unpkg.com/kidlat-css/css/kidlat.css',
+    './princxt.css'
+  ],
+  timeout: 1000, // default timeout before the print window appears
+  autoClose: false, // if false, the window will not close after printing
+  windowTitle: window.document.title, // override the window title
+}
+
+Vue.use(VueHtmlToPaper, options);
 
 import vco from "v-click-outside"
 

@@ -83,7 +83,7 @@ export default {
     //     this.transactions = response.data.data.data
     //   })
     
-  
+
     // addTransaction: function () {
     //   this.$router.push('/transactions/add-transaction');
     // },
@@ -157,7 +157,7 @@ export default {
                 @filtered="onFiltered"
               >
               <template #cell(has_special)="has_special">
-                  <p v-if="has_special.value == true">48hrs</p>
+                  <p v-if="has_special.value == false">48hrs</p>
                   <p class="bg-danger text-white text-center" v-else>Yes [24/12/6hrs Service Required]</p>
               </template>
                 <template v-slot:cell(action)="data">

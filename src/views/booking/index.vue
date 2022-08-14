@@ -14,11 +14,9 @@
                   variant="success"
                   class="my-2"
                   v-if="this.message"
-                  >{{ this.message }}</b-alert
+                  >Added successfully</b-alert
                 >
-                <b-alert show variant="danger" class="my-2" v-if="this.error">{{
-                  this.error
-                }}</b-alert>
+                <b-alert show variant="danger" class="my-2" v-if="this.error">Data Incomplete</b-alert>
                 <form class="" role="form">
                   <div class="row">
                     <div class="col-md-12 mb-2">
@@ -69,7 +67,7 @@
                     </div>
                     <div class="col-md-12 mb-2">
                       <label for="Service">Service Hours</label>
-                      <select
+                      <!-- <select
                         name=""
                         id=""
                         class="form-control"
@@ -84,7 +82,8 @@
                         >
                           {{ hour }}
                         </option>
-                      </select>
+                      </select> -->
+                      <v-select :options="this.allServiceHours" @change="getServiceMethodCost()" v-model="serviceHours"></v-select>
                     </div>
                     <div class="col-md-12">
                       <b-form-group
@@ -108,10 +107,11 @@
                           Service Cost: &#8358;{{ totalServiceCost }}
                         </h6></span
                       >
-                      <span
-                        ><h6>
+                      <span>
+                        <h6>
                           Quick Hours Cost: &#8358;{{ totalServiceMethodCost }}
-                        </h6></span
+                        </h6>
+                        </span
                       >
                     </div>
 
@@ -131,7 +131,7 @@
         </div>
       </div>
 
-      <div class="col-8">
+      <div class="col-8"  v-if="this.bookingList.length">
         <div class="card">
           <div class="card-body">
             <h4
@@ -166,7 +166,10 @@
                       <td>{{ index + 1 }}</td>
                       <td>{{ booking.attireType.title }}</td>
                       <td>{{ booking.service.title }}</td>
-                      <td>{{ booking.hour }}</td>
+                      <td>
+                        {{ booking.hour
+                        }}<b>(&#8358;{{ booking.serviceMethod.cost }})</b>
+                      </td>
                       <td>{{ booking.quantity }}</td>
                       <td>{{ booking.cost }}</td>
                       <td>{{ booking.totalCost }}</td>
@@ -183,6 +186,13 @@
                 </table>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-8" v-else>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="text-center">No bookings available</h4>
           </div>
         </div>
       </div>
@@ -294,7 +304,13 @@
                       class="form-control"
                     >
                       <option value="">Select Delivery Method</option>
-                      <option :value="delivery.id" v-for="delivery in this.getAllDeliveryMethods.data" :key="delivery.id">{{delivery.name}}</option>
+                      <option
+                        :value="delivery.id"
+                        v-for="delivery in this.getAllDeliveryMethods.data"
+                        :key="delivery.id"
+                      >
+                        {{ delivery.name }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -345,7 +361,7 @@
 import Layout from "../layouts/main";
 import PageHeader from "@/components/page-header";
 import appConfig from "@/app.config";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 const api = process.env.VUE_APP_BASE_URL;
 
@@ -415,7 +431,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getAllAttires", "getAllServices", "getAttireGroup", "getAllDeliveryMethods"]),
+    ...mapGetters([
+      "getAllAttires",
+      "getAllServices",
+      "getAttireGroup",
+      "getAllDeliveryMethods",
+    ]),
     /* Total no. of records*/
     rows() {
       return this.tableData.length;
@@ -425,10 +446,14 @@ export default {
     },
 
     totalServiceMethodCost() {
-      return this.serviceMethodCost * this.quantity;
+      if (!this.serviceMethodCost) {
+        return 0;
+      }
+      return this.serviceMethodCost.cost * this.quantity;
     },
   },
   methods: {
+    ...mapActions(["allAttires", "allServices"]),
     makeOrder: function () {
       var booking = JSON.parse(localStorage.getItem("allBookingList"));
       var newBooking = [];
@@ -438,39 +463,34 @@ export default {
           service_id: booking[i].service.id,
           quantity: booking[i].quantity,
           service_hours: booking[i].hour,
+          service_method_id: booking[i].serviceMethod.id,
         });
       }
-
-      // console.log(booking);
-      this.customerOrder.push({
-        customer_name: this.customerName,
-        customer_phone: this.customerPhoneNumber,
-        customer_email: this.customerEmail,
-        address: this.customerAddress,
-        payment_type: this.paymentType,
-        delivery_method_id: this.deliveryType,
-        booking: {
-          ...newBooking,
-        },
-      });
-      console.log(this.customerOrder);
-    axios.post(api + "admin/booking", {
-        customer_name: this.customerName,
-        customer_phone: this.customerPhoneNumber,
-        customer_email: this.customerEmail,
-        address: this.customerAddress,
-        payment_type: this.paymentType,
-        delivery_method_id: this.deliveryType,
-        bookings: [
-          ...newBooking
-        ],
-    }, {
-        headers: {
-          Authorization: `Bearer ${this.$store.state.token}`,
-        },
-      }).then(response => {
-        console.log(response);
-      })
+      axios
+        .post(
+          api + "admin/booking",
+          {
+            customer_name: this.customerName,
+            customer_phone: this.customerPhoneNumber,
+            customer_email: this.customerEmail,
+            address: this.customerAddress,
+            payment_type: this.paymentType,
+            delivery_method_id: this.deliveryType,
+            bookings: [...newBooking],
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.$store.state.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          if (response.data.message == "Operation Successful") {
+            localStorage.removeItem("allBookingList");
+            this.getBookingListFromStorage();
+          }
+        });
     },
     /**
      * Search the table data with search input
@@ -501,7 +521,7 @@ export default {
               this.error =
                 "Inform the administrator to add pricing for this service hour. Note the service type and attire type.";
             } else {
-              this.serviceMethodCost = response.data.data.cost;
+              this.serviceMethodCost = response.data.data;
             }
           });
       }
@@ -535,26 +555,30 @@ export default {
         });
     },
 
-    // creating booking
+    // creating booking inside localstorage
     createBooking() {
-      this.bookingList.unshift({
-        id: this.bookingList.length + 1,
-        attireType: this.attireType,
-        hour: this.serviceHours,
-        service: this.serviceType,
-        quantity: this.quantity,
-        cost: this.serviceCost,
-        totalCost: this.totalServiceCost,
-      });
-      console.log(this.bookingList);
-      localStorage.setItem("allBookingList", JSON.stringify(this.bookingList));
-      this.getBookingListFromStorage();
+      if (this.attireType == "" && this.serviceHours == "" && this.quantity == "" && this.serviceHours == "") {
+        this.error = true;
+      }
+      else {
+        this.bookingList.unshift({
+          id: this.bookingList.length + 1,
+          attireType: this.attireType,
+          hour: this.serviceHours,
+          service: this.serviceType,
+          quantity: this.quantity,
+          cost: this.serviceCost,
+          totalCost: this.totalServiceCost,
+          serviceMethod: this.serviceMethodCost,
+        });
+        localStorage.setItem("allBookingList", JSON.stringify(this.bookingList));
+        this.getBookingListFromStorage();
+        this.message = true;
+      }
+      
     },
 
-    // getBookingListFromStorage() {
-    //   this.showBookingList = JSON.parse(localStorage.getItem("allBookingList"));
-    //   console.log(this.showBookingList);
-    // },
+    // get booking list from local storage
     getBookingListFromStorage() {
       if (localStorage.getItem("allBookingList")) {
         try {
@@ -565,10 +589,8 @@ export default {
       }
     },
 
-    // delete booking from list
+    // delete booking from local storage
     deleteBooking(id) {
-      alert(id);
-      console.log(id);
       if (localStorage.getItem("allBookingList")) {
         this.bookingList = JSON.parse(localStorage.getItem("allBookingList"));
         this.bookingList = this.bookingList.filter((item) => item.id != id);
@@ -577,19 +599,7 @@ export default {
           JSON.stringify(this.bookingList)
         );
         this.getBookingListFromStorage();
-        console.log(this.bookingList);
       }
-    },
-    findAttire(event) {
-      console.log(
-        event.target.options[event.target.options.selectedIndex].getAttribute(
-          "test"
-        )
-      );
-    },
-
-    addOrder: function () {
-      this.$router.push("/order/add-order");
     },
   },
 
@@ -597,7 +607,8 @@ export default {
     // Set the initial number of items
     this.totalRows = this.items.length;
     this.getBookingListFromStorage();
-    console.log(this.getAllDeliveryMethods)
+    // this.allAttires();
+    // this.allServices();
   },
 };
 </script>
