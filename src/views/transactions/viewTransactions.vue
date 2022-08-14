@@ -136,15 +136,15 @@ export default {
                   <tbody>
                     <tr>
                       <td>Delivery Method:</td>
-                      <td>{{this.singleTransaction.delivery_method.name}}</td>
+                      <td v-if="this.singleTransaction.delivery_method">{{this.singleTransaction.delivery_method.name}}</td>
                     </tr>
                     <tr>
                       <td>Delivery Cost:</td>
-                      <td>&#8358;{{Number(this.singleTransaction.delivery_method.cost).toLocaleString()}}.00</td>
+                      <td v-if="this.singleTransaction.delivery_method">&#8358;{{Number(this.singleTransaction.delivery_method.cost).toLocaleString()}}.00</td>
                     </tr>
                     <tr>
                       <td>Delivery Times:</td>
-                      <td>{{this.singleTransaction.delivery_method.times}}</td>
+                      <td v-if="this.singleTransaction.delivery_method">{{this.singleTransaction.delivery_method.times}}</td>
                     </tr>
                     <tr>
                       <td>payment Type:</td>
@@ -186,8 +186,10 @@ export default {
                       <td>{{booking.quantity}}</td>
                       <td>{{booking.expected_collection_date}}</td>
                       <td>&#8358;{{Number(booking.service.service_cost.cost).toLocaleString()}}.00</td>
-                      <td>{{booking.service_method.hours}}</td>
-                      <td>&#8358;{{Number(booking.service_method.cost).toLocaleString()}}.00</td>
+                      <td v-if="booking.service_method">{{booking.service_method.hours}}</td>
+                      <td v-else>48</td>
+                      <td v-if="booking.service_method">&#8358;{{Number(booking.service_method.cost).toLocaleString()}}.00</td>
+                      <td v-else>&#8358;{{booking.service.service_cost.cost}}</td>
                       <td><b>&#8358;{{Number(booking.perBookingTotal).toLocaleString()}}.00</b></td>
                     </tr>
                     <tr>
@@ -207,7 +209,7 @@ export default {
       </div>
     </div>
 
-    <div
+    <!-- <div
       class="" id="printArea"
       style="min-height: 450px"
     >
@@ -303,8 +305,7 @@ export default {
                   style="font-size: 10px; font-weight: 400"
                 >
                   &#8358;{{Number(booking.service_method.cost) + Number(booking.service.service_cost.cost)}}
-                  <!-- &#8358;{{Number().toLocaleString()}}.00 -->
-                </div>
+                 </div>
                 <div
                   class="card-table-item"
                   style="font-size: 10px; font-weight: 400"
@@ -353,6 +354,6 @@ export default {
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </Layout>
 </template>
