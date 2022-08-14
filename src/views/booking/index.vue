@@ -72,7 +72,7 @@
                         v-model="serviceHours"
                         @change="getServiceMethodCost()"
                       >
-                        <option value="48" selected>48</option>
+                        <option value="48">48</option>
                         <option
                           :value="hour"
                           v-for="hour in this.allServiceHours"
@@ -166,17 +166,16 @@
                       <td>{{ booking.service.title }}</td>
                       <td>
                         {{ booking.hour }}
-                        <span v-if="booking.serviceMethod.cost"
+                        <span v-if="booking.serviceMethod"
                           ><b
                             >(&#8358;{{ booking.serviceMethod.cost }})</b
-                          ></span
-                        >
+                          ></span>
                         <span v-else>(&#8358;{{ booking.serviceMethod }})</span>
                       </td>
                       <td>{{ booking.quantity }}</td>
                       <td>{{ booking.cost }}</td>
                       <td>{{ booking.totalCost }}</td>
-                      <td v-if="booking.serviceMethod.cost">
+                      <td v-if="booking.serviceMethod">
                         &#8358;{{
                           booking.serviceMethod.cost * booking.quantity +
                           booking.totalCost
@@ -430,7 +429,7 @@ export default {
       allServiceHours: [24, 12, 6],
       attireType: "",
       serviceType: "",
-      serviceHours: "",
+      serviceHours: 48,
       quantity: 1,
       serviceCost: 0,
       serviceMethodCost: null,
@@ -589,6 +588,7 @@ export default {
      */
     getServiceCost() {
       this.message = false;
+      this.error = ""
       axios
         .get(
           api +
@@ -610,6 +610,14 @@ export default {
           } else {
             this.error = "Something went wrong";
           }
+          // if (response.error) {
+          //   // this.error = response.data.error
+          //   // console.log(response.error);
+          //   console.log("error in fetching data");
+          // }
+        }).catch((error) => {
+          this.error = error.response.data.error;
+          this.serviceCost = 0
         });
     },
 
@@ -639,13 +647,13 @@ export default {
         );
         this.getBookingListFromStorage();
         this.message = true;
-        this.attireType = "";
-        this.serviceType = "";
-        this.quantity = 1;
-        this.serviceHours = "";
-        this.serviceMethod = 0;
-        this.totalServiceCost = 0;
-        this.totalServiceMethodCost = 0;
+        // this.attireType = "";
+        // this.serviceType = "";
+        // this.quantity = 1;
+        // this.serviceHours = "";
+        // this.serviceMethod = 0;
+        // this.totalServiceCost = 0;
+        // this.totalServiceMethodCost = 0;
       }
     },
 
