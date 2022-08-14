@@ -67,7 +67,7 @@
                     </div>
                     <div class="col-md-12 mb-2">
                       <label for="Service">Service Hours</label>
-                      <!-- <select
+                      <select
                         name=""
                         id=""
                         class="form-control"
@@ -82,8 +82,8 @@
                         >
                           {{ hour }}
                         </option>
-                      </select> -->
-                      <v-select :options="this.allServiceHours" @change="getServiceMethodCost()" v-model="serviceHours"></v-select>
+                      </select>
+                      <!-- <v-select :options="this"></v-select> -->
                     </div>
                     <div class="col-md-12">
                       <b-form-group
