@@ -318,6 +318,8 @@ export default {
     // add service
     addService() {
       this.isLoading = true;
+      if (this.serviceTitle) {
+        this.error = false
       axios
         .post(
           api + "admin/services",
@@ -343,6 +345,11 @@ export default {
           this.serviceTitle = "";
           console.log(error.response.data);
         });
+      }
+      else {
+        this.error = true;
+        this.isLoading = false;
+      }
     },
 
     // get single service

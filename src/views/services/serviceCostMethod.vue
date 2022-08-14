@@ -253,7 +253,7 @@ export default {
       serviceCost: "",
       serviceAttireGroup: "",
       serviceTime: "",
-      relatedServiceMethods: {},
+      relatedServiceMethods: [],
     
       message: false,
       isLoading: false,
@@ -299,6 +299,7 @@ export default {
            this.getServiceCostMethod();
         })
     },
+    // get all service cost method
     getServiceCostMethod() {
       axios.get(api + `admin/all-service-methods/${this.singleService.id}`, {
         headers: {

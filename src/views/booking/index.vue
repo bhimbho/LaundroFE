@@ -13,7 +13,7 @@
                   >Added successfully</b-alert
                 >
                 <b-alert show variant="danger" class="my-2" v-if="this.error"
-                  >Data Incomplete</b-alert
+                  >{{this.error}}</b-alert
                 >
                 <form class="" role="form">
                   <div class="row">
@@ -536,6 +536,7 @@ export default {
 
     // get service cost from endpoint
     getServiceMethodCost() {
+      this.message = false;
       if (this.serviceHours == 48) {
         this.serviceMethodCost = 0;
       } else {
@@ -564,6 +565,7 @@ export default {
      *
      */
     getServiceCost() {
+      this.message = false;
       axios
         .get(
           api +
@@ -592,7 +594,7 @@ export default {
     createBooking() {
       if (
         this.attireType == "" &&
-        this.serviceHours == "" &&
+        this.serviceType == "" &&
         this.quantity == "" &&
         this.serviceHours == ""
       ) {
@@ -614,6 +616,13 @@ export default {
         );
         this.getBookingListFromStorage();
         this.message = true;
+        this.attireType = ""
+        this.serviceType = ""
+        this.quantity = 1 
+        this.serviceHours = ""
+        this.serviceMethod = 0
+        this.totalServiceCost = 0;
+        this.totalServiceMethodCost = 0;
       }
     },
 

@@ -15,16 +15,16 @@
                   variant="success"
                   class="my-2"
                   v-if="this.message"
-                  >Added successfully</b-alert
+                  >{{this.message}}</b-alert
                 >
                 <b-alert show variant="danger" class="my-2" v-if="this.error"
                   >{{this.newMessage}}</b-alert
                 >
+                    <b-alert show variant="danger" class="my-2" v-if="this.error">{{ error.message.error }}</b-alert>
+                <b-alert show variant="danger" class="my-2" v-if="this.newError">{{this.newError}}</b-alert>
                 <form class="" role="form">
                   <div class="row">
                     <div class="col-md-12">
-                      <b-alert show variant="success" class="my-2" v-if="this.message">{{this.message}}</b-alert>
-                      <b-alert show variant="danger" class="my-2" v-if="this.error">{{ error.message.error }}</b-alert>
                       <b-form-group
                         id="example text"
                         label="Service Title"
@@ -215,7 +215,7 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      title: "Services",
+      title: "Services Cost",
       items: [
         {
           text: "Dashboard",
@@ -250,6 +250,7 @@ export default {
       message: false,
       isLoading: false,
       error: false,
+      newError: "",
       newMessage: "",
     };
   },
@@ -275,6 +276,7 @@ export default {
    
     addServiceCost: async function () {
       this.isLoading = true;
+      if (this.serviceAttireId && this.serviceCost) {
       await axios
         .post(
           api + "admin/service-cost",
@@ -290,14 +292,18 @@ export default {
           }
         )
         .then((response) => {
-          if (response.status === 403) {
-            this.error = response.data.error;
-          } else {
             this.message = response.data.message;
              this.error =false;
+             this.newError = ""
             this.getRelatedServiceCosts();
-          }
-        });
+          }).catch((error)=> {
+            this.error = error.response.data.error;
+          });
+      }
+      else {
+        this.newError = "Invalid Data"
+        this.isLoading = false
+      }
     },
 
     // get all related service cost
