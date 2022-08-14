@@ -1,0 +1,13 @@
+body {
+  background: red !important;
+}
+@media print {
+  body {
+    background: red !important;
+  }
+  @page {
+    width: 300px !important;
+    /* size: landscape !important; */
+    /* background: red !important; */
+  }
+}
