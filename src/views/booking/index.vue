@@ -12,9 +12,9 @@
                 <b-alert show variant="success" class="my-2" v-if="this.message"
                   >Added successfully</b-alert
                 >
-                <b-alert show variant="danger" class="my-2" v-if="this.error"
-                  >{{this.error}}</b-alert
-                >
+                <b-alert show variant="danger" class="my-2" v-if="this.error">{{
+                  this.error
+                }}</b-alert>
                 <form class="" role="form">
                   <div class="row">
                     <div class="col-md-12 mb-2">
@@ -72,7 +72,7 @@
                         v-model="serviceHours"
                         @change="getServiceMethodCost()"
                       >
-                        <option value="">Select Service Hours</option>
+                        <option value="48" selected>48</option>
                         <option
                           :value="hour"
                           v-for="hour in this.allServiceHours"
@@ -222,8 +222,12 @@
       title-class="font-18"
       ref="my-modal"
     >
-      <b-alert show variant="success" class="my-2" v-if="this.orderMessage">Booking Successful</b-alert>
-      <b-alert show variant="danger" class="my-2" v-if="this.orderError">Incomplete Details</b-alert>
+      <b-alert show variant="success" class="my-2" v-if="this.orderMessage"
+        >Booking Successful</b-alert
+      >
+      <b-alert show variant="danger" class="my-2" v-if="this.orderError"
+        >Incomplete Details</b-alert
+      >
 
       <form class="" role="form">
         <div class="row">
@@ -284,7 +288,10 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-12 mb-2" v-if="customerType == 'existing-customer'">
+                  <div
+                    class="col-md-12 mb-2"
+                    v-if="customerType == 'existing-customer'"
+                  >
                     <div class="row">
                       <div class="col-md-12">
                         <label for="">Select Customer</label>
@@ -295,52 +302,52 @@
                     </div>
                   </div>
                   <div class="col-md-6">
-                        <b-form-group
-                          id="example text"
-                          label="Customer Address"
-                          label-for="Customer Address"
-                        >
-                          <b-form-input
-                            for="text"
-                            type="text"
-                            placeholder="Customer Address"
-                            v-model="customerAddress"
-                          ></b-form-input>
-                        </b-form-group>
-                      </div>
-                      <div class="col-md-6 mb-2">
-                        <label for="">Payment Type</label>
-                        <select
-                          name=""
-                          id=""
-                          v-model="paymentType"
-                          class="form-control"
-                        >
-                          <option value="">Select Payment Type</option>
-                          <option value="transfer">Transfer</option>
-                          <option value="cash">Cash</option>
-                          <option value="cheque">Cheque</option>
-                          <option value="card">Card</option>
-                        </select>
-                      </div>
-                      <div class="col-md-6 mb-2">
-                        <label for="">Delivery Method</label>
-                        <select
-                          name=""
-                          id=""
-                          v-model="deliveryType"
-                          class="form-control"
-                        >
-                          <option value="">Select Delivery Method</option>
-                          <option
-                            :value="delivery.id"
-                            v-for="delivery in this.getAllDeliveryMethods.data"
-                            :key="delivery.id"
-                          >
-                            {{ delivery.name }}
-                          </option>
-                        </select>
-                      </div>
+                    <b-form-group
+                      id="example text"
+                      label="Customer Address"
+                      label-for="Customer Address"
+                    >
+                      <b-form-input
+                        for="text"
+                        type="text"
+                        placeholder="Customer Address"
+                        v-model="customerAddress"
+                      ></b-form-input>
+                    </b-form-group>
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    <label for="">Payment Type</label>
+                    <select
+                      name=""
+                      id=""
+                      v-model="paymentType"
+                      class="form-control"
+                    >
+                      <option value="">Select Payment Type</option>
+                      <option value="transfer">Transfer</option>
+                      <option value="cash">Cash</option>
+                      <option value="cheque">Cheque</option>
+                      <option value="card">Card</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    <label for="">Delivery Method</label>
+                    <select
+                      name=""
+                      id=""
+                      v-model="deliveryType"
+                      class="form-control"
+                    >
+                      <option value="">Select Delivery Method</option>
+                      <option
+                        :value="delivery.id"
+                        v-for="delivery in this.getAllDeliveryMethods.data"
+                        :key="delivery.id"
+                      >
+                        {{ delivery.name }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
               </form>
             </div>
@@ -420,7 +427,7 @@ export default {
         { key: "salary", sortable: true },
         { key: "action" },
       ],
-      allServiceHours: [48, 24, 12, 6],
+      allServiceHours: [24, 12, 6],
       attireType: "",
       serviceType: "",
       serviceHours: "",
@@ -477,15 +484,32 @@ export default {
       this.isOrderLoading = true;
       var booking = JSON.parse(localStorage.getItem("allBookingList"));
       var newBooking = [];
-      for (var i = 0; i < booking.length; i++) {
-        newBooking.push({
-          attire_type_id: booking[i].attireType.id,
-          service_id: booking[i].service.id,
-          quantity: booking[i].quantity,
-          service_hours: booking[i].hour,
-          service_method_id: booking[i].serviceMethod.id,
-        });
+      
+        for (var i = 0; i < booking.length; i++) {
+          if(booking[i].serviceMethod) {
+            newBooking.push({
+              attire_type_id: booking[i].attireType.id,
+              service_id: booking[i].service.id,
+              quantity: booking[i].quantity,
+              service_hours: booking[i].hour,
+              service_method_id: booking[i].serviceMethod.id,
+            });
+        }
+        else {
+        // for (var j = 0; j < booking.length; j++) {
+          newBooking.push({
+            attire_type_id: booking[i].attireType.id,
+            service_id: booking[i].service.id,
+            quantity: booking[i].quantity,
+            service_hours: booking[i].hour,
+            service_method_id: null,
+          });
+        // }
       }
+      }
+      
+      
+      console.log(newBooking)
       axios
         .post(
           api + "admin/booking",
@@ -510,19 +534,18 @@ export default {
             localStorage.removeItem("allBookingList");
             this.getBookingListFromStorage();
             this.orderMessage = true;
-            this.customerName = ""
-            this.customerPhoneNumber = ""
-            this.customerEmail = ""
-            this.customerAddress = ""
-            this.paymentType = ""
-            this.deliveryType = ""
-            this.isOrderLoading = false
+            this.customerName = "";
+            this.customerPhoneNumber = "";
+            this.customerEmail = "";
+            this.customerAddress = "";
+            this.paymentType = "";
+            this.deliveryType = "";
+            this.isOrderLoading = false;
           }
-          // if (response.data.message !== "Operation Successful") {
-          // }
-        }).catch(() => {
-            this.orderError = true
-            this.isOrderLoading = false
+        })
+        .catch(() => {
+          this.orderError = true;
+          this.isOrderLoading = false;
         });
     },
     /**
@@ -616,11 +639,11 @@ export default {
         );
         this.getBookingListFromStorage();
         this.message = true;
-        this.attireType = ""
-        this.serviceType = ""
-        this.quantity = 1 
-        this.serviceHours = ""
-        this.serviceMethod = 0
+        this.attireType = "";
+        this.serviceType = "";
+        this.quantity = 1;
+        this.serviceHours = "";
+        this.serviceMethod = 0;
         this.totalServiceCost = 0;
         this.totalServiceMethodCost = 0;
       }

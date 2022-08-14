@@ -2,7 +2,6 @@
 import Layout from "../layouts/main";
 import PageHeader from "@/components/page-header";
 import appConfig from "@/app.config";
-// import mapGetters from "vuex"
 import printJS from 'print-js'
 
 export default {
@@ -30,9 +29,6 @@ export default {
       checked: true,
       singleTransaction: [],
     };
-  },
-  computed: {
-    // ...mapGetters(["getSingleTransaction"]),
   },
   methods: {
     getSingleTransaction() {
