@@ -9,14 +9,12 @@
             <h4 class="card-title">Add Booking</h4>
             <div class="row">
               <div class="col-12">
-                <b-alert
-                  show
-                  variant="success"
-                  class="my-2"
-                  v-if="this.message"
+                <b-alert show variant="success" class="my-2" v-if="this.message"
                   >Added successfully</b-alert
                 >
-                <b-alert show variant="danger" class="my-2" v-if="this.error">Data Incomplete</b-alert>
+                <b-alert show variant="danger" class="my-2" v-if="this.error"
+                  >Data Incomplete</b-alert
+                >
                 <form class="" role="form">
                   <div class="row">
                     <div class="col-md-12 mb-2">
@@ -111,8 +109,7 @@
                         <h6>
                           Quick Hours Cost: &#8358;{{ totalServiceMethodCost }}
                         </h6>
-                        </span
-                      >
+                      </span>
                     </div>
 
                     <div class="col-md-12 mt-2">
@@ -131,7 +128,7 @@
         </div>
       </div>
 
-      <div class="col-8"  v-if="this.bookingList.length">
+      <div class="col-8" v-if="this.bookingList.length">
         <div class="card">
           <div class="card-body">
             <h4
@@ -154,6 +151,7 @@
                       <th>Service Hours</th>
                       <th>Quantity</th>
                       <th>Cost</th>
+                      <th>Subtotal Cost</th>
                       <th>Total Cost</th>
                       <th>Action</th>
                     </tr>
@@ -167,12 +165,29 @@
                       <td>{{ booking.attireType.title }}</td>
                       <td>{{ booking.service.title }}</td>
                       <td>
-                        {{ booking.hour
-                        }}<b>(&#8358;{{ booking.serviceMethod.cost }})</b>
+                        {{ booking.hour }}
+                        <span v-if="booking.serviceMethod.cost"
+                          ><b
+                            >(&#8358;{{ booking.serviceMethod.cost }})</b
+                          ></span
+                        >
+                        <span v-else>(&#8358;{{ booking.serviceMethod }})</span>
                       </td>
                       <td>{{ booking.quantity }}</td>
                       <td>{{ booking.cost }}</td>
                       <td>{{ booking.totalCost }}</td>
+                      <td v-if="booking.serviceMethod.cost">
+                        &#8358;{{
+                          booking.serviceMethod.cost * booking.quantity +
+                          booking.totalCost
+                        }}
+                      </td>
+                      <td v-else>
+                        {{
+                          booking.serviceMethod * booking.quantity +
+                          booking.totalCost
+                        }}
+                      </td>
                       <td>
                         <button
                           class="btn btn-sm btn-danger"
@@ -207,9 +222,8 @@
       title-class="font-18"
       ref="my-modal"
     >
-      <!-- <b-alert show variant="success" class="my-2" v-if="this.newMessage">{{
-        this.newMessage
-      }}</b-alert> -->
+      <b-alert show variant="success" class="my-2" v-if="this.orderMessage">Booking Successful</b-alert>
+      <b-alert show variant="danger" class="my-2" v-if="this.orderError">Incomplete Details</b-alert>
 
       <form class="" role="form">
         <div class="row">
@@ -222,134 +236,133 @@
           </div>
           <div class="row">
             <div class="col-md-12" style="padding: 20px">
-              <form action="" v-if="customerType == 'new-customer'">
+              <form action="">
                 <div class="row">
-                  <div class="col-md-6">
-                    <b-form-group
-                      id="example text"
-                      label="Customer Name"
-                      label-for="Customer Name"
-                    >
-                      <b-form-input
-                        for="text"
-                        type="text"
-                        placeholder="Customer Name"
-                        v-model="customerName"
-                      ></b-form-input>
-                    </b-form-group>
+                  <div class="col-md-12" v-if="customerType == 'new-customer'">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <b-form-group
+                          id="example text"
+                          label="Customer Name"
+                          label-for="Customer Name"
+                        >
+                          <b-form-input
+                            for="text"
+                            type="text"
+                            placeholder="Customer Name"
+                            v-model="customerName"
+                          ></b-form-input>
+                        </b-form-group>
+                      </div>
+                      <div class="col-md-6">
+                        <b-form-group
+                          id="example text"
+                          label="Customer Phone Number"
+                          label-for="Customer Phone Number"
+                        >
+                          <b-form-input
+                            for="text"
+                            type="text"
+                            placeholder="Customer Phone Number"
+                            v-model="customerPhoneNumber"
+                          ></b-form-input>
+                        </b-form-group>
+                      </div>
+                      <div class="col-md-12">
+                        <b-form-group
+                          id="example text"
+                          label="Customer Email Address"
+                          label-for="Customer Email Address"
+                        >
+                          <b-form-input
+                            for="text"
+                            type="text"
+                            placeholder="Customer Email Address"
+                            v-model="customerEmail"
+                          ></b-form-input>
+                        </b-form-group>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 mb-2" v-if="customerType == 'existing-customer'">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label for="">Select Customer</label>
+                        <select name="" id="" class="form-control">
+                          <option value="">Select Customer</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
                   <div class="col-md-6">
-                    <b-form-group
-                      id="example text"
-                      label="Customer Phone Number"
-                      label-for="Customer Phone Number"
-                    >
-                      <b-form-input
-                        for="text"
-                        type="text"
-                        placeholder="Customer Phone Number"
-                        v-model="customerPhoneNumber"
-                      ></b-form-input>
-                    </b-form-group>
-                  </div>
-                  <div class="col-md-6">
-                    <b-form-group
-                      id="example text"
-                      label="Customer Email Address"
-                      label-for="Customer Email Address"
-                    >
-                      <b-form-input
-                        for="text"
-                        type="text"
-                        placeholder="Customer Email Address"
-                        v-model="customerEmail"
-                      ></b-form-input>
-                    </b-form-group>
-                  </div>
-                  <div class="col-md-6">
-                    <b-form-group
-                      id="example text"
-                      label="Customer Address"
-                      label-for="Customer Address"
-                    >
-                      <b-form-input
-                        for="text"
-                        type="text"
-                        placeholder="Customer Address"
-                        v-model="customerAddress"
-                      ></b-form-input>
-                    </b-form-group>
-                  </div>
-                  <div class="col-md-6 mb-2">
-                    <label for="">Payment Type</label>
-                    <select
-                      name=""
-                      id=""
-                      v-model="paymentType"
-                      class="form-control"
-                    >
-                      <option value="">Select Payment Type</option>
-                      <option value="transfer">Transfer</option>
-                      <option value="cash">Cash</option>
-                      <option value="cheque">Cheque</option>
-                      <option value="card">Card</option>
-                    </select>
-                  </div>
-                  <div class="col-md-6 mb-2">
-                    <label for="">Delivery Method</label>
-                    <select
-                      name=""
-                      id=""
-                      v-model="deliveryType"
-                      class="form-control"
-                    >
-                      <option value="">Select Delivery Method</option>
-                      <option
-                        :value="delivery.id"
-                        v-for="delivery in this.getAllDeliveryMethods.data"
-                        :key="delivery.id"
-                      >
-                        {{ delivery.name }}
-                      </option>
-                    </select>
-                  </div>
+                        <b-form-group
+                          id="example text"
+                          label="Customer Address"
+                          label-for="Customer Address"
+                        >
+                          <b-form-input
+                            for="text"
+                            type="text"
+                            placeholder="Customer Address"
+                            v-model="customerAddress"
+                          ></b-form-input>
+                        </b-form-group>
+                      </div>
+                      <div class="col-md-6 mb-2">
+                        <label for="">Payment Type</label>
+                        <select
+                          name=""
+                          id=""
+                          v-model="paymentType"
+                          class="form-control"
+                        >
+                          <option value="">Select Payment Type</option>
+                          <option value="transfer">Transfer</option>
+                          <option value="cash">Cash</option>
+                          <option value="cheque">Cheque</option>
+                          <option value="card">Card</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6 mb-2">
+                        <label for="">Delivery Method</label>
+                        <select
+                          name=""
+                          id=""
+                          v-model="deliveryType"
+                          class="form-control"
+                        >
+                          <option value="">Select Delivery Method</option>
+                          <option
+                            :value="delivery.id"
+                            v-for="delivery in this.getAllDeliveryMethods.data"
+                            :key="delivery.id"
+                          >
+                            {{ delivery.name }}
+                          </option>
+                        </select>
+                      </div>
                 </div>
               </form>
             </div>
           </div>
-
-          <form action="" v-if="customerType == 'existing-customer'">
-            <div class="col-md-12">
-              <b-form-group
-                id="example text"
-                label="Customer Address"
-                label-for="Customer Address"
-              >
-                <b-form-input
-                  for="text"
-                  type="text"
-                  placeholder="Customer Address"
-                ></b-form-input>
-              </b-form-group>
-            </div>
-          </form>
 
           <div class="col-md-12 mt-4">
             <b-button
               variant="primary"
               class="btn btn-block"
               @click="makeOrder()"
+              v-show="!isOrderLoading"
               >Make Order</b-button
             >
-            <!-- <b-button
-              v-show="isLoading"
+            <b-button
+              v-show="isOrderLoading"
               variant="primary"
               class="btn btn-block waves-effect waves-light"
               disabled
             >
               <b-spinner small type="grow"></b-spinner>
               Loading...
-            </b-button> -->
+            </b-button>
           </div>
         </div>
       </form>
@@ -419,6 +432,9 @@ export default {
       error: false,
       message: false,
       isLoading: false,
+      isOrderLoading: false,
+      orderError: false,
+      orderMessage: false,
 
       customerType: "",
       customerName: "",
@@ -451,10 +467,14 @@ export default {
       }
       return this.serviceMethodCost.cost * this.quantity;
     },
+    // grandTotal() {
+    //   this.bookingList.reduce
+    // }
   },
   methods: {
     ...mapActions(["allAttires", "allServices"]),
     makeOrder: function () {
+      this.isOrderLoading = true;
       var booking = JSON.parse(localStorage.getItem("allBookingList"));
       var newBooking = [];
       for (var i = 0; i < booking.length; i++) {
@@ -489,7 +509,20 @@ export default {
           if (response.data.message == "Operation Successful") {
             localStorage.removeItem("allBookingList");
             this.getBookingListFromStorage();
+            this.orderMessage = true;
+            this.customerName = ""
+            this.customerPhoneNumber = ""
+            this.customerEmail = ""
+            this.customerAddress = ""
+            this.paymentType = ""
+            this.deliveryType = ""
+            this.isOrderLoading = false
           }
+          // if (response.data.message !== "Operation Successful") {
+          // }
+        }).catch(() => {
+            this.orderError = true
+            this.isOrderLoading = false
         });
     },
     /**
@@ -557,10 +590,14 @@ export default {
 
     // creating booking inside localstorage
     createBooking() {
-      if (this.attireType == "" && this.serviceHours == "" && this.quantity == "" && this.serviceHours == "") {
+      if (
+        this.attireType == "" &&
+        this.serviceHours == "" &&
+        this.quantity == "" &&
+        this.serviceHours == ""
+      ) {
         this.error = true;
-      }
-      else {
+      } else {
         this.bookingList.unshift({
           id: this.bookingList.length + 1,
           attireType: this.attireType,
@@ -571,11 +608,13 @@ export default {
           totalCost: this.totalServiceCost,
           serviceMethod: this.serviceMethodCost,
         });
-        localStorage.setItem("allBookingList", JSON.stringify(this.bookingList));
+        localStorage.setItem(
+          "allBookingList",
+          JSON.stringify(this.bookingList)
+        );
         this.getBookingListFromStorage();
         this.message = true;
       }
-      
     },
 
     // get booking list from local storage
