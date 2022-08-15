@@ -119,7 +119,7 @@ export default {
       >
         <div
           class="card"
-          style="max-width: 300px; margin: 0 auto; width: 300px; height: 100%"
+          style="max-width: 300px; width: 300px; height: 100%"
         >
           <div class="card-body" style="padding: 10px">
             <div class="card-image d-flex justify-content-center">
