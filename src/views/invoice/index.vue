@@ -71,10 +71,8 @@ export default {
 
     print() {
       console.log('Printing started');
-      // Get HTML to print from element
       const prtHtml = document.getElementById('print').innerHTML;
 
-      // Get all stylesheets HTML
       let stylesHtml = '';
       for (const node of [
         ...document.querySelectorAll('link[rel="stylesheet"], style'),
@@ -82,7 +80,6 @@ export default {
         stylesHtml += node.outerHTML;
       }
 
-      // Open the print window
       const WinPrint = window.open(
         '',
         '',
@@ -90,14 +87,14 @@ export default {
       );
 
       WinPrint.document.write(`<!DOCTYPE html>
-<html>
-  <head>
-    ${stylesHtml}
-  </head>
-  <body>
-    ${prtHtml}
-  </body>
-</html>`);
+        <html>
+          <head>
+            ${stylesHtml}
+          </head>
+          <body>
+            ${prtHtml}
+          </body>
+        </html>`);
 
       window.setTimeout(() => {
         WinPrint.document.close();
