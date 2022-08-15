@@ -68,6 +68,44 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
+
+    print() {
+      console.log('Printing started');
+      // Get HTML to print from element
+      const prtHtml = document.getElementById('print').innerHTML;
+
+      // Get all stylesheets HTML
+      let stylesHtml = '';
+      for (const node of [
+        ...document.querySelectorAll('link[rel="stylesheet"], style'),
+      ]) {
+        stylesHtml += node.outerHTML;
+      }
+
+      // Open the print window
+      const WinPrint = window.open(
+        '',
+        '',
+        'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0'
+      );
+
+      WinPrint.document.write(`<!DOCTYPE html>
+<html>
+  <head>
+    ${stylesHtml}
+  </head>
+  <body>
+    ${prtHtml}
+  </body>
+</html>`);
+
+      window.setTimeout(() => {
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+      }, 3000);
+    },
   },
 };
 </script>
@@ -76,11 +114,16 @@ export default {
   <Layout>
     <PageHeader :title="title" :items="items" />
     <div class="row justify-content-center">
+      <button @click="print()">print</button>
       <div
+        id="print"
         class="col-md-6"
-        style="max-width: 300px; flex-basis: 300px; min-height: 450px"
+        style="flex-basis: 300px; min-height: 450px"
       >
-        <div class="card" style="height: 100%">
+        <div
+          class="card"
+          style="max-width: 300px; margin: 0 auto; width: 300px; height: 100%"
+        >
           <div class="card-body" style="padding: 10px">
             <div class="card-image d-flex justify-content-center">
               <img
