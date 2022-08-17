@@ -686,8 +686,8 @@ export default {
     // Set the initial number of items
     this.totalRows = this.items.length;
     this.getBookingListFromStorage();
-    // this.allAttires();
-    // this.allServices();
+    this.allAttires();
+    this.allServices();
   },
 };
 </script>
