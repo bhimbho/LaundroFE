@@ -363,17 +363,35 @@ export default {
                 >
                   <span>{{ booking.attire_type.title }} </span>
                   <span>({{ booking.service.title }}) </span>
-                  <span>{{ booking.service_method.hours }} </span>
+                  <span v-if="booking.service_method">{{ booking.service_method.hours }} </span>
+                  <span v-else>48</span>
                 </div>
                 <div
                   class="card-table-item"
                   style="font-size: 10px; font-weight: 400"
+                  v-if="booking.service_method"
                 >
                   &#8358;{{
                     Number(booking.service_method.cost) +
                     Number(booking.service.service_cost.cost)
                   }}
                 </div>
+                <div
+                  class="card-table-item"
+                  style="font-size: 10px; font-weight: 400"
+                  v-else
+                >
+                  &#8358;{{ booking.service.service_cost.cost }}
+                </div>
+
+                <!-- <td v-if="booking.service_method">
+                        &#8358;{{
+                          Number(booking.service_method.cost).toLocaleString()
+                        }}.00
+                      </td>
+                      <td v-else>
+                        &#8358;{{ booking.service.service_cost.cost }}
+                      </td> -->
                 <div
                   class="card-table-item"
                   style="font-size: 10px; font-weight: 400"
@@ -393,7 +411,7 @@ export default {
               <span style="font-size: 10px; font-weight: 400">
                 Delivery Type
               </span>
-              <span style="font-size: 10px; font-weight: 400">
+              <span style="font-size: 10px; font-weight: 400"  v-if="this.singleTransaction.delivery_method">
                 {{ this.singleTransaction.delivery_method.name }}
               </span>
             </div>
@@ -401,7 +419,7 @@ export default {
               <span style="font-size: 10px; font-weight: 400">
                 Delivery Fee
               </span>
-              <span style="font-size: 10px; font-weight: 400">
+              <span style="font-size: 10px; font-weight: 400"  v-if="this.singleTransaction.delivery_method">
                 &#8358;{{
                   Number(
                     this.singleTransaction.delivery_method.cost
